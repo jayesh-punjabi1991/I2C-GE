@@ -1,0 +1,123 @@
+px-card{
+  padding:0.5rem 1.33333rem 2rem !important;
+}
+.rt{
+	float: right;
+}
+.lt{
+	float: left;
+}
+.search-form .btn:not([style-scope]):not(.style-scope){
+	border-radius: 50%;
+	padding: 0 0.5em;
+}
+.btn-primary:hover{
+	color: #fff !important;
+    background-color: #286090 !important;
+    border-color: #204d74 !important;
+}
+.btn-primary{
+	color: #fff !important;
+    background-color: #337ab7 !important;
+    border-color: #2e6da4 !important;
+}
+.btn-success:hover{
+	color: #fff !important;
+    background-color: #449d44 !important;
+    border-color: #398439 !important;
+}
+.btn-success{
+	color: #fff !important;
+    background-color: #5cb85c !important;
+    border-color: #4cae4c !important;
+}
+.btn-reject:hover{
+	color: #fff !important;
+    background-color: #c9302c !important;
+    border-color: #ac2925 !important;
+}
+.btn-reject{
+	  color: #fff !important;
+    background-color: #d9534f !important;
+    border-color: #d43f3a !important;
+}
+.Quoteheading{
+  color:#265ba0 !important;
+}
+.summaryTable {
+    border-collapse: collapse;
+    width: 100%;
+}
+.summaryTable td, th {
+width:200px !important;
+border: 1px solid #71838f !important;
+text-align: left !important;
+padding: 10px !important;
+padding-left: 20px !important;
+}
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.cust_det p{
+	margin-bottom: 5px !important;
+	margin-top: 5px !important;
+}
+.cust_det h4{
+  margin-top: 15px !important;
+  margin-bottom: 10px !important;
+}
+.cust_det table h4{
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+.sucess_msg{
+	border:2px solid #5cb85c;
+	border-radius: 4px;
+	margin-bottom: 20px;
+}
+.sucess_msg p{
+	color: #5cb85c;
+	padding-left: 30px;
+}
+body > div > div > main > section > px-card > px-data-table > div{
+  margin-top:2% !important;
+}
+#scrollBodyTableContainer{
+  background-color: #59707e !important;
+  color: white;
+}
+.block{
+		border:2px solid #818d94;
+		border-radius: 4px;
+		margin-bottom: 20px !important;
+    margin-left: 0 !important;
+    margin-top: 20px !important;
+}
+.QuoteSummaryTable tr > td > p{
+  margin-top:0px !important;
+  margin-bottom: 0px !important;
+}
+.accept_form table, .reject_form table{
+	width: 100%;
+}
+.accept_form .label_td , .reject_form .label_td{
+	width:20%;
+}
+.accept_form textarea, .accept_form input[type="text"], .reject_form textarea, .reject_form input[type="text"]{
+	width: 100%;
+}
+.accept_form textarea, .reject_form textarea{
+	padding: 5px;
+	margin: 10px 0;
+	height: 80px;
+}
+.reject_form{
+	border: 2px solid #d9534f;
+	padding: 20px;
+}
+.disabled {
+  opacity: 0.65 !important;
+  cursor: not-allowed !important;
+}

@@ -1,2 +1,2 @@
-# tca-ge-view-app
-tca-ge-view-app
+# tradeconnect-ge-view-app
+This app is GE view app protected with SSO authentication.

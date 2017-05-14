@@ -1,0 +1,161 @@
+@media (min-width: 768px){
+	.search-form{
+		float: right;
+		margin-right: 15px;
+	}
+	.order_table{
+		margin-top: 50px;
+		padding: 0 30px;
+	}
+}
+body{
+	color: #eee;
+}
+.rt{
+	float: right;
+}
+.lt{
+	float: left;
+}
+.sidemenu, .main-content{
+	height: 89vh;
+}
+.sidemenu{
+	background-color: black;
+}
+.sidemenu > ul {
+	padding-left: 0;
+}
+.sidemenu > ul > li{
+	list-style: none;
+	padding: 10px 10px 20px 5px;
+	text-align: center;
+}
+.sidemenu > ul > li > a, .sidemenu > ul > li > a:hover{
+	color:#eee;
+}
+.sidemenu > ul > li > a > p{
+	margin-bottom: 2px;
+}
+.sidemenu > ul > li > a:hover{
+	text-decoration: none;
+	color: white;
+}
+.sidemenu > ul > li > a:focus{
+	text-decoration: none;
+}
+.view-content{
+	margin-top: 10px;
+	color: #555;
+}
+.search-form .btn{
+	border-radius: 20px;
+}
+.status_ack{
+	display: inline-block;
+	vertical-align: top;
+	width:20px;
+	height: 20px;
+	background-color: #e4d354;
+	border-radius: 50%;
+	text-align: center;
+}
+.status_am{
+	display: inline-block;
+	vertical-align: top;
+	width:20px;
+	height: 20px;
+	background-color: #90ed7d;
+	border-radius: 50%;
+	text-align: center;
+}
+.status_cr{
+	display: inline-block;
+	vertical-align: top;
+	width:20px;
+	height: 20px;
+	background-color: #f7a35c;
+	border-radius: 50%;
+}
+.tab-content{
+	color: black;
+}
+.filter_div{
+	margin-top: 20px;
+}
+.recent_ordr{
+	font-size: 22px;
+	padding-top: 5px;
+}
+.table td, .table th{
+	text-align: center;
+}
+.table td{
+	max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.text-white{
+	color: #eee !important;
+}
+.text-blue{
+	color: #337ab7 !important;
+}
+.order_tab{
+	font-size: 16px;
+	color: #555;
+	border : 0 !important;
+}
+.cr_tab{
+	font-size: 16px;
+	color: #555;
+	border : 0 !important;
+}
+.nav-tabs{
+	border-bottom: 0;
+}
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus{
+	color: #555;
+	background-color: #eee;
+}
+.desc{
+	display:inline-block;
+    width:50px;
+    white-space: nowrap;
+    overflow:hidden !important;
+    text-overflow: ellipsis;
+}
+.status_ini{
+	color: #fcf411;
+}
+.status_acpt{
+	color: #06871e;
+}
+.status_rej{
+	color: #ed2540;
+}
+.filter_btn{
+	margin-left: 64px;
+}
+.more_btn{
+	margin-right: 55px;
+}
+.all_orders{
+	margin-top: 30px;
+}
+.details_div{
+	border: 1px solid #555;
+	padding: 10px;
+	margin: 10px;
+}
+.accordion_row td{
+	padding:0 !important;
+}
+.accordion_row p{
+	text-align: left;
+}
+.accordion_row > td > div{
+	padding: 10px;
+}
+}

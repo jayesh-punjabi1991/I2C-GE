@@ -1,0 +1,31 @@
+@media only screen and (max-width: 768px) { /*CSS for devices with screen width less than or equal to 768px*/
+	.hidden-md{
+		display: none;
+	}
+	.search-form{
+		float: none;
+	}
+	.table_quo>tbody>tr>td, .table_quo>tbody>tr>th, .table_quo>tfoot>tr>td, .table_quo>tfoot>tr>th, .table_quo>thead>tr>td, .table_quo>thead>tr>th{
+		padding: 8px;
+	}
+	.table_item>tbody>tr>td, .table_item>tbody>tr>th, .table_item>tfoot>tr>td, .table_item>tfoot>tr>th, .table_item>thead>tr>td, .table_item>thead>tr>th{
+		padding: 8px;
+	}
+}
+
+@media only screen and (min-width: 768px) { /*CSS for devices with screen width greater than or equal to 768px*/
+	.form-inline{
+		display: inline-block;
+		width: auto;
+	}
+	.search-form{
+		float: right;
+	}
+	.table_quo>tbody>tr>td, .table_quo>tbody>tr>th, .table_quo>tfoot>tr>td, .table_quo>tfoot>tr>th, .table_quo>thead>tr>td, .table_quo>thead>tr>th{
+		padding: 8px 30px;
+	}
+	.table_item>tbody>tr>td, .table_item>tbody>tr>th, .table_item>tfoot>tr>td, .table_item>tfoot>tr>th, .table_item>thead>tr>td, .table_item>thead>tr>th{
+		padding: 8px 30px;
+	}
+	
+}

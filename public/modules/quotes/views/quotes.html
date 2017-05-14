@@ -1,0 +1,29 @@
+<px-card header-text="List of Quotes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" class="quotesList">
+  <!--<div class="layout" id="FilterDiv">
+		<div class="layout__item u-1/2" id="Firstdiv">
+      <div class="layout">
+        <div class="layout__item u-1/3" id="firstfilter">
+          <px-dropdown display-value="Select"><px-dropdown-content extend-dropdown='true' extend-dropdown-by='25' max-cont-character-width='10' items='[{"key":"1","val":"Quote Number"},{"key":"2","val":"Quote Version"},{"key":"3","val":"Created Date"},{"key":"4","val":"Status"}]'></px-dropdown-content></px-dropdown>
+        </div>
+        <div class="layout__item u-1/3" id="secondfilter">
+          <input id="inputfilter" type="text" id="fname" name="firstname" placeholder="Search">
+        </div>
+        <div class="layout__item u-1/3" id="thirdfilter">
+          <button id="applybutton" class="btn">Apply</button>
+        </div>
+      </div>
+		</div>
+    <div class="layout__item u-1/2" id="SecondDiv">
+      <div id="calenderdiv">
+      <px-datetime-range-field hide-time="true" show-buttons="true" date-format="YYYY/MM/DD" time-format="HH:mm:ss" time-zone="UTC" show-time-zone="abbreviatedText" range='{"from":"2015-07-01T01:00:00.000Z","to":"2016-07-08T14:00:00.000Z"}'></px-datetime-range-field>
+    </div>
+		</div>
+	</div>-->
+  <px-data-table table-data='{{QuotesList}}' language="en" striped="true" sortable="true" show-column-chooser="true" table-rows="true" include-all-columns="true" >
+		<px-data-table-column name="quote#" Label="Quote Number" type="html" sortable></px-data-table-column>
+		<px-data-table-column name="quoteVer" label="Quote Version" sortable></px-data-table-column>
+		<px-data-table-column name="createdDate" label="Created Date"></px-data-table-column>
+		<px-data-table-column name="status" label="Status" sortable></px-data-table-column>
+		<px-data-table-column name="action" label="Action" type="html"></px-data-table-column>
+	</px-data-table>
+</px-card>

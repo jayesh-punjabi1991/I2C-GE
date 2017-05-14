@@ -1,0 +1,199 @@
+<link rel="stylesheet" type="text/css" href="css/quoteDetails.css">
+<link rel="stylesheet" type="text/css" href="css/common-lg.css">
+	<px-card>
+		<div class="layout">
+			<div class="layout__item pull--right">
+				<div class="lt">
+					<a href="/quotes" title="Back" class="btn btn-primary">Back</a>
+				</div>
+				<!-- <div class="rt">
+					<a title="Details" id="CompleteDetails" class="btn" style="background-color:#60bd68;color:white" ng-click="completedetails = true;acceptbutton = true" ng-hide="acceptbutton" ng-disabled="rejectDetails">Complete the Details</a>
+					<a title="Accept" id="AcceptButton" class="btn disabled" ng-show="acceptbutton" ng-click="successMessage = true;AcceptClicked()">Accept</a>
+					<a title="Reject" id="RejectButton" style="background-color:#f15854;color:white" class="btn" ng-disabled="acceptDetails" ng-click="successMessage=false;rejectDetails = true;">Reject</a>
+				</div> -->
+			</div>
+		</div>
+    <div class="sucess_msg" ng-show="successMessage" style="margin-top:2% !important">
+      <p>The Quote# {{QuoteNumber}} has been accepted successfully.</p>
+    </div>
+    <div class="reject_form" ng-show="AcknowledgeReject" style="margin-top:2% !important;margin-left:0 !important">
+      <p style="color:#d9534f">The Quote# {{QuoteNumber}} has been rejected successfully.</p>
+    </div>
+  	<div class="layout" ng-show="rejectDetails" style="margin-top:2% !important;margin-left:0 !important">
+  		<div class="layout__item reject_form">
+  			<table>
+  				<tr>
+  					<td class="label_td"><label for="cmnt">Comments:</td>
+  					<td><textarea id="cmnt"></textarea></td>
+  				</tr>
+  				<tr>
+  					<td class="label_td">Supporting Documents:</td>
+  					<td>
+  						<input type="file" name=""/>
+  					</td>
+  				</tr>
+  			</table>
+  			<div class="clearfix">
+  				<button type="submit" class="form-field--inline btn btn-reject rt" ng-click="AcknowledgeReject=true;rejectDetails=false;RejectClicked()">Reject Quote</button>
+  			</div>
+  		</div>
+  	</div>
+
+		<h1 class="Quoteheading">QUOTE#&nbsp;:&nbsp;{{QuoteNumber}}</h1>
+		<div class="layout">
+			<div class="layout__item pull--right">
+				<div class="lt">
+					<table class="summaryTable" style="line-height:0.5">
+						<tr>
+							<th style="background-color:#b6c3cc">Version</th>
+							<th style="font-weight:normal">{{QuoteVersion}}</th>
+						</tr>
+						<tr>
+							<td style="background-color:#b6c3cc;font-weight:bold">Date</td>
+							<td>{{QuoteDate}}</td>
+						</tr>
+						<tr>
+							<td style="background-color:#b6c3cc;font-weight:bold">Status</td>
+							<td>{{QuoteStatus}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="rt">
+					<p style="border-bottom:2px red solid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Quote Net Selling Price: &nbsp;&nbsp;&nbsp;&nbsp;
+						<strong style="font-size:2rem">{{POAmount}}</strong>
+					</p>
+				</div>
+			</div>
+		</div>
+    <div class="layout" style="border-top:1px solid #8f9ca4;border-bottom:1px solid #8f9ca4">
+  		<div class="layout__item desk-25 small-100 cust_det clearfix" style="border-right:1px solid #8f9ca4;">
+  			<div class="lt">
+  				<h4>Customer</h4>
+  				<p>Memorial Hospital of Lampa LP</p>
+  				<p>2901 Swan Lake</p>
+  				<p>Tampa FL 29380-92388</p>
+  			</div>
+  		</div>
+  		<div class="layout__item desk-33 small-100 cust_det clearfix" style="border-right:1px solid #8f9ca4;">
+        <div class="lt">
+  				<h4>Ship To</h4>
+  				<p>{{ShipToAddress1}} , {{ShipToAddress2}}</p>
+          <p>{{ShipToAddress3}}</p>
+  				<p>{{ShipToCity}} , {{ShipToCountry}} , {{ShipToPostalCode}} {{ShipToProvince}} {{ShipToState}}</p>
+  			</div>
+  		</div>
+      <div class="layout__item desk-33 small-100 cust_det clearfix">
+        <!-- <div class="lt">
+  				<h4>Bill To</h4>
+          <textarea ng-show="completedetails" id="billTo" ng-change="enableAccept()" style="width:440px;height:100px" ng-model="BillTo" required></textarea>
+  			</div> -->
+  		</div>
+  	</div>
+
+    <div class="layout" style="border-bottom:1px solid #8f9ca4">
+      <div class="layout__item desk-50 small-100 cust_det clearfix">
+      <div class="lt">
+        <h4>Terms</h4>
+        <table>
+          <tr>
+            <td><h4>Governing Agreement:</h4></td>
+            <td>HCA National</td>
+          </tr>
+          <tr>
+            <td><h4>Terms of Delivery:</h4></td>
+            <td>{{DeliveryTerms}}</td>
+          </tr>
+          <tr>
+            <td><h4>Billing Terms:</h4></td>
+            <td>{{BillingTerms}}</td>
+          </tr>
+          <tr>
+            <td><h4>Payment Terms:</h4></td>
+            <td>{{paymentTerms}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!-- <div class="layout__item desk-50 small-100 cust_det clearfix">
+      <div class="">
+        <h4></h4>
+        <table>
+          <tr>
+            <td class="label_td"><label for="poNum">PO Number</label></td>
+            <td><input ng-show="completedetails" style="width:440px" ng-change="enableAccept()" class="form-field--inline text-input input--tiny form-control" ng-model="PO" id="poNum" type="text" placeholder="" required></td>
+          </tr>
+          <tr>
+            <td class="label_td" ng-show="completedetails">PO:</td>
+            <td>
+              <input ng-show="completedetails" type="file" name=""/>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div> -->
+  </div>
+  <h4>Summary</h4>
+  <px-data-table table-data='{{partsList}}' language="en" striped="true" table-rows="true" include-all-columns="true" hide-pagination-control="true">
+    <px-data-table-column name="srno" Label="#"></px-data-table-column>
+    <px-data-table-column name="qty" label="Qty"></px-data-table-column>
+    <px-data-table-column name="desc" label="Description"></px-data-table-column>
+    <px-data-table-column name="cPrice" label="Ext Contract Price"></px-data-table-column>
+    <px-data-table-column name="disc" label="Discount"></px-data-table-column>
+    <px-data-table-column name="sPrice" label="Ext Sell Price"></px-data-table-column>
+  </px-data-table>
+
+  <div class="layout block">
+    <div class="layout__item">
+      <table class="QuoteSummaryTable">
+        <tr>
+          <td style="padding-bottom:10px !important;padding-top:10px !important;font-weight:bold">Quote Summary</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><p>1. &nbsp;&nbsp;<strong>Total Contract List Price : </strong></p></td>
+          <td>{{listPrice}}</td>
+        </tr>
+        <tr>
+          <td><p>2. &nbsp;&nbsp;<strong>Total Quote Discount : </strong></p></td>
+          <td>$420,723.80</td>
+        </tr>
+        <tr>
+          <td><p>3. &nbsp;&nbsp;<strong>Total Extended Selling Price : </strong></p></td>
+          <td>{{sellingPrice}}</td>
+        </tr>
+        <tr>
+          <td><p>4. &nbsp;&nbsp;<strong>Total Quote Net Selling Price : </strong></p></td>
+          <td>{{POAmount}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <h4>Item Details</h4>
+  <px-data-table table-data='{{itemDetails}}' language="en" striped="true" table-rows="true" include-all-columns="true" hide-pagination-control="true">
+    <px-data-table-column name="sr.no" Label="#"></px-data-table-column>
+    <px-data-table-column name="qty" label="Qty"></px-data-table-column>
+    <px-data-table-column name="itemNo" label="Item#"></px-data-table-column>
+    <px-data-table-column name="desc" label="Description"></px-data-table-column>
+    <px-data-table-column name="cPrice" label="Ext Contract Price"></px-data-table-column>
+    <px-data-table-column name="disc" label="Discount"></px-data-table-column>
+    <px-data-table-column name="sPrice" label="Ext Sell Price"></px-data-table-column>
+  </px-data-table>
+
+  <div class="layout block">
+    <div class="layout__item">
+      <table>
+        <tr>
+          <td style="padding-bottom:10px !important;padding-top:10px !important;font-weight:bold">Support Documents</td>
+        </tr>
+        <tr>
+          <td>1. &nbsp;&nbsp;<a href="">Confirmed Quote</a></td>
+        </tr>
+        <tr>
+          <td>2. &nbsp;&nbsp;<a href="">Customer Signed Quote</a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+	</px-card>

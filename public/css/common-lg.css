@@ -1,0 +1,46 @@
+@media only screen and (max-width: 992px){ /*CSS for devices with screen width less than or equal to 992px*/
+    .hidden-lg{
+        display: none;
+    }
+    .small-100{
+        width:100%;
+    }
+    .small-50{
+        width:50%;
+        flex-basis:0 !important;
+    }
+    .small-25{
+      width:25%;
+      flex-basis:0 !important;
+    }
+}
+@media only screen and (min-width: 992px){ /*CSS for devices with screen width greater than or equal to 992px*/
+    main:not([style-scope]):not(.style-scope){
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+    .desk-50{
+        width: 50%;
+        flex-basis:0 !important;
+    }
+    .desk-75{
+        width: 75%;
+        flex-basis:0 !important;
+    }
+    .desk-25{
+        max-width:25% !important;
+        width: 25%;
+        flex-basis:0 !important;
+    }
+    .desk-33{
+        max-width:33.33% !important;
+        width: 33.33%;
+        flex-basis:0 !important;
+    }
+    .table_quo>tbody>tr>td, .table_quo>tbody>tr>th, .table_quo>tfoot>tr>td, .table_quo>tfoot>tr>th, .table_quo>thead>tr>td, .table_quo>thead>tr>th{
+        padding: 8px 65px;
+    }
+    .table_item>tbody>tr>td, .table_item>tbody>tr>th, .table_item>tfoot>tr>td, .table_item>tfoot>tr>th, .table_item>thead>tr>td, .table_item>thead>tr>th{
+        padding: 8px 48px;
+    }
+}

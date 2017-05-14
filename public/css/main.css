@@ -1,0 +1,47 @@
+.viewport{
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+body{
+  margin-bottom: 0 !important;
+}
+.content-wrapper{
+  height: 575px !important;
+}
+/*main{
+  height:580px !important;
+}*/
+px-app-nav{
+  background-color: #3b3b3f !important;
+  width: 12em !important;
+}
+.px-app-nav-0 a.px-app-nav:link, .px-app-nav-0  a.px-app-nav:visited{
+  color: white !important;
+}
+.btn--bare{
+  display:none !important;
+}
+.Mainheading{
+  color:white !important;
+  margin-left: 1.5% !important;
+}
+.px-app-nav-0 .u-ml--.px-app-nav{
+  margin-left: 0.8rem !important;
+}
+[role=banner] h1 svg path:not([style-scope]):not(.style-scope), [role=banner] h2 svg path:not([style-scope]):not(.style-scope){
+  fill:white !important;
+}
+#Login{
+   float:right;
+   margin-right:2%;
+}
+#LoginText{
+  font-size:1rem;color:white;
+  margin-bottom:0 !important;
+}
+#LoginPersonIcon{
+   color:white;
+   float:right;
+   margin-right:1%;
+   margin-top:0.5%
+}

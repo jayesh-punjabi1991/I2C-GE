@@ -1,0 +1,60 @@
+px-card h1{
+  margin-top: 0 !important;
+  margin-left: 0 !important;
+  margin-bottom: 0 !important;
+}
+px-card h3{
+  margin-top: 0 !important;
+  margin-left: 0 !important;
+  margin-bottom: 0 !important;
+}
+#PendingActions {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 0 !important;
+}
+
+#PendingActions td, #PendingActions th {
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+}
+
+#PendingActions tr:nth-child(even){background-color: #f2f2f2;}
+
+#PendingActions tr:hover {background-color: #ddd;}
+
+#PendingActions th {
+    background-color: #59707e;
+    color:white;
+    text-align: left;
+    font-weight: 500;
+}
+.close{
+    text-decoration: none;
+    color: red !important;
+    font-weight: bolder;
+    vertical-align: super;
+    font-size: 1.5em;
+}
+#Action{
+  color:#1e90ff !important;
+  text-decoration: underline !important;
+}
+.badge {
+    background:             radial-gradient( center -9px, circle closest-side, white 0, red 26px );
+    background:    -moz-radial-gradient( center -9px, circle closest-side, white 0, red 26px );
+    background:     -ms-radial-gradient( center -9px, circle closest-side, white 0, red 26px );
+    background:      -o-radial-gradient( center -9px, circle closest-side, white 0, red 26px );
+    background: -webkit-radial-gradient( center -9px, circle, white 0, red 26px );
+    background-color: red;
+    right: 71%;
+    position: absolute;
+    border-radius: 50%;
+    /*box-shadow: 1px 1px 1px black;*/
+    color: white;
+    font: bold 17px/13px Helvetica, Verdana, Tahoma;
+    height: 20px; /* height + padding-top must equal width */
+    padding-top: 4px; /* height + padding-top must equal width */
+    text-align: center;
+    width: 20px;
+}

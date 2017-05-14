@@ -1,0 +1,16 @@
+@media only screen and (max-width: 576px){ /*CSS for devices with screen width less than or equal to 576px*/
+	.hidden-sm{
+		display: none;
+	}
+	main:not([style-scope]):not(.style-scope){
+		margin-left: 0rem;
+	}
+}
+@media only screen and (min-width: 576px){/*CSS for devices with screen width greater than or equal to 576px*/
+	.hidden-lg-device{
+		display: none !important;
+	}
+	main:not([style-scope]):not(.style-scope){
+		margin-left: 6.6rem;
+	}
+}
