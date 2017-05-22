@@ -46,7 +46,9 @@
         </div>
     </header>
     <div class="viewport">
-        <div class="content-wrapper">
+        <div class="flex flex--wrap">
+            <style is='custom-style'>:root { --px-table-row: { border-bottom: 1px solid gray; } }</style>
+
             <px-app-nav class="navbar" nav-items="{{App.tabs}}" path-prefix="/" path-key="state" nav-expanded=true>
                 <px-login class="sticky" style="display:none"></px-login>
             </px-app-nav>

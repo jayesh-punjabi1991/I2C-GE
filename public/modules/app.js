@@ -23,6 +23,7 @@ define([
         'home',
         'quotes',
         'orders',
+        'changeRequest',
         'app.routes',
         'app.constants',
         'app.interceptors',
@@ -45,7 +46,7 @@ define([
             tabs: [
                 {icon: 'fa-home fa-2x', state: 'dashboards', label: 'Home'},
                 {icon: 'fa-truck fa-2x', state: 'orders', label: 'Orders'},
-                {icon: 'fa-pencil-square-o fa-2x', state: '', label: 'Change Request'},
+                {icon: 'fa-pencil-square-o fa-2x', state: 'changeRequest', label: 'Change Request'},
                 {icon: 'fa-gavel fa-2x', state: '', label: 'Disputes'}
             ]
         };
@@ -72,7 +73,7 @@ define([
                           'email': $window.sessionStorage.getItem('userEmail')
                         };
                         predixUserService.getUserDetails(data).success(function (response){
-                          $window.sessionStorage.setItem('customerId',response.customerID);
+                          $window.sessionStorage.setItem('customerId',response.supplierID);
                           //$window.sessionStorage.setItem('customerId',1);
                           $window.sessionStorage.setItem('userRole', response.userRole);
                           $window.sessionStorage.setItem('userPermission', response.userPermission);

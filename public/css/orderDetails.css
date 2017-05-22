@@ -1,5 +1,30 @@
 px-card{
-  padding:0.5rem 1.33333rem 2rem !important;
+  padding:1rem 0rem 2rem !important;
+}
+.px-data-table-cell{
+  max-width: 150px !important;
+  word-wrap: break-word;
+  height:    100% !important;
+}
+px-data-table-cell{
+  height: 100% !important;
+  vertical-align: baseline;
+}
+.px-data-table-cell-0 .viewing.px-data-table-cell{
+  max-height:none;
+  white-space: normal;
+}
+.th{
+  max-width: 150px !important;
+  word-wrap: break-word;
+}
+.column-head{
+  max-width: 150px !important;
+  word-wrap: break-word;
+  white-space: normal !important;
+}
+#scrollBodyTableContainer > div.tr.rows.striped.style-scope.aha-table > px-data-table-cell.style-scope.aha-table.td.aha-link-td.x-scope.px-data-table-cell-0 > span{
+  display:none !important;
 }
 .rt{
 	float: right;
@@ -86,4 +111,56 @@ body > div > div > main > section > px-card > px-data-table > div{
 	  color: #fff !important;
     background-color: #d9534f !important;
     border-color: #d43f3a !important;
+}
+#changeRequestDiv{
+  display:none;
+}
+#changeRequestDiv, #disputeTextDiv{
+	border: 2px solid #2e6da4;
+	border-radius: 4px;
+	color: #2e6da4;
+	margin-bottom: 30px;
+}
+#rejectTextDiv{
+	border: 2px solid #d9534f;
+	border-radius: 4px;
+	color: #d9534f;
+	margin-bottom: 30px;
+}
+#changeRequestDiv h3, #disputeTextDiv h4{
+	margin: 0  !important;
+	padding: 10px;
+	border-bottom: 2px solid #2e6da4;
+}
+#rejectTextDiv h4{
+	margin: 0  !important;
+	padding: 10px;
+	border-bottom: 2px solid #d9534f;
+}
+
+#changeRequestDiv .send_form{
+	margin: 10px;
+	width: 100%;
+}
+#changeRequestDiv .send_form div, #disputeTextDiv .send_form div{
+	margin: 20px;
+}
+#rejectTextDiv .send_form div{
+	margin: 20px;
+}
+
+#changeRequestDiv .send_form .mailSub input[type="text"]{
+	padding: 5px;
+  margin-left: 15px;
+  width: 93%
+}
+#changeRequestDiv .send_form .mailTo input[type="text"], #changeRequestDiv .send_form .mailCc input[type="text"]{
+	padding: 5px;
+  margin-left: 15px;
+  width: 96%
+}
+#changeRequestDiv .send_form textarea{
+	padding: 5px;
+  width: 99%;
+  height: 100px;
 }

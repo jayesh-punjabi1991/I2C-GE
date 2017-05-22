@@ -8,7 +8,7 @@ define(['angular', './module', 'constants'], function(angular, module) {
         return {
             getMyPendingActions: function() {
               console.log('Dashboard '+ $window.sessionStorage.getItem('auth_token'));
-              return $http.get(urls.base_url + urls.get_mypending_actions +'/' + $window.sessionStorage.getItem('customerId')+ '/'+ $window.sessionStorage.getItem('roleName'), {
+              return $http.get(urls.base_url + urls.get_mypending_actions + '/'+ $window.sessionStorage.getItem('roleName'), {
                  headers: {
                    'Authorization': 'Bearer ' + $window.sessionStorage.getItem('auth_token'),
                    'x-access-token': $window.sessionStorage.getItem('userToken')

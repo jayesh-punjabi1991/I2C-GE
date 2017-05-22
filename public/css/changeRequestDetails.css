@@ -1,0 +1,98 @@
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+  color: #449d44;
+  font-weight: bold;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: 150%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+.btn-primary:hover{
+	color: #fff !important;
+    background-color: #286090 !important;
+    border-color: #204d74 !important;
+}
+.btn-primary{
+	color: #fff !important;
+    background-color: #337ab7 !important;
+    border-color: #2e6da4 !important;
+}
+.btn-success:hover{
+	color: #fff !important;
+    background-color: #449d44 !important;
+    border-color: #398439 !important;
+}
+.btn-success{
+	color: #fff !important;
+    background-color: #5cb85c !important;
+    border-color: #4cae4c !important;
+}
+.btn-reject:hover{
+	color: #fff !important;
+    background-color: #c9302c !important;
+    border-color: #ac2925 !important;
+}
+.btn-reject{
+	  color: #fff !important;
+    background-color: #d9534f !important;
+    border-color: #d43f3a !important;
+}.disabled {
+  opacity: 0.65 !important;
+  cursor: not-allowed !important;
+}
+.sucess_msg{
+	border:2px solid #5cb85c;
+	border-radius: 4px;
+	margin-bottom: 20px;
+}
+.sucess_msg p{
+	color: #5cb85c;
+	padding-left: 30px;
+}
+
+.accept_form table, .reject_form table{
+	width: 100%;
+}
+.accept_form .label_td , .reject_form .label_td{
+	width:20%;
+}
+.accept_form textarea, .accept_form input[type="text"], .reject_form textarea, .reject_form input[type="text"]{
+	width: 100%;
+}
+.accept_form textarea, .reject_form textarea{
+	padding: 5px;
+	margin: 10px 0;
+	height: 80px;
+}
+.reject_form{
+	border: 2px solid #d9534f;
+	padding: 20px;
+}

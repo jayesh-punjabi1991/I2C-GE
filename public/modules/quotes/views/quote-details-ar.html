@@ -8,7 +8,7 @@
 				</div>
 				<!-- <div class="rt">
 					<a title="Details" id="CompleteDetails" class="btn" style="background-color:#60bd68;color:white" ng-click="completedetails = true;acceptbutton = true" ng-hide="acceptbutton" ng-disabled="rejectDetails">Complete the Details</a>
-					<a title="Accept" id="AcceptButton" class="btn disabled" ng-show="acceptbutton" ng-click="successMessage = true;AcceptClicked()">Accept</a>
+					<a title="Accept" id="AcceptButton" class="btn disabled" ng-show="acceptbutton" ng-click="acceptClicked()">Accept</a>
 					<a title="Reject" id="RejectButton" style="background-color:#f15854;color:white" class="btn" ng-disabled="acceptDetails" ng-click="successMessage=false;rejectDetails = true;">Reject</a>
 				</div> -->
 			</div>
@@ -24,7 +24,7 @@
   			<table>
   				<tr>
   					<td class="label_td"><label for="cmnt">Comments:</td>
-  					<td><textarea id="cmnt"></textarea></td>
+  					<td><textarea id="cmnt" ng-model="comments"></textarea></td>
   				</tr>
   				<tr>
   					<td class="label_td">Supporting Documents:</td>
@@ -34,7 +34,7 @@
   				</tr>
   			</table>
   			<div class="clearfix">
-  				<button type="submit" class="form-field--inline btn btn-reject rt" ng-click="AcknowledgeReject=true;rejectDetails=false;RejectClicked()">Reject Quote</button>
+  				<button type="submit" class="form-field--inline btn btn-reject rt" ng-click="rejectClicked()">Reject Quote</button>
   			</div>
   		</div>
   	</div>
@@ -83,10 +83,12 @@
   			</div>
   		</div>
       <div class="layout__item desk-33 small-100 cust_det clearfix">
-        <!-- <div class="lt">
+        <div class="lt">
   				<h4>Bill To</h4>
-          <textarea ng-show="completedetails" id="billTo" ng-change="enableAccept()" style="width:440px;height:100px" ng-model="BillTo" required></textarea>
-  			</div> -->
+					<p>{{BillToAddress1}} , {{BillToAddress2}}</p>
+          <p>{{BillToAddress3}}</p>
+  				<p>{{BillToCity}} , {{BillToCountry}} , {{BillToPostalCode}} {{BillToProvince}} {{BillToState}}</p>
+  			</div>
   		</div>
   	</div>
 
@@ -97,7 +99,7 @@
         <table>
           <tr>
             <td><h4>Governing Agreement:</h4></td>
-            <td>HCA National</td>
+            <td>{{customerId}}</td>
           </tr>
           <tr>
             <td><h4>Terms of Delivery:</h4></td>
@@ -114,33 +116,35 @@
         </table>
       </div>
     </div>
-    <!-- <div class="layout__item desk-50 small-100 cust_det clearfix">
+    <div class="layout__item desk-50 small-100 cust_det clearfix">
       <div class="">
         <h4></h4>
         <table>
           <tr>
             <td class="label_td"><label for="poNum">PO Number</label></td>
-            <td><input ng-show="completedetails" style="width:440px" ng-change="enableAccept()" class="form-field--inline text-input input--tiny form-control" ng-model="PO" id="poNum" type="text" placeholder="" required></td>
+            <td><input ng-show="completedetails" style="width:440px" ng-change="enableAccept()" class="form-field--inline text-input input--tiny form-control" ng-model="PONumber" id="poNum" type="text" placeholder="" required></td>
           </tr>
           <tr>
             <td class="label_td" ng-show="completedetails">PO:</td>
             <td>
-              <input ng-show="completedetails" type="file" name=""/>
+							<form name="uploadDoc">
+								<input ng-show="completedetails" type="file" id="uploadDoc" file-input="files"/>
+							</form>
             </td>
           </tr>
         </table>
       </div>
-    </div> -->
+    </div>
   </div>
   <h4>Summary</h4>
-  <px-data-table table-data='{{partsList}}' language="en" striped="true" table-rows="true" include-all-columns="true" hide-pagination-control="true">
+  <!-- <px-data-table table-data='{{partsList}}' language="en" table-rows="true" include-all-columns="true" hide-pagination-control="true" class="items">
     <px-data-table-column name="srno" Label="#"></px-data-table-column>
-    <px-data-table-column name="qty" label="Qty"></px-data-table-column>
-    <px-data-table-column name="desc" label="Description"></px-data-table-column>
-    <px-data-table-column name="cPrice" label="Ext Contract Price"></px-data-table-column>
-    <px-data-table-column name="disc" label="Discount"></px-data-table-column>
-    <px-data-table-column name="sPrice" label="Ext Sell Price"></px-data-table-column>
-  </px-data-table>
+    <px-data-table-column name="qty" label="Qty" class="items"></px-data-table-column>
+    <px-data-table-column name="desc" label="Description" class="items"></px-data-table-column>
+    <px-data-table-column name="cPrice" label="Ext Contract Price" class="items"></px-data-table-column>
+    <px-data-table-column name="disc" label="Discount" class="items"></px-data-table-column>
+    <px-data-table-column name="sPrice" label="Ext Sell Price" class="items"></px-data-table-column>
+  </px-data-table> -->
 
   <div class="layout block">
     <div class="layout__item">
@@ -170,14 +174,14 @@
   </div>
 
   <h4>Item Details</h4>
-  <px-data-table table-data='{{itemDetails}}' language="en" striped="true" table-rows="true" include-all-columns="true" hide-pagination-control="true">
-    <px-data-table-column name="sr.no" Label="#"></px-data-table-column>
-    <px-data-table-column name="qty" label="Qty"></px-data-table-column>
-    <px-data-table-column name="itemNo" label="Item#"></px-data-table-column>
-    <px-data-table-column name="desc" label="Description"></px-data-table-column>
-    <px-data-table-column name="cPrice" label="Ext Contract Price"></px-data-table-column>
-    <px-data-table-column name="disc" label="Discount"></px-data-table-column>
-    <px-data-table-column name="sPrice" label="Ext Sell Price"></px-data-table-column>
+  <px-data-table table-data='{{itemDetails}}' language="en" table-rows="true" include-all-columns="true" hide-pagination-control="true">
+    <px-data-table-column name="sr.no" Label="#" class="items"></px-data-table-column>
+    <px-data-table-column name="qty" label="Qty" class="items"></px-data-table-column>
+    <px-data-table-column name="itemNo" label="Item#" class="items"></px-data-table-column>
+    <px-data-table-column name="desc" label="Description" class="items"></px-data-table-column>
+    <px-data-table-column name="cPrice" label="Ext Contract Price" class="items"></px-data-table-column>
+    <px-data-table-column name="disc" label="Discount" class="items"></px-data-table-column>
+    <px-data-table-column name="sPrice" label="Ext Sell Price" class="items"></px-data-table-column>
   </px-data-table>
 
   <div class="layout block">

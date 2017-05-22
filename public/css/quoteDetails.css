@@ -1,5 +1,9 @@
+.content-wrapper{
+  height:auto !important;
+}
+
 px-card{
-  padding:0.5rem 1.33333rem 2rem !important;
+  padding:1rem 0rem 2rem !important;
 }
 .rt{
 	float: right;
@@ -85,8 +89,8 @@ body > div > div > main > section > px-card > px-data-table > div{
   margin-top:2% !important;
 }
 #scrollBodyTableContainer{
-  background-color: #59707e !important;
-  color: white;
+  /*background-color: #59707e !important;
+  color: white;*/
 }
 .block{
 		border:2px solid #818d94;
@@ -120,4 +124,25 @@ body > div > div > main > section > px-card > px-data-table > div{
 .disabled {
   opacity: 0.65 !important;
   cursor: not-allowed !important;
+}
+#SmallScreen{
+  display:none;
+}
+@media screen and (max-width: 1050px){
+#BigScreen{
+  display:none;
+}
+#SmallScreen{
+  display:block;
+}
+#billTo{
+  width:200px !important;
+}
+#PO{
+  width:200px !important;
+}
+.summaryTable td, th {
+width:166px !important;
+padding-left: 10px !important;
+}
 }

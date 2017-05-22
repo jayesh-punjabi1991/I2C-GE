@@ -11,7 +11,6 @@ px-card h3{
 #PendingActions {
     border-collapse: collapse;
     width: 100%;
-    margin-bottom: 0 !important;
 }
 
 #PendingActions td, #PendingActions th {
@@ -39,22 +38,4 @@ px-card h3{
 #Action{
   color:#1e90ff !important;
   text-decoration: underline !important;
-}
-.badge {
-    background:             radial-gradient( center -9px, circle closest-side, white 0, red 26px );
-    background:    -moz-radial-gradient( center -9px, circle closest-side, white 0, red 26px );
-    background:     -ms-radial-gradient( center -9px, circle closest-side, white 0, red 26px );
-    background:      -o-radial-gradient( center -9px, circle closest-side, white 0, red 26px );
-    background: -webkit-radial-gradient( center -9px, circle, white 0, red 26px );
-    background-color: red;
-    right: 71%;
-    position: absolute;
-    border-radius: 50%;
-    /*box-shadow: 1px 1px 1px black;*/
-    color: white;
-    font: bold 17px/13px Helvetica, Verdana, Tahoma;
-    height: 20px; /* height + padding-top must equal width */
-    padding-top: 4px; /* height + padding-top must equal width */
-    text-align: center;
-    width: 20px;
 }

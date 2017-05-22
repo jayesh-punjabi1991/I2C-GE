@@ -1,12 +1,47 @@
+html{
+  background-color: white !important;
+  /*overflow: scroll;
+  overflow-x: hidden;*/
+}
+/*::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space
+    background: transparent;  /* optional: just make scrollbar invisible
+}*/
+/* optional: show position indicator in red */
+/*::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}*/
+[role=banner]:not([style-scope]):not(.style-scope){
+	background-color: #3b3b3f;
+	color: #eee;
+}
+main:not([style-scope]):not(.style-scope){
+	min-height: calc(100vh - 4rem) !important;
+	background-color: #fff !important;
+}
+body:not([style-scope]):not(.style-scope){
+	margin-bottom: 0 !important;
+}
 .viewport{
   margin-left: 0 !important;
   margin-right: 0 !important;
 }
-body{
-  margin-bottom: 0 !important;
+.px-app-nav-0{
+  padding: 0 1em 1em 1em;
 }
-.content-wrapper{
-  height: 575px !important;
+.px-app-nav-0 .navbar__item.px-app-nav > li.px-app-nav{
+  line-height: 3.5;
+}
+.px-app-nav-0 .navbar__item.px-app-nav > li.px-app-nav .fa.px-app-nav{
+  vertical-align: middle;
+}
+.px-app-nav-0 a.px-app-nav:link, .px-app-nav-0  a.px-app-nav:visited{
+  color: white !important;
+}
+.px-app-nav-0 a.selected.px-app-nav, .px-app-nav-0  a.selected.px-app-nav:hover{
+  background-color: white !important;
+  color: #086e87 !important;
+  font-weight: bold;
 }
 /*main{
   height:580px !important;
@@ -15,10 +50,11 @@ px-app-nav{
   background-color: #3b3b3f !important;
   width: 12em !important;
 }
-.px-app-nav-0 a.px-app-nav:link, .px-app-nav-0  a.px-app-nav:visited{
-  color: white !important;
-}
-.btn--bare{
+
+/*.btn--bare{
+  display:none !important;
+}*/
+.btn--svg{
   display:none !important;
 }
 .Mainheading{

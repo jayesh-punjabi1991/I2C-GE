@@ -1,0 +1,181 @@
+<link rel="stylesheet" type="text/css" href="css/orderDetails.css">
+<link rel="stylesheet" type="text/css" href="css/common-lg.css">
+<px-card>
+    <div class="layout">
+        <div class="layout__item pull--right">
+            <div class="lt">
+                <a href="/orders" title="Back" class="btn btn-primary">Back</a>
+            </div>
+        </div>
+    </div>
+    <h1 class="Orderheading">ORDER : &nbsp;&nbsp;{{orderNumber}}</h1>
+
+    <div class="layout">
+        <div class="layout__item pull--right">
+            <div class="lt" >
+                <table class="summaryTable" style="line-height:0.5;height:142px">
+                    <tr>
+                        <th style="background-color:#b6c3cc">Date</th>
+                        <th style="font-weight:normal">{{orderdate}}</th>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#b6c3cc;font-weight:bold">GE Reference Number/Order Number</td>
+                        <td>{{orderNumber}}</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#b6c3cc;font-weight:bold">PO Number</td>
+                        <td>{{POnumber}}</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#b6c3cc;font-weight:bold">Status</td>
+                        <td>{{status}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="rt" style="width:40%;">
+              <div id="disputeTextDiv" style="float:right">
+            		<h4>Change Request Email text</h4>
+            		<div class="send_form">
+            			<div>
+            				The items I requested and the items that are mentioned are different. Please change the item Monitor B450 to Monitor B950.
+            			</div>
+            		</div>
+            	</div>
+            </div>
+        </div>
+    </div>
+    <div class="layout" style="border-top:1px solid #8f9ca4;border-bottom:1px solid #8f9ca4">
+        <div class="layout__item desk-50 small-100 cust_det clearfix" style="border-right:1px solid #8f9ca4;">
+            <div class="lt">
+              <h4>Ship To</h4>
+              <p>{{shipTo_1}}</p>
+              <p>{{shipTo_2}}</p>
+              <p>{{shipTo_3}}</p>
+              <p>{{shipTo_4}}</p>
+            </div>
+        </div>
+        <div class="layout__item desk-50 small-100 cust_det clearfix">
+            <div class="lt">
+              <h4>Bill To</h4>
+              <p>{{billTo_1}}</p>
+              <p>{{billTo_2}}</p>
+              <p>{{billTo_3}}</p>
+              <p>{{billTo_4}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="layout" style="border-bottom:1px solid #8f9ca4">
+        <div class="layout__item desk-50 small-100 cust_det clearfix">
+            <div class="lt">
+                <h4>Terms</h4>
+                <table>
+                    <tr>
+                        <td>
+                            <h4>Taxable Status:</h4>
+                        </td>
+                        <td>{{taxableStatus}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>Liquidated Damage Terms(Parking Lot):</h4>
+                        </td>
+                        <td>{{liquidatedDamageTerms}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>Billing Timeline and Percentage to be Billed:</h4>
+                        </td>
+                        <td>{{billingTimeline}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>Billing Terms:</h4>
+                        </td>
+                        <td>{{billingTerms}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>Delivery Terms:</h4>
+                        </td>
+                        <td>{{deliveryTerms}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>Customer account number:</h4>
+                        </td>
+                        <td>{{customerNumber}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="layout__item desk-50 small-100 cust_det clearfix">
+            <div class="rt" style="margin-top:14%;margin-right:25%">
+                <p style="color:#e53837;font-size:1.5em">Value:<span style="color:#e53837;font-size:1.5em">${{contractAmount}}</span></p>
+            </div>
+        </div>
+    </div>
+    <h4>Sub Orders ({{LengthOfOrders}})</h4>
+    <px-data-table table-data='{{OrderList}}' language="en" striped="true" table-rows="true" include-all-columns="true" hide-pagination-control="true">
+        <px-data-table-column name="SrNo" Label="#"></px-data-table-column>
+        <px-data-table-column name="billing_terms" label="Billing Timeline and Percentage to be Billed"></px-data-table-column>
+        <px-data-table-column name="billToaddress" label="Bill To"></px-data-table-column>
+        <px-data-table-column name="sch_os_date" label="Scehduled Onsite Date"></px-data-table-column>
+        <px-data-table-column name="ros_date" label="Requested Onsite ROSD"></px-data-table-column>
+        <px-data-table-column name="bill_amt" label="Billing Amount(USD)"></px-data-table-column>
+        <px-data-table-column name="link" label=" " type="html"></px-data-table-column>
+    </px-data-table>
+    <div ng-show="Suborder==true">
+        <h4>Shipment Details ({{LengthOfSubOrders}})</h4>
+        <px-data-table table-data='{{SubOrderList}}' language="en" striped="true" table-rows="true" include-all-columns="true" hide-pagination-control="true">
+            <px-data-table-column name="SrNo" Label="#"></px-data-table-column>
+            <px-data-table-column name="ship_to" label="Ship To"></px-data-table-column>
+            <px-data-table-column name="ship_date" label="Scehduled Onsite Date"></px-data-table-column>
+            <px-data-table-column name="delivery_date" label="Requested Onsite ROSD"></px-data-table-column>
+            <px-data-table-column name="ship_amt" label="Shipment Amount(USD)"></px-data-table-column>
+            <px-data-table-column name="pod" label="POD"></px-data-table-column>
+            <px-data-table-column name="link" label=" " type="html"></px-data-table-column>
+        </px-data-table>
+    </div>
+    <div ng-show="Shipment==true">
+        <h4>Part Details ({{LengthOfShipment}})</h4>
+        <px-data-table table-data='{{ShipmentList}}' language="en" striped="true" table-rows="true" include-all-columns="true">
+            <px-data-table-column name="SrNo" Label="#"></px-data-table-column>
+            <px-data-table-column name="model_Type" label="Model Type"></px-data-table-column>
+            <px-data-table-column name="item_number" label="Item #"></px-data-table-column>
+            <px-data-table-column name="line_item_description" label="Item Description"></px-data-table-column>
+            <px-data-table-column name="quantity" label="Qty"></px-data-table-column>
+            <px-data-table-column name="list_price" label="L.P"></px-data-table-column>
+            <px-data-table-column name="discount_perc" label="Discount"></px-data-table-column>
+            <px-data-table-column name="sellingPrice" label="S.P"></px-data-table-column>
+        </px-data-table>
+    </div>
+    <div class="layout block">
+        <div class="layout__item">
+            <table>
+                <tr>
+                    <td style="padding-bottom:10px !important;padding-top:10px !important;font-weight:bold">Support Documents</td>
+                </tr>
+                <tr ng-show="docFlag" ng-repeat = "document in supporting_documents">
+        					<td>{{$index+1}}. &nbsp;&nbsp;<a target="_blank" href="" ng-click="displayFile(document.url)">{{document.description}}</a></td>
+        				</tr>
+        				<tr ng-show="!docFlag">
+        					<td>No documents related to this Quote</td>
+        				</tr>
+                <!--
+                <tr>
+                    <td>2. &nbsp;&nbsp;<a href="">Purchase Order</a></td>
+                </tr>
+                <tr>
+                    <td>2. &nbsp;&nbsp;<a href="">Quote</a></td>
+                </tr>
+                <tr>
+                    <td>3. &nbsp;&nbsp;<a href="">Signed Quote</a></td>
+                </tr>
+                <tr>
+                    <td>3. &nbsp;&nbsp;<a href="">Change Letter</a></td>
+                </tr>-->
+            </table>
+        </div>
+    </div>
+</px-card>

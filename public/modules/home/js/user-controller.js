@@ -18,7 +18,6 @@ define(['angular', './module'], function (angular, controllers) {
                   'email': $window.sessionStorage.getItem('userEmail')
                 };
                 predixUserService.getUserDetails(data).success(function (response){
-                  console.log(response);
                   $window.sessionStorage.setItem('customerId',response.supplierID);
                   $window.sessionStorage.setItem('roleName', response.userRole.userRoleName);
                   $window.sessionStorage.setItem('roleID', response.userRole.userRoleID);

@@ -1,0 +1,173 @@
+<link rel="stylesheet" type="text/css" href="css/orderDetails.css">
+<link rel="stylesheet" type="text/css" href="css/ChangeRequestDetails.css">
+<link rel="stylesheet" type="text/css" href="css/common-lg.css">
+<px-card>
+    <div class="layout">
+        <div class="layout__item pull--right">
+            <div class="lt">
+                <a href="/changeRequest" title="Back" class="btn btn-primary">Back</a>
+            </div>
+            <div class="rt">
+    					<a title="Accept" id="AcceptButton" class="btn btn-primary" ng-click="successMessage = true;AcceptClicked()">Accept</a>
+    					<a title="Reject" id="RejectButton" class="btn btn-reject" class="btn" ng-disabled="acceptDetails" ng-click="successMessage=false;rejectDetails = true;RejectClicked()">Reject</a>
+    				</div>
+        </div>
+    </div>
+
+    <h1 class="Orderheading">ORDER : &nbsp;&nbsp;{{orderNumber}}</h1>
+    <div class="sucess_msg" ng-show="successMessage" style="margin-top:2% !important">
+      <p>The Change Request #{{}} has been accepted successfully.</p>
+    </div>
+    <div class="reject_form" ng-show="rejectDetails" style="margin-top:2% !important;margin-left:0 !important;margin-bottom:2% !important">
+      <p style="color:#d9534f">The Change Request #{{}} has been rejected successfully.</p>
+    </div>
+    <div class="layout">
+        <div class="layout__item pull--right">
+            <div class="lt" >
+                <table class="summaryTable" style="line-height:0.5;height:142px">
+                    <tr>
+                        <th style="background-color:#b6c3cc">Date</th>
+                        <th style="font-weight:normal">{{orderdate | date : "mediumDate"}}</th>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#b6c3cc;font-weight:bold">GE Reference Number/Order Number</td>
+                        <td>{{orderNumber}}</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#b6c3cc;font-weight:bold">PO Number</td>
+                        <td>{{POnumber}}</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#b6c3cc;font-weight:bold">Status</td>
+                        <td>{{CRStatus}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="rt" style="width:40%;">
+              <div id="disputeTextDiv" style="float:right">
+            		<h4>Change Request Email text</h4>
+            		<div class="send_form">
+            			<div>
+                    {{description}}
+            			</div>
+            		</div>
+            	</div>
+            </div>
+        </div>
+    </div>
+    <div class="layout" style="border-top:1px solid #8f9ca4;border-bottom:1px solid #8f9ca4">
+        <div class="layout__item desk-50 small-100 cust_det clearfix" style="border-right:1px solid #8f9ca4;">
+            <div class="lt">
+                <h4>Ship To</h4>
+                <p>{{shipTo_1}}</p>
+                <p>{{shipTo_2}}</p>
+                <p>{{shipTo_3}}</p>
+                <p>{{shipTo_4}}</p>
+            </div>
+        </div>
+        <div class="layout__item desk-50 small-100 cust_det clearfix">
+            <div class="lt">
+                <h4>Bill To</h4>
+                <p>{{billTo_1}}</p>
+                <p>{{billTo_2}}</p>
+                <p>{{billTo_3}}</p>
+                <p>{{billTo_4}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="layout" style="border-bottom:1px solid #8f9ca4">
+        <div class="layout__item desk-50 small-100 cust_det clearfix">
+            <div class="lt">
+                <h4>Terms</h4>
+                <table>
+                    <tr>
+                        <td>
+                            <h4>Taxable Status:</h4>
+                        </td>
+                        <td>{{taxableStatus}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>Liquidated Damage Terms(Parking Lot):</h4>
+                        </td>
+                        <td>{{liquidatedDamageTerms}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>Billing Timeline and Percentage to be Billed:</h4>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>Billing Terms:</h4>
+                        </td>
+                        <td>{{billingTerms}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>Delivery Terms:</h4>
+                        </td>
+                        <td>{{deliveryTerms}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>Customer account number:</h4>
+                        </td>
+                        <td>{{crData.customer_number}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="layout__item desk-50 small-100 cust_det clearfix">
+            <div class="rt tooltip" style="margin-top:14%;margin-right:25%">
+                <p style="color:#e53837;font-size:1.5em">Value:<span style="color:#e53837;font-size:1.5em">{{}}</span></p>
+            </div>
+        </div>
+    </div>
+    <h4>Summary</h4>
+    <px-data-table table-data='{{OrderList}}' language="en" striped="true" table-rows="true" include-all-columns="true" hide-pagination-control="true">
+        <px-data-table-column name="SrNo" Label="#"></px-data-table-column>
+        <px-data-table-column name="billing_terms" label="Billing Terms"></px-data-table-column>
+        <px-data-table-column name="billToaddress" label="Bill To"></px-data-table-column>
+        <px-data-table-column name="sch_os_date" label="Scehduled Onsite Date"></px-data-table-column>
+        <px-data-table-column name="ros_date" label="Requested Onsite ROSD"></px-data-table-column>
+        <px-data-table-column name="bill_amt" label="Billing Amount(USD)"></px-data-table-column>
+        <px-data-table-column name="link" label=" " type="html"></px-data-table-column>
+    </px-data-table>
+    <div ng-show="Suborder==true">
+    <h4>Sub Order Details</h4>
+    <px-data-table table-data='{{SubOrderList}}' language="en" striped="true" table-rows="true" include-all-columns="true" hide-pagination-control="true">
+        <px-data-table-column name="SrNo" Label="#"></px-data-table-column>
+        <px-data-table-column name="part_Desc" label="Part Description"></px-data-table-column>
+        <px-data-table-column name="ship_to" label="Ship To"></px-data-table-column>
+        <px-data-table-column name="sch_os_date" label="Scehduled Onsite Date"></px-data-table-column>
+        <px-data-table-column name="ros_date" label="Requested Onsite ROSD"></px-data-table-column>
+        <px-data-table-column name="ship_amt" label="Shipment Amount(USD)"></px-data-table-column>
+        <px-data-table-column name="pod" label="POD"></px-data-table-column>
+        <px-data-table-column name="link" label=" " type="html"></px-data-table-column>
+    </px-data-table>
+  </div>
+    <div class="layout block">
+        <div class="layout__item">
+            <table>
+                <tr>
+                    <td style="padding-bottom:10px !important;padding-top:10px !important;font-weight:bold">Support Documents</td>
+                </tr>
+                <tr>
+                    <td>1. &nbsp;&nbsp;<a href="">Purchase Order</a></td>
+                </tr>
+                <tr>
+                    <td>2. &nbsp;&nbsp;<a href="">Quote</a></td>
+                </tr>
+                <tr>
+                    <td>3. &nbsp;&nbsp;<a href="">Signed Quote</a></td>
+                </tr>
+                <tr>
+                    <td>3. &nbsp;&nbsp;<a href="">Change Letter</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</px-card>

@@ -23,7 +23,17 @@ define(['angular', './module', 'constants'], function(angular, module) {
                  });
              },
             acceptQuote: function (data) {
-              return $http.put(urls.base_url + urls.accept_quote + '?customerId=' +$window.sessionStorage.getItem('customerId'), JSON.stringify(data) , {
+              return $http.post(urls.base_url + urls.accept_quote + '?customerId=' +$window.sessionStorage.getItem('customerId'),  data , {
+                 headers: {
+                   'Authorization': 'Bearer ' + $window.sessionStorage.getItem('auth_token'),
+                   'x-access-token': $window.sessionStorage.getItem('userToken'),
+                   'transformRequest': angular.identity,
+                   'Content-Type': undefined
+                 }
+               });
+            },
+            acceptQuote1: function (data) {
+              return $http.put(urls.base_url + urls.accept_quote + '?customerId=' +$window.sessionStorage.getItem('customerId'),  JSON.stringify(data) , {
                  headers: {
                    'Authorization': 'Bearer ' + $window.sessionStorage.getItem('auth_token'),
                    'x-access-token': $window.sessionStorage.getItem('userToken')
@@ -39,7 +49,7 @@ define(['angular', './module', 'constants'], function(angular, module) {
                });
             },
             uploadDocument: function (data) {
-              return $http.post(urls.base_url + urls.file_upload, data , {
+              return $http.post(urls.base_url + urls.file_upload + '?customerId=' +$window.sessionStorage.getItem('customerId'), data , {
                  headers: {
                    'Authorization': 'Bearer ' + $window.sessionStorage.getItem('auth_token'),
                    'x-access-token': $window.sessionStorage.getItem('userToken'),

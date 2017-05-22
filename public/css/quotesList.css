@@ -1,7 +1,8 @@
-.quotesList{
-  height:550px;
+.quotesList px-card{
+  height:560px;
   margin:0.5%;
   margin-bottom: 0 !important;
+  overflow-y: auto;
 }
 aha-table{
   margin-top: 2%;
@@ -69,4 +70,14 @@ border-radius: 3px !important;
 }
 #calenderdiv{
   margin-top: 2%;
+}
+.legend_tbl{
+  /*border:2px solid #59707e;
+  border-radius: 10px 0 0 0px;*/
+  padding:15px;
+  margin-bottom: 0 !important;
+  margin-top: 2%;
+}
+.table_det{
+  margin-bottom: 0 !important;
 }

@@ -86,6 +86,7 @@ main:not([style-scope]):not(.style-scope){
     background-color: #337ab7 !important;
     border-color: #2e6da4 !important;
 }
+
 .btn-success:hover{
 	color: #fff !important;
     background-color: #449d44 !important;
@@ -451,6 +452,7 @@ button a, button a:hover, button a:visited{
 #viewDetailsDiv .dispute_hdr a{
 	margin: 15px;
 }
+
 .sucess_msg{
 	border:2px solid #5cb85c;
 	border-radius: 4px;

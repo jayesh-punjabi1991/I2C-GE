@@ -1,5 +1,10 @@
 <link rel="stylesheet" type="text/css" href="css/quoteDetails.css">
 <link rel="stylesheet" type="text/css" href="css/common-lg.css">
+<style>
+	.items{
+		background-color: white !important;
+	}
+</style>
 	<px-card>
 		<div class="layout">
 			<div class="layout__item pull--right">
@@ -97,7 +102,7 @@
         <table>
           <tr>
             <td><h4>Governing Agreement:</h4></td>
-            <td>HCA National</td>
+            <td>{{customerId}}</td>
           </tr>
           <tr>
             <td><h4>Terms of Delivery:</h4></td>
@@ -135,14 +140,14 @@
     </div>
   </div>
   <h4>Summary</h4>
-  <px-data-table table-data='{{partsList}}' language="en" striped="true" table-rows="true" include-all-columns="true" hide-pagination-control="true">
+  <!-- <px-data-table table-data='{{partsList}}' language="en" table-rows="true" include-all-columns="true" hide-pagination-control="true" class="items">
     <px-data-table-column name="srno" Label="#"></px-data-table-column>
-    <px-data-table-column name="qty" label="Qty"></px-data-table-column>
-    <px-data-table-column name="desc" label="Description"></px-data-table-column>
-    <px-data-table-column name="cPrice" label="Ext Contract Price"></px-data-table-column>
-    <px-data-table-column name="disc" label="Discount"></px-data-table-column>
-    <px-data-table-column name="sPrice" label="Ext Sell Price"></px-data-table-column>
-  </px-data-table>
+    <px-data-table-column name="qty" label="Qty" class="items"></px-data-table-column>
+    <px-data-table-column name="desc" label="Description" class="items"></px-data-table-column>
+    <px-data-table-column name="cPrice" label="Ext Contract Price" class="items"></px-data-table-column>
+    <px-data-table-column name="disc" label="Discount" class="items"></px-data-table-column>
+    <px-data-table-column name="sPrice" label="Ext Sell Price" class="items"></px-data-table-column>
+  </px-data-table> -->
 
   <div class="layout block">
     <div class="layout__item">
@@ -172,14 +177,14 @@
   </div>
 
   <h4>Item Details</h4>
-  <px-data-table table-data='{{itemDetails}}' language="en" striped="true" table-rows="true" include-all-columns="true" hide-pagination-control="true">
-    <px-data-table-column name="sr.no" Label="#"></px-data-table-column>
-    <px-data-table-column name="qty" label="Qty"></px-data-table-column>
-    <px-data-table-column name="itemNo" label="Item#"></px-data-table-column>
-    <px-data-table-column name="desc" label="Description"></px-data-table-column>
-    <px-data-table-column name="cPrice" label="Ext Contract Price"></px-data-table-column>
-    <px-data-table-column name="disc" label="Discount"></px-data-table-column>
-    <px-data-table-column name="sPrice" label="Ext Sell Price"></px-data-table-column>
+  <px-data-table table-data='{{itemDetails}}' language="en" table-rows="true" include-all-columns="true" hide-pagination-control="true">
+    <px-data-table-column name="sr.no" Label="#" class="items"></px-data-table-column>
+    <px-data-table-column name="qty" label="Qty" class="items"></px-data-table-column>
+    <px-data-table-column name="itemNo" label="Item#" class="items"></px-data-table-column>
+    <px-data-table-column name="desc" label="Description" class="items"></px-data-table-column>
+    <px-data-table-column name="cPrice" label="Ext Contract Price" class="items"></px-data-table-column>
+    <px-data-table-column name="disc" label="Discount" class="items"></px-data-table-column>
+    <px-data-table-column name="sPrice" label="Ext Sell Price" class="items"></px-data-table-column>
   </px-data-table>
 
   <div class="layout block">

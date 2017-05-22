@@ -1,4 +1,4 @@
-<px-card header-text="List of Orders &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" class="quotesList">
+<px-card header-text="List of Orders&nbsp;&nbsp;&nbsp;({{Length}})&nbsp;&nbsp;&nbsp;" class="quotesList">
   <!--<div class="layout" id="FilterDiv">
 		<div class="layout__item u-1/2" id="Firstdiv">
       <div class="layout">
@@ -19,12 +19,27 @@
     </div>
 		</div>
 	</div>-->
-  <px-data-table table-data='{{OrdersList}}' language="en" striped="true" sortable="true" show-column-chooser="true" table-rows="true" include-all-columns="true" >
+  <px-data-table table-data='{{OrderList}}' language="en" striped="true" sortable="true" show-column-chooser="true" table-rows="true" include-all-columns="true" >
 		<px-data-table-column name="order#" Label="Order Number" type="html" sortable></px-data-table-column>
 		<px-data-table-column name="PO#" label="PO Number" sortable></px-data-table-column>
+    <px-data-table-column name="custNum" label="Customer Number" sortable></px-data-table-column>
+    <px-data-table-column name="custName" label="Customer Name" sortable></px-data-table-column>
 		<px-data-table-column name="createdDate" label="Created Date"></px-data-table-column>
-		<px-data-table-column name="value" label="Total Value" sortable></px-data-table-column>
     <px-data-table-column name="status" label="Status" sortable></px-data-table-column>
 		<px-data-table-column name="action" label="Action" type="html"></px-data-table-column>
 	</px-data-table>
+  <div class="layout_item legend_tbl">
+      <table class="table_det">
+        <tbody>
+          <tr>
+            <td><i class="fa fa-caret-right" style="padding-right:10px" aria-hidden="true"></i><strong>Accepted</strong>:</td>
+            <td>Are the orders which are approved for processing</td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-caret-right" style="padding-right:10px"aria-hidden="true"></i><strong>Change Request</strong>:</td>
+            <td> Order is in process of change, because of change in agreed Scope of Work. Once change request is approved order will be in Accepted state</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 </px-card>
