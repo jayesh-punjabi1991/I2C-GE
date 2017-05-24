@@ -12,13 +12,12 @@ define(['angular', './module'], function(angular, controllers) {
         $scope.Shipment = false;
         var count = 0;
         var count1 = 0;
-
+        $scope.customerId = $stateParams.custId;
+        $scope.orderNumber = $stateParams.id;
         //Service Call
         OrdersService.getOrderDetails($stateParams.id, $stateParams.custId).then(function success(response) {
             console.log(response);
             $scope.response = response;
-            $scope.orderNumber = $stateParams.id;
-            $scope.customerId = $stateParams.custId;
             $scope.orderdate = parseInt(response.data.order_date * 1000);
             $scope.POnumber = response.data.cust_po_number;
             $scope.status = response.data.order_process_status;
@@ -137,8 +136,8 @@ define(['angular', './module'], function(angular, controllers) {
             });
         });
 
-        OrdersService.getDLforCR().then(function success(response) {
-          $scope.to=response.data.email;
+        OrdersService.getDLforCR($scope.customerId).then(function success(response) {
+          $scope.to=response.data.to;
         });
 
         $scope.sendCRMail = function () {

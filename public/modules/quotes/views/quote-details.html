@@ -11,7 +11,7 @@
 				<div class="lt">
 					<a href="/quotes" title="Back" class="btn btn-primary">Back</a>
 				</div>
-				<div class="rt">
+				<div ng-if="QuoteStatus == 'confirmed'" class="rt">
 					<a title="Details" id="CompleteDetails" class="btn" style="background-color:#60bd68;color:white" ng-click="completedetails = true;acceptbutton = true" ng-hide="acceptbutton" ng-disabled="rejectDetails">Complete the Details</a>
 					<a title="Accept" id="AcceptButton" class="btn disabled" ng-show="acceptbutton" ng-click="acceptClicked()">Accept</a>
 					<a title="Reject" id="RejectButton" style="background-color:#f15854;color:white" class="btn" ng-disabled="acceptDetails" ng-click="successMessage=false;rejectDetails = true;">Reject</a>

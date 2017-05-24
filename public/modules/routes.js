@@ -74,19 +74,19 @@ define(['angular', 'angular-ui-router'], function(angular) {
             .state('changeRequestDetailsA', {
                 parent: 'secure',
                 url: '/changeRequest/Accepted/:custId/:id',
-                templateUrl: 'modules/changeRequest/views/CRdetailsAccepted.html',
+                templateUrl: 'modules/changeRequest/views/change-request-details.html',
                 controller: 'CRDetailsCtrl'
             })
             .state('changeRequestDetailsR', {
                 parent: 'secure',
                 url: '/changeRequest/Rejected/:custId/:id',
-                templateUrl: 'modules/changeRequest/views/CRdetailsRejected.html',
+                templateUrl: 'modules/changeRequest/views/change-request-details.html',
                 controller: 'CRDetailsCtrl'
             })
             .state('changeRequestDetailsP', {
                 parent: 'secure',
                 url: '/changeRequest/Pending/:custId/:id',
-                templateUrl: 'modules/changeRequest/views/CRdetailsPending.html',
+                templateUrl: 'modules/changeRequest/views/change-request-details.html',
                 controller: 'CRDetailsCtrl'
             });
 

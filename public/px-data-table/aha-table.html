@@ -20,7 +20,8 @@
     <content id="columndefs"></content>
 
     <template is="dom-if" if="{{showColumnChooser}}">
-      <div class="flex columnChooser">
+
+      <div class="flex columnChooser" >
         <px-dropdown display-value="Show/Hide Column">
           <px-dropdown-content class="px-dropdown-content" checkbox-mode="true" max-cont-character-width="16" items='{{_columnChooserItems}}'>
           </px-dropdown-content>
@@ -458,6 +459,7 @@
       if(typeof this._internalData !== "undefined" && this._internalData.length === 0){
         this._internalData = this._initializeInternalData();
       } else{
+        //Changed here
         this._internalData = this._initializeInternalData();
         //this._internalData = this._refreshInternalData();
       }
@@ -554,7 +556,6 @@
       for(i = 0, len = this._internalData.length; i < len; i++) {
         this._setInternalDataAt(this._internalData[i], '_filtered', false);
       }
-
       // sort
       if(this.sortedColumn) {
         this.filteredSortedData = this._sortByColumn(this.filteredSortedData);
@@ -678,6 +679,7 @@
 
     // sort by header click handler
     _sort: function(e, p) {
+
       var column = e.model.column,
           sortingColumn;
       if(column && column.sortable) {
@@ -739,6 +741,9 @@
         if(this.sortedColumn === "_selected") {
           sortFunction = this._defaultSortSelected;
         }
+        else if(this.sortedColumn === "date") {
+          sortFunction = this._defaultSortByDate;
+        }
         else {
           sortFunction = this._defaultSortAlphabetically;
         }
@@ -773,6 +778,21 @@
       }
 
       return customFunction;
+    },
+
+    _defaultSortByDate: function(a, b) {
+      if(this.descending) {
+        if(new Date(a.value) < new Date(b.value)) {
+          return 1;
+        }
+        return -1;
+      }
+      else {
+        if(new Date(a.value) > new Date(b.value)) {
+          return 1;
+        }
+        return -1;
+      }
     },
 
     // fallback default sort function if per-column sort isn't specified.
@@ -1450,6 +1470,8 @@
       return source === false || source === "false";
     },
     _getHeaderClass: function(item) {
+      //Change here for Sorting Icon(UnComment this line)
+      //this._getSortingIcon(null,null,null);
       var classList = ['th ', 'aha-' + item.name + '-th', 'u-p0'];
       if(item.sortable) {
         classList.push('sortable');
@@ -1474,18 +1496,24 @@
     },
     _getSortingIcon: function(column, sortingColumn, descending) {
       var sortingIcon = ' ';
+      //Change here for Sorting Icon(UnComment this line)
+      //sortingIcon= 'polymer-font-awesome:fa-sort';
+      if(column!=null){
       if(sortingColumn === column.name) {
         sortingIcon = descending ? 'polymer-font-awesome:fa-caret-down' : 'polymer-font-awesome:fa-caret-up';
       }
+    }
       return sortingIcon;
     },
     _getSortingClass: function(column, sortingColumn, descending) {
       var classList = 'sorting fa';
       if(sortingColumn !== column.name) {
+        //Change here for Sorting Icon(Comment this line)
         classList = classList + ' visuallyhidden';
       }
       return classList;
     },
+
     _getTextSortingClass: function(column, sortingColumn) {
       var classList = ['column-head', 'u-m--'];
       if(column.sortable) {

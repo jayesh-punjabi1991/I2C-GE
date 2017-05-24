@@ -1,21 +1,21 @@
-px-card{
-  height:560px;
-  margin:0.5%;
-  margin-bottom: 0 !important;
+.layout > .layout__item:not([style-scope]):not(.style-scope){
+  padding-left: 0rem !important;
 }
 aha-table{
-  margin-top: 2%;
+  margin-top: -3%;
 }
 .columnChooser{
   margin-bottom: 2%;
   margin-right: 1% !important;
 }
 #dtBtns {
-  margin-left: 4rem !important;
+  margin-left: 1rem !important;
 }
-#scrollBodyTableContainer > div:nth-child(1){
-  background-color: #59707e !important;
-  color:white;
+.btn--primary.px-datetime-buttons{
+  background-color:#2b5ea2;
+}
+.px-pagination-0 .btn--pagination--number.px-pagination{
+  background-color: #2b5ea2 !important;
 }
 .aha-table-0 .sorted-text.aha-table{
   color:white !important;
@@ -67,16 +67,87 @@ border-radius: 3px !important;
   margin-left:2%;
   height:50px;
 }
-#calenderdiv{
-  margin-top: 2%;
-}
-.legend_tbl{
-  /*border:2px solid #59707e;
-  border-radius: 10px 0 0 0px;*/
-  padding:15px;
-  margin-bottom: 0 !important;
-  margin-top: 2%;
-}
 .table_det{
+  padding:5px;
   margin-bottom: 0 !important;
+}
+
+#fieldWrapper{
+border-radius: 3px !important;
+}
+#FilterDiv{
+  padding-top:1% !important;
+}
+#Firstdiv{
+  background-color:#f0f4f7;
+  width:46% !important;
+  margin-left:20px;
+  height:50px
+}
+#firstfilter{
+  margin-top:2%;
+  padding-right: 10px;
+}
+#secondfilter{
+  margin-top:0.3%;
+  padding-right: 10px;
+}
+#thirdfilter{
+  margin-top:2%;
+}
+#inputfilter{
+  background-color:#e4e4ea;
+  border: 1px solid #b1b1bc;
+}
+#applybutton{
+  width:85%;background-color:#3573c5;
+  color:white;
+  border:1px solid #b1b1bc;
+}
+#SecondDiv{
+  background-color:#f0f4f7;
+  margin-left:2%;
+  height:50px;
+}
+#calenderdiv{
+  margin-top: 1%;
+}
+#scrollBodyTableContainer > div:nth-child(1){
+  background-color: #2b5ea2;
+  color: white;
+}
+.px-app-nav-0 > nav.px-app-nav{
+  margin-top: 5% !important;
+}
+#circle {
+	width: 15px;
+	height: 15px;
+	background: #059748;
+  border:2px solid grey;
+	border-radius: 50px;
+  margin-left: 14%;
+}
+#circle1 {
+	width: 15px;
+	height: 15px;
+	background: #e53838;
+  border:2px solid grey;
+	border-radius: 50px;
+  margin-left: 14%;
+}
+#circle2 {
+	width: 15px;
+	height: 15px;
+	background: #ff9821;
+  border:2px solid grey;
+	border-radius: 50px;
+  margin-left: 14%;
+}
+#scrollBodyTableContainer > div:nth-child(even) > px-data-table-cell.style-scope.aha-table.td.aha-status-td.x-scope.px-data-table-cell-0{
+  padding-left: 45px;
+  font-size: 0.95rem;
+}
+#scrollBodyTableContainer > div:nth-child(odd) > px-data-table-cell.style-scope.aha-table.td.aha-status-td.x-scope.px-data-table-cell-0{
+  padding-left: 45px;
+  font-size: 0.95rem;
 }

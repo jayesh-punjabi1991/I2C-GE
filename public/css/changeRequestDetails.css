@@ -1,39 +1,76 @@
-.tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
-  color: #449d44;
-  font-weight: bold;
+.rt{
+	float: right;
 }
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  top: 150%;
-  left: 50%;
-  margin-left: -60px;
+.lt{
+	float: left;
 }
-
-.tooltip .tooltiptext::after {
+.clearfix:after {
   content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent black transparent;
+  display: table;
+  clear: both;
 }
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
+.cr-wrapper{
+  margin: 3px !important;
+}
+.card-head{
+	padding-bottom: 20px !important;
+}
+.cr-heading{
+  padding-top: 20px;
+  margin-top: 0;
+	margin-bottom: 5px !important;
+}
+.cr-heading .cr{
+  color: #7c7c84;
+  font-size: 20px;
+}
+.cr-heading .cr_id{
+  color: #086e87;
+}
+.imp_details{
+	padding: 0px 10px;
+}
+.small_label{
+ color: #7c7c84;
+ font-size: 14px;
+ margin-bottom: 5px !important;
+}
+.big_label{
+	margin-top: 0 !important;
+	font-size: 15px;
+}
+.status_pending{
+	background-color: orange;
+	border: 3px solid #7c7c84;
+	height: 15px;
+	width: 15px;
+	border-radius: 50%;
+	display: inline-block;
+	vertical-align: middle;
+}
+.status_reject{
+	background-color: red;
+	border: 3px solid #7c7c84;
+	height: 15px;
+	width: 15px;
+	border-radius: 50%;
+	display: inline-block;
+	vertical-align: middle;
+}
+.status_accept{
+	background-color: lightgreen;
+	border: 3px solid #7c7c84;
+	height: 15px;
+	width: 15px;
+	border-radius: 50%;
+	display: inline-block;
+	vertical-align: middle;
+}
+.head-text, .label-color{
+	color:#7c7c84;
+}
+.cr_btns{
+	padding-top: 20px;
 }
 .btn-primary:hover{
 	color: #fff !important;
@@ -45,6 +82,7 @@
     background-color: #337ab7 !important;
     border-color: #2e6da4 !important;
 }
+
 .btn-success:hover{
 	color: #fff !important;
     background-color: #449d44 !important;
@@ -61,38 +99,27 @@
     border-color: #ac2925 !important;
 }
 .btn-reject{
-	  color: #fff !important;
+	color: #fff !important;
     background-color: #d9534f !important;
     border-color: #d43f3a !important;
-}.disabled {
-  opacity: 0.65 !important;
-  cursor: not-allowed !important;
 }
-.sucess_msg{
-	border:2px solid #5cb85c;
-	border-radius: 4px;
-	margin-bottom: 20px;
+#rejectButton{
+	margin-right: 20px;
 }
-.sucess_msg p{
-	color: #5cb85c;
-	padding-left: 30px;
+.u_email{
+	display: inline-block;
+	margin-left: 10px;
 }
-
-.accept_form table, .reject_form table{
-	width: 100%;
+.email_body{
+	padding: 10px;
 }
-.accept_form .label_td , .reject_form .label_td{
-	width:20%;
+.adr_div{
+	margin-top: 10px;
+	padding: 10px;
 }
-.accept_form textarea, .accept_form input[type="text"], .reject_form textarea, .reject_form input[type="text"]{
-	width: 100%;
+.side-margin{
+	margin-left: 16px;
 }
-.accept_form textarea, .reject_form textarea{
-	padding: 5px;
-	margin: 10px 0;
-	height: 80px;
-}
-.reject_form{
-	border: 2px solid #d9534f;
-	padding: 20px;
+.bottom-margin{
+	margin-bottom: 5px !important;
 }

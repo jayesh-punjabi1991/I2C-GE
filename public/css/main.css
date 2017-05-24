@@ -1,56 +1,30 @@
-html{
-  background-color: white !important;
-  /*overflow: scroll;
-  overflow-x: hidden;*/
-}
-/*::-webkit-scrollbar {
-    width: 0px;  /* remove scrollbar space
-    background: transparent;  /* optional: just make scrollbar invisible
-}*/
-/* optional: show position indicator in red */
-/*::-webkit-scrollbar-thumb {
-    background: #FF0000;
-}*/
-[role=banner]:not([style-scope]):not(.style-scope){
-	background-color: #3b3b3f;
-	color: #eee;
-}
-main:not([style-scope]):not(.style-scope){
-	min-height: calc(100vh - 4rem) !important;
-	background-color: #fff !important;
-}
-body:not([style-scope]):not(.style-scope){
-	margin-bottom: 0 !important;
-}
 .viewport{
   margin-left: 0 !important;
   margin-right: 0 !important;
 }
-.px-app-nav-0{
-  padding: 0 1em 1em 1em;
+body{
+  margin-bottom: 0 !important;
 }
-.px-app-nav-0 .navbar__item.px-app-nav > li.px-app-nav{
-  line-height: 3.5;
-}
-.px-app-nav-0 .navbar__item.px-app-nav > li.px-app-nav .fa.px-app-nav{
-  vertical-align: middle;
-}
-.px-app-nav-0 a.px-app-nav:link, .px-app-nav-0  a.px-app-nav:visited{
-  color: white !important;
-}
-.px-app-nav-0 a.selected.px-app-nav, .px-app-nav-0  a.selected.px-app-nav:hover{
-  background-color: white !important;
-  color: #086e87 !important;
-  font-weight: bold;
-}
-/*main{
-  height:580px !important;
-}*/
-px-app-nav{
-  background-color: #3b3b3f !important;
-  width: 12em !important;
+#nav-item-0{
+  font-size: 1.5rem !important;
 }
 
+#nav-item-1{
+  font-size: 1.5rem !important;
+}
+
+#nav-item-2{
+  font-size: 1.5rem !important;
+}
+
+#nav-item-3{
+  font-size: 1.5rem !important;
+}
+
+/*
+main{
+  height:580px !important;
+}*/
 /*.btn--bare{
   display:none !important;
 }*/
@@ -61,9 +35,9 @@ px-app-nav{
   color:white !important;
   margin-left: 1.5% !important;
 }
-.px-app-nav-0 .u-ml--.px-app-nav{
+/*.px-app-nav-0 .u-ml--.px-app-nav{
   margin-left: 0.8rem !important;
-}
+}*/
 [role=banner] h1 svg path:not([style-scope]):not(.style-scope), [role=banner] h2 svg path:not([style-scope]):not(.style-scope){
   fill:white !important;
 }
@@ -80,4 +54,92 @@ px-app-nav{
    float:right;
    margin-right:1%;
    margin-top:0.5%
+}
+
+
+html, header {
+    background-color: #172937 !important;
+}
+
+px-app-nav {
+    background-color: #2f414f !important;
+    padding-top: 0px !important;
+    width: 13.5% !important;
+}
+
+main {
+    background-color: #e7e7e7  !important;
+    min-height: calc(100vh - 4rem) !important;
+}
+
+
+.heading {
+    color: #f4f4f5 !important;
+    padding-left: 20px;
+}
+
+.rpic img {
+    float: right;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    margin-top: 0.7%;
+}
+
+.Welcome {
+    color: #f4f4f5 !important;
+    padding-left: 10px;
+    float: right;
+    margin-right: 1%;
+    font-weight: 500;
+    margin-bottom: 0 !important;
+}
+
+
+input[type=text] {
+    width: 100%;
+    padding: 7px 15px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+#fieldWrapper{
+border-radius: 3px !important;
+background-color: white !important;
+}
+#FilterDiv{
+  padding-top:1% !important;
+}
+#Firstdiv{
+  height:50px
+}
+#firstfilter{
+  margin-top:2%;
+}
+#secondfilter{
+  margin-top:0.3%;
+}
+#thirdfilter{
+  margin-top:2%;
+}
+#inputfilter{
+  background-color:white;
+  border: 1px solid #b1b1bc;
+}
+#applybutton{
+  width: 85%;
+  background-color: #3e87e8 !important;
+  color: white;
+  border: 1px solid #2b5ea2 !important;
+}
+#SecondDiv{
+  height:50px;
+}
+#calenderdiv{
+  margin-top: 2%;
+}
+.px-app-nav-0 > nav.px-app-nav{
+  margin-top: 5% !important;
 }

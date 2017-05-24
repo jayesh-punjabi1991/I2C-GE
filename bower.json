@@ -36,9 +36,18 @@
     "require-css": "0.1.1",
     "requirejs": "https://github.com/jrburke/requirejs.git#2.1.18",
     "requirejs-plugins": "1.0.2",
-    "google-analytics": "~0.1.0"
+    "google-analytics": "~0.1.0",
+    "px-datetime-range-field": "^0.5.11"
   },
   "resolutions": {
-    "web-animations-js": "~2.0.0"
+    "web-animations-js": "~2.0.0",
+    "px-theme": "~0.8.0",
+    "polymer": "~v1.5.0",
+    "px-iconography-design": "~0.2.9",
+    "px-typography-design": "~0.3.4",
+    "px-defaults-design": "~0.2.0",
+    "px-mixins-design": "~0.2.0",
+    "px-colors-design": "~0.2.0",
+    "px-functions-design": "~0.3.3"
   }
 }

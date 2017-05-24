@@ -1,5 +1,11 @@
 px-card{
-  padding:1rem 0rem 2rem !important;
+  padding:0.5rem 1.33333rem 2rem !important;
+}
+.rt{
+	float: right;
+}
+.lt{
+	float: left;
 }
 .px-data-table-cell{
   max-width: 150px !important;
@@ -25,12 +31,6 @@ px-data-table-cell{
 }
 #scrollBodyTableContainer > div.tr.rows.striped.style-scope.aha-table > px-data-table-cell.style-scope.aha-table.td.aha-link-td.x-scope.px-data-table-cell-0 > span{
   display:none !important;
-}
-.rt{
-	float: right;
-}
-.lt{
-	float: left;
 }
 .Orderheading{
   color:#265ba0 !important;
@@ -154,7 +154,7 @@ body > div > div > main > section > px-card > px-data-table > div{
   margin-left: 15px;
   width: 93%
 }
-#changeRequestDiv .send_form .mailTo input[type="text"], #changeRequestDiv .send_form .mailCc input[type="text"]{
+#changeRequestDiv .send_form .mailTo input[type="text"]{
 	padding: 5px;
   margin-left: 15px;
   width: 96%
@@ -162,5 +162,5 @@ body > div > div > main > section > px-card > px-data-table > div{
 #changeRequestDiv .send_form textarea{
 	padding: 5px;
   width: 99%;
-  height: 100px;
+  height: 50px;
 }

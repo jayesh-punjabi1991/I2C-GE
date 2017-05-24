@@ -23,7 +23,7 @@ define(['angular', './module', 'constants'], function(angular, module) {
                  });
              },
             acceptQuote: function (data) {
-              return $http.post(urls.base_url + urls.accept_quote + '?customerId=' +$window.sessionStorage.getItem('customerId'),  data , {
+              return $http.post('http://3.235.169.14:9004' + urls.accept_quote + '?customerId=' +$window.sessionStorage.getItem('customerId'),  data , {
                  headers: {
                    'Authorization': 'Bearer ' + $window.sessionStorage.getItem('auth_token'),
                    'x-access-token': $window.sessionStorage.getItem('userToken'),

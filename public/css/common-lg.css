@@ -32,6 +32,21 @@
         width: 25%;
         flex-basis:0 !important;
     }
+    .desk-20{
+        max-width:20% !important;
+        width: 20%;
+        flex-basis:0 !important;
+    }
+    .desk-10{
+        max-width:10% !important;
+        width: 25%;
+        flex-basis:0 !important;
+    }
+    .desk-30{
+        max-width:30% !important;
+        width: 30%;
+        flex-basis:0 !important;
+    }
     .desk-33{
         max-width:33.33% !important;
         width: 33.33%;
