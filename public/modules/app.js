@@ -10,7 +10,8 @@ define([
     'constants',
     'interceptors',
     'px-datasource',
-    'ng-bind-polymer'
+    'ng-bind-polymer',
+    'angularUtils.directives.dirPagination'
 ], function ($, angular) {
     'use strict';
 
@@ -28,7 +29,8 @@ define([
         'app.constants',
         'app.interceptors',
         'predix.datasource',
-        'px.ngBindPolymer'
+        'px.ngBindPolymer',
+        'angularUtils.directives.dirPagination'
     ]);
 
     /**
@@ -77,6 +79,7 @@ define([
                           //$window.sessionStorage.setItem('customerId',1);
                           $window.sessionStorage.setItem('userRole', response.userRole);
                           $window.sessionStorage.setItem('userPermission', response.userPermission);
+                          $rootScope.userRole = response.userRole.userRoleName;
                           $window.location.reload();
                         });
                     }else{

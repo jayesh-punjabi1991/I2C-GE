@@ -23,6 +23,7 @@ define(['angular', './module'], function (angular, controllers) {
                   $window.sessionStorage.setItem('roleID', response.userRole.userRoleID);
                   $window.sessionStorage.setItem('userPermission', response.userPermission);
                   console.log($window.sessionStorage.getItem('userRole'));
+                  $rootScope.userRole = response.userRole.userRoleName;
                   $state.go('dashboards');
                 });
             }else{

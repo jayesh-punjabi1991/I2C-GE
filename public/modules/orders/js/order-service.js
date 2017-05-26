@@ -23,7 +23,7 @@ define(['angular', './module', 'constants'], function(angular, module) {
                  });
              },
              getDLforCR : function(custId){
-               return $http.get('http://3.251.39.52:9004' + urls.get_DL_for_CR + "/" + custId + "?eventName=CR.Initiate",{
+               return $http.get(urls.base_url + urls.get_DL_for_CR + "/" + custId + "?eventName=CR.Initiate",{
                  headers: {
                    'Authorization': 'Bearer ' + $window.sessionStorage.getItem('auth_token'),
                    'x-access-token': $window.sessionStorage.getItem('userToken')

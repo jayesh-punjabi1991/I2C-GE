@@ -1,16 +1,17 @@
 <link rel="stylesheet" type="text/css" href="css/ChangeRequestDetails.css">
 <link rel="stylesheet" type="text/css" href="css/common-lg.css">
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 <div class="cr-wrapper">
   <px-card  class="card-head">
     <h2 class="cr-heading"><span class="cr">CHANGE REQUEST# :</span>&nbsp;<span class="cr_id">{{crId}}</span></h2>
     <div class="imp_details clearfix">
       <div class="desk-20 small-50 lt details_div">
         <p class="small_label">Order Number</p>
-        <p class="big_label"><i class="fa fa-truck small_label"></i>&nbsp;&nbsp;{{orderNumber}}</p>
+        <p class="big_label" id="ge_order_number"><i class="fa fa-truck small_label"></i>&nbsp;&nbsp;{{orderNumber}}</p>
       </div>
       <div class="desk-20 small-50 lt details_div">
         <p class="small_label">PO Number</p>
-        <p class="big_label"><i class="fa fa-file small_label"></i>&nbsp;&nbsp;{{POnumber}}</p>
+        <p class="big_label" id="cust_po_number"><i class="fa fa-file small_label"></i>&nbsp;&nbsp;{{POnumber}}</p>
       </div>
       <div class="desk-20 small-50 lt details_div">
         <p class="small_label">Created Date</p>
@@ -32,9 +33,12 @@
         <h3 class="head-text">Request Email</h3>
       </div>
       <div class="desk-50 rt clearfix cr_btns">
-        <a title="Accept" id="acceptButton" class="btn btn-primary rt" ng-click="acceptClicked()">Accept</a>
-        <a title="Accept" id="rejectButton" class="btn btn-primary rt" ng-click="approveClicked()">Approve</a>
-        <a title="Reject" id="rejectButton" class="btn btn-reject rt" class="btn" ng-click="rejectClicked()">Reject</a>
+        <a  title="Accept" id="acceptButton" class="btn btn-primary rt" ng-click="acceptClicked()">Accept</a>
+        <a  title="Accept" id="rejectButton" class="btn btn-primary rt" ng-click="approveClicked()">Approve</a>
+        <a  title="Reject" id="rejectButton" class="btn btn-reject rt" class="btn" ng-click="rejectClicked()">Reject</a>
+        <!-- <a ng-if="CRStatus== 'pending' && orderStatus == 'change requested' && crData.to == 'CPA'" title="Accept" id="acceptButton" class="btn btn-primary rt" ng-click="acceptClicked()">Accept</a>
+        <a ng-if="CRStatus== 'accepted' && orderStatus == 'change requested' && crData.to == 'OMS'" title="Accept" id="rejectButton" class="btn btn-primary rt" ng-click="approveClicked()">Approve</a>
+        <a ng-if="CRStatus== 'pending' && orderStatus == 'accepted' && crData.to == 'CPA'" title="Reject" id="rejectButton" class="btn btn-reject rt" class="btn" ng-click="rejectClicked()">Reject</a> -->
       </div>
     </div>
     <div class="email_body">
@@ -54,25 +58,21 @@
       <h3 class="cr-heading label-color">Order Details</h3>
     </div>
     <div class="adr_div clearfix">
-      <div class="desk-20 small-50 lt details_div">
+      <div class="desk-25 small-50 lt details_div">
         <p class="small_label">Customer account number</p>
-        <p class="big_label">{{customerNumber}}</p>
+        <p class="big_label" id="customer_number">{{customerNumber}}</p>
       </div>
-      <div class="desk-10 small-50 lt details_div">
+      <div class="desk-20 small-50 lt details_div">
         <p class="small_label">Taxable Status</p>
-        <p class="big_label">{{taxableStatus}}</p>
+        <p class="big_label" id="taxable_status">{{taxableStatus}}</p>
       </div>
       <div class="desk-30 small-50 lt details_div">
         <p class="small_label">Billing Timeline and Percentage to be Billed</p>
         <p class="big_label">{{billingTimeline}}</p>
       </div>
-      <div class="desk-20 small-50 lt details_div">
-        <p class="small_label">Payment/Billing Terms</p>
-        <p class="big_label">{{billingTerms}}</p>
-      </div>
-      <div class="desk-20 small-50 lt details_div">
+      <div class="desk-25 small-50 lt details_div">
         <p class="small_label">Delivery Terms</p>
-        <p class="big_label">{{deliveryTerms}}</p>
+        <p class="big_label"  id="delivery_terms">{{deliveryTerms}}</p>
       </div>
     </div>
     <div class="adr_div clearfix">
@@ -93,29 +93,86 @@
     </div>
   </px-card>
   <px-card>
+    <h4>Sub Order Details ({{lengthofSubOrders}})</h4>
+    <table class="sortable">
+        <tr style="background-color: #2b5ea2;color: white;">
+            <th>Sr.No</th>
+            <th>Bill To Address</th>
+            <th>Billing Terms</th>
+            <th>SOSD</th>
+            <th>ROSD</th>
+            <th>Bill Amt</th>
+            <th></th>
+        </tr>
+        <tr id="{{'Sub_Order'+x.sub_order_id}}" dir-paginate="x in OrderList |itemsPerPage:10" pagination-id="SubOrder">
+            <td>{{x.SrNo}}</td>
+            <td id="{{'bill_to'+x.sub_order_id}}">{{x.bill_to.address1}}</td>
+            <td id="{{'billing_terms'+x.sub_order_id}}">{{x.billing_terms}}</td>
+            <td id="{{'sch_os_date'+x.sub_order_id}}">{{x.sch_os_date}}</td>
+            <td id="{{'ros_date'+x.sub_order_id}}">{{x.ros_date}}</td>
+            <td id="{{'bill_amt'+x.sub_order_id}}">{{x.bill_amt}}</td>
+            <td id="{{'Detail'+x.sub_order_id}}" ng-click="saveSubOrder(x.sub_order_id)"><a href='javascript:void(0)'>Details</a></td>
+        </tr>
+    </table>
     <div>
-      <h3 class="cr-heading label-color">Sub-Order Details</h3>
+        <dir-pagination-controls pagination-id="SubOrder" ng-click="applyCss()" max-size="5" direction-links="true" boundary-links="true">
+        </dir-pagination-controls>
     </div>
-    <px-data-table table-data='{{OrderList}}' language="en" striped="true" table-rows="true" include-all-columns="true" hide-pagination-control="true">
-        <px-data-table-column name="SrNo" Label="#"></px-data-table-column>
-        <px-data-table-column name="billing_terms" label="Billing Terms"></px-data-table-column>
-        <px-data-table-column name="billToaddress" label="Bill To"></px-data-table-column>
-        <px-data-table-column name="sch_os_date" label="SOSD"></px-data-table-column>
-        <px-data-table-column name="ros_date" label="ROSD"></px-data-table-column>
-        <px-data-table-column name="bill_amt" label="Billing Amount(USD)"></px-data-table-column>
-        <px-data-table-column name="link" label=" " type="html"></px-data-table-column>
-    </px-data-table>
     <div ng-show="Suborder==true">
-    <h4>Shipment Details</h4>
-    <px-data-table table-data='{{SubOrderList}}' language="en" striped="true" table-rows="true" include-all-columns="true" hide-pagination-control="true">
-        <px-data-table-column name="SrNo" Label="#"></px-data-table-column>
-        <!-- <px-data-table-column name="line_item_description" label="Part Description"></px-data-table-column> -->
-        <px-data-table-column name="ship_to" label="Ship To"></px-data-table-column>
-        <px-data-table-column name="sch_os_date" label="SOSD"></px-data-table-column>
-        <px-data-table-column name="ros_date" label="ROSD"></px-data-table-column>
-        <px-data-table-column name="ship_amt" label="Shipment Amount(USD)"></px-data-table-column>
-        <px-data-table-column name="pod" label="POD"></px-data-table-column>
-        <px-data-table-column name="link" label=" " type="html"></px-data-table-column>
-    </px-data-table>
+        <h4>Shipment Details ({{lengthofShipments}})</h4>
+        <table class="sortable">
+            <tr style="background-color: #2b5ea2;color: white;">
+                <th>Sr.No</th>
+                <th>Ship To</th>
+                <th>Ship Date</th>
+                <th>Delivery Date</th>
+                <th>Ship Amount</th>
+                <th>POD</th>
+                <th></th>
+            </tr>
+            <tr id="{{'Shipment'+x.shipment_id}}" dir-paginate="x in SubOrderList |itemsPerPage:10" pagination-id="Shipment">
+                <td>{{x.SrNo}}</td>
+                <td id="{{'ship_to'+x.shipment_id}}">{{x.ship_to}}</td>
+                <td id="{{'ship_date'+x.shipment_id}}">{{x.ship_date}}</td>
+                <td id="{{'delivery_date'+x.shipment_id}}">{{x.delivery_date}}</td>
+                <td id="{{'ship_amt'+x.shipment_id}}">{{x.ship_amt}}</td>
+                <td id="{{'pod'+x.shipment_id}}">{{x.pod}}</td>
+                <td id="{{'Details'+x.shipment_id}}" ng-click="saveShipment(x.shipment_id)"><a href='javascript:void(0)'>Details</a></td>
+            </tr>
+        </table>
+        <div>
+            <dir-pagination-controls ng-click="applyCss()" pagination-id="Shipment" max-size="5" direction-links="true" boundary-links="true">
+            </dir-pagination-controls>
+        </div>
+    </div>
+    <div ng-show="Shipment==true">
+        <h4>Part Details ({{LengthOfShipment}})</h4>
+        <table class="sortable">
+            <tr style="background-color: #2b5ea2;color: white;">
+                <th>Sr.No</th>
+                <th>Model Type</th>
+                <th>Item Number</th>
+                <th>Line Description</th>
+                <th>Quantity</th>
+                <th>List Price</th>
+                <th>Discount Price</th>
+                <th>Selling Price</th>
+            </tr>
+            <tr id="{{'LineItem'+x.line_number}}" dir-paginate="x in ShipmentList |itemsPerPage:10" pagination-id="LineItem">
+                <td>{{x.SrNo}}</td>
+                <td>{{x.model_Type}}</td>
+                <td>{{x.itemNumber}}</td>
+                <td>{{x.line_item_description}}</td>
+                <td>{{x.quantity}}</td>
+                <td>{{x.list_price}}</td>
+                <td>{{x.discount_perc}}</td>
+                <td>{{x.sellingPrice}}</td>
+            </tr>
+        </table>
+        <div>
+            <dir-pagination-controls ng-click="applyCss()" pagination-id="LineItem" max-size="5" direction-links="true" boundary-links="true">
+            </dir-pagination-controls>
+        </div>
+    </div>
   </px-card>
 </div>

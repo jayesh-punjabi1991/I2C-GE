@@ -44,7 +44,7 @@ require.config({
         'angular-mocks': '../bower_components/angular-mocks/angular-mocks',
         'angular-resource': '../bower_components/angular-resource/angular-resource',
         'angular-route': '../bower_components/angular-route/angular-route',
-
+        'angularUtils.directives.dirPagination':'../lib/dirPagination',
         // angular ui router
         'angular-ui-router': '../bower_components/angular-ui-router/release/angular-ui-router.min',
 

@@ -123,3 +123,54 @@
 .bottom-margin{
 	margin-bottom: 5px !important;
 }
+body > div > div > main > section > px-card > div:nth-child(11) > div > dir-pagination-controls > ul{
+  margin-left: 85% !important;
+  width: 100%;
+  margin-top: 4%;
+  margin-bottom: 4% !important;
+}
+body > div > div > main > section > px-card > div:nth-child(11) > div > dir-pagination-controls > ul > li{
+  padding-right: 5px !important;
+}
+
+body > div > div > main > section > px-card > div:nth-child(9) > dir-pagination-controls > ul{
+  margin-left: 85% !important;
+  width: 100%;
+  margin-top: 4%;
+  margin-bottom: 4% !important;
+}
+body > div > div > main > section > px-card > div:nth-child(11) > div > dir-pagination-controls > ul > li{
+  padding-right: 5px !important;
+}
+
+body > div > div > main > section > px-card > div:nth-child(9) > dir-pagination-controls > ul{
+  margin-left: 85% !important;
+  width: 100%;
+  margin-top: 4%;
+  margin-bottom: 4% !important;
+}
+body > div > div > main > section > px-card > div:nth-child(9) > dir-pagination-controls > ul > li{
+  padding-right: 5px !important;
+}
+
+body > div > div > main > section > px-card > div:nth-child(10) > div > dir-pagination-controls > ul{
+  margin-left: 85% !important;
+  width: 100%;
+  margin-top: 4%;
+  margin-bottom: 4% !important;
+}
+body > div > div > main > section > px-card > div:nth-child(10) > div > dir-pagination-controls > ul > li{
+  padding-right: 5px !important;
+}
+
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
+    content: " \25B4\25BE"
+}
+table.sortable tr:nth-child(even){
+  background-color: #efeff4
+}
+table.sortable tr{
+  height:40px !important;
+  border-top:1px solid #b1b1bc;
+  border-bottom: 1px solid #b1b1bc;
+}

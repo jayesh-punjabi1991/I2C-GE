@@ -20,9 +20,9 @@ define(['angular', './module'], function(angular, controllers) {
                             "cr#": value.status == 'Accepted' ? "<a href='/changeRequest/Accepted/" + val.custId + "/" + value.change_req_id + "'>" + value.change_req_id + "</a>" : value.status == 'Rejected' ? "<a href='/changeRequest/Rejected/" + val.custId + "/" + value.change_req_id + "'>" + value.change_req_id + "</a>" : "<a href='/changeRequest/Pending/" + val.custId + "/" + value.change_req_id + "'>" + value.change_req_id + "</a>",
                             "PO#": value.cust_po_number,
                             "createdDate": value.cr_date ? $filter('date')(value.cr_date * 1000, "MMM dd, yyyy") : '',
-                            "status": value.status === "accepted" ? "<div id='circle'></div><p>" + value.status +"</p>" : value.status === "rejected" ? "<div id='circle1'></div><p>" + value.status + "</p>": "<div id='circle2'></div><p>" + value.status + "</p>",
+                            "status": value.status === "accepted" ? "<div class='status_accept'></div>" + value.status  : value.status === "rejected" ? "<div class='status_reject'></div>" + value.status: "<div class='status_pending'></div>" + value.status,
                             "action": value.order_process_status == 'Pending' ? "<a title='Withdraw a change Request' style='color:#9c9c20 !important' href='javascript:void(0)'><i class='fa fa-undo' aria-hidden='true'></i></a>" : "",
-                            "crDesc": value.description
+                            "crDesc": value.description.substring(1, 40) + '...'
                         });
                     })
                 })

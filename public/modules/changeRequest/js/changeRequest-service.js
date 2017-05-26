@@ -24,8 +24,17 @@ define(['angular', './module', 'constants'], function(angular, module) {
                     }
                 });
             },
+            getCrDiffDetails: function(val, custId){
+              //return $http.get('modules/changeRequest/json/ChangeRequestList.json')
+              return $http.get(urls.base_url + urls.get_Cr_diff_details+'/'+ val +'?custId='+custId, {
+                 headers: {
+                   'Authorization': 'Bearer ' + $window.sessionStorage.getItem('auth_token'),
+                   'x-access-token': $window.sessionStorage.getItem('userToken')
+                 }
+               });
+             },
             acceptCR: function(crNo,custId, data) {
-              return $http.post('http://3.202.44.66:9004' + urls.accept_CR+'/'+ crNo +'?custId='+custId, JSON.stringify(data), {
+              return $http.post(urls.base_url + urls.accept_CR+'/'+ crNo +'?custId='+custId, JSON.stringify(data), {
                  headers: {
                    'Authorization': 'Bearer ' + $window.sessionStorage.getItem('auth_token'),
                    'x-access-token': $window.sessionStorage.getItem('userToken')
@@ -33,7 +42,7 @@ define(['angular', './module', 'constants'], function(angular, module) {
                });
             },
             rejectCR: function(crNo,custId, data) {
-              return $http.post('http://3.202.44.66:9004' + urls.reject_CR+'/'+ crNo +'?custId='+custId, JSON.stringify(data), {
+              return $http.post(urls.base_url + urls.reject_CR+'/'+ crNo +'?custId='+custId, JSON.stringify(data), {
                  headers: {
                    'Authorization': 'Bearer ' + $window.sessionStorage.getItem('auth_token'),
                    'x-access-token': $window.sessionStorage.getItem('userToken')
@@ -41,7 +50,7 @@ define(['angular', './module', 'constants'], function(angular, module) {
                });
             },
             approveOrder: function(oNo,custId, data) {
-              return $http.put('http://3.202.44.66:9004' + urls.approve_order+'/'+ oNo +'?custId='+custId, JSON.stringify(data), {
+              return $http.put(urls.base_url + urls.approve_order+'/'+ oNo +'?custId='+custId, JSON.stringify(data), {
                  headers: {
                    'Authorization': 'Bearer ' + $window.sessionStorage.getItem('auth_token'),
                    'x-access-token': $window.sessionStorage.getItem('userToken')
