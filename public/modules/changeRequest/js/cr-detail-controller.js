@@ -11,19 +11,15 @@ define(['angular', './module'], function (angular, controllers) {
       $scope.dummy1 = [];
       $scope.crId = $stateParams.id;
       $scope.customerId = $stateParams.custId;
+      $scope.orderStatus = '';
       var count=0;
       var count1=0;
       CrService.getCrDetails($stateParams.id, $stateParams.custId).then(function success(response){
         //console.log(response);
         $scope.orderNumber=response.data.ge_order_number;
-        diffCode($scope.orderNumber, $scope.customerId);
-        // CrService.getCrDiffDetails($scope.orderNumber).then(function success(response1) {
-        //   console.log(response1);
-        //   debugger;
-        // });
-        $scope.response=response;
-        $scope.crData = response.data;
 
+        $scope.response_o=response;
+        $scope.crData = response.data;
         $scope.crdate=response.data.cr_date*1000;
         $scope.POnumber=response.data.order.cust_po_number;
         $scope.CRStatus=response.data.status;
@@ -36,111 +32,124 @@ define(['angular', './module'], function (angular, controllers) {
         $scope.billingTimeline = response.data.order.sub_orders[0].billing_terms;
         $scope.billingTerms = response.data.order.sub_orders[0].payment_terms;
         $scope.liquidatedDamageTerms=response.data.order.liquidated_damage_terms;
-        $scope.shipTo_1 = ($scope.response.data.order.sub_orders[0].shipments[0].ship_to.address1 ? $scope.response.data.order.sub_orders[0].shipments[0].ship_to.address1 : '');
-        $scope.shipTo_2 = ($scope.response.data.order.sub_orders[0].shipments[0].ship_to.address2 ? $scope.response.data.order.sub_orders[0].shipments[0].ship_to.address2 : '');
-        $scope.shipTo_3 = ($scope.response.data.order.sub_orders[0].shipments[0].ship_to.city ? $scope.response.data.order.sub_orders[0].shipments[0].ship_to.city : '')  + " " + ($scope.response.data.order.sub_orders[0].shipments[0].ship_to.country ? $scope.response.data.order.sub_orders[0].shipments[0].ship_to.country : '');
-        $scope.shipTo_4 = $scope.response.data.order.sub_orders[0].shipments[0].ship_to.state ? $scope.response.data.order.sub_orders[0].shipments[0].ship_to.state : '' + " " + $scope.response.data.order.sub_orders[0].shipments[0].ship_to.province ? $scope.response.data.order.sub_orders[0].shipments[0].ship_to.province : '' + " " + $scope.response.data.order.sub_orders[0].shipments[0].ship_to.postalcode ? $scope.response.data.order.sub_orders[0].shipments[0].ship_to.postalcode : '';
-        $scope.billTo_1 = $scope.response.data.order.sub_orders[0].bill_to.address1 ? $scope.response.data.order.sub_orders[0].bill_to.address1 : '';
-        $scope.billTo_2 = $scope.response.data.order.sub_orders[0].bill_to.address2 ? $scope.response.data.order.sub_orders[0].bill_to.address2 : '';
-        $scope.billTo_3 = ($scope.response.data.order.sub_orders[0].bill_to.city)?$scope.response.data.order.sub_orders[0].bill_to.city:'' + " " + ($scope.response.data.order.sub_orders[0].bill_to.country)?$scope.response.data.order.sub_orders[0].bill_to.country:'';
-        $scope.billTo_4 = ($scope.response.data.order.sub_orders[0].bill_to.state)?$scope.response.data.order.sub_orders[0].bill_to.state:'' + " " + ($scope.response.data.order.sub_orders[0].bill_to.province)?$scope.response.data.order.sub_orders[0].bill_to.province:'' + " " + ($scope.response.data.order.sub_orders[0].postalcode)?$scope.response.data.order.sub_orders[0].postalcode:'';
-      //   //For Sub-Order Table
-      //   angular.forEach(response.data.order.sub_orders,function(value,key){
-      //     $scope.OrderList[count]=value;
-      //     $scope.OrderList[count].SrNo=count+1;
-      //     $scope.OrderList[count].billToaddress=value.bill_to.address1 ? value.bill_to.address1 : ''+" "+value.bill_to.address2 ? value.bill_to.address2 : ''+" " +value.bill_to.city ? value.bill_to.city :''+" "+value.bill_to.country ? value.bill_to.country : ''+" "+value.bill_to.state ? value.bill_to.state : ''+" "+value.bill_to.province ? value.bill_to.province : ''+" "+value.bill_to.postalcode ? value.bill_to.postalcode : '';
-      //     count++;
-      //   })
-      //   $scope.lengthofSubOrders = $scope.OrderList.length;
-      //   //For Shipment Table
-      //   $timeout(function () {
-      //     for(var i=0;i<$scope.response.data.order.sub_orders.length;i++){
-      //     document.getElementById('Detail'+$scope.response.data.order.sub_orders[i].sub_order_id).addEventListener('click', function(event) {
-      //       var count1=0;
-      //       $scope.dummy = [];
-      //       $scope.SubOrderList=[];
-      //       $scope.ShipmentList = [];
-      //       $scope.Shipment=false;
-      //       $scope.$apply();
-      //       for(var i=0;i<$scope.response.data.order.sub_orders.length;i++){
-      //       angular.forEach($scope.response.data.order.sub_orders[i].shipments,function(value,key){
-      //         if(value.sub_order_id==$scope.selectedSubOrder){
-      //           $scope.dummy.push({
-      //               'ge_order_number': value.ge_order_number,
-      //               'ship_to': value.ship_to,
-      //               'shipment_id': value.shipment_id,
-      //               'sub_order_id': value.sub_order_id
-      //           });
-      //           $scope.SubOrderList[count1] = $scope.dummy[count1];
-      //           $scope.SubOrderList[count1].SrNo = count1 + 1;
-      //           $scope.SubOrderList[count1].ship_to = $scope.dummy[count1].ship_to.address1 ? $scope.dummy[count1].ship_to.address1 : '' + " " + $scope.dummy[count1].ship_to.address2 ? $scope.dummy[count1].ship_to.address2 : '' + " " + $scope.dummy[count1].ship_to.city ? $scope.dummy[count1].ship_to.city : '' + " " + $scope.dummy[count1].ship_to.country ? $scope.dummy[count1].ship_to.country : '' + " " + $scope.dummy[count1].ship_to.state ? $scope.dummy[count1].ship_to.state : '' + " " + $scope.dummy[count1].ship_to.province ? $scope.dummy[count1].ship_to.province : '' + " " + $scope.dummy[count1].ship_to.postalcode ? $scope.dummy[count1].ship_to.postalcode : '';
-      //           ++count1;
-      //         }
-      //       })
-      //     }
-      //         $scope.lengthofShipments = $scope.SubOrderList.length;
-      //         $scope.CreateShipmentJson();
-      //         if($scope.SubOrderList.length>0){
-      //         $scope.Suborder=true;
-      //         $scope.$apply();
-      //       }
-      //       else{
-      //         $scope.Suborder=false;
-      //       }
-      //   }, false);
-      // }
-      // }, 1000);
+        $scope.shipTo_1 = ($scope.response_o.data.order.sub_orders[0].shipments[0].ship_to.address1 ? $scope.response_o.data.order.sub_orders[0].shipments[0].ship_to.address1 : '');
+        $scope.shipTo_2 = ($scope.response_o.data.order.sub_orders[0].shipments[0].ship_to.address2 ? $scope.response_o.data.order.sub_orders[0].shipments[0].ship_to.address2 : '');
+        $scope.shipTo_3 = ($scope.response_o.data.order.sub_orders[0].shipments[0].ship_to.city ? $scope.response_o.data.order.sub_orders[0].shipments[0].ship_to.city : '')  + " " + ($scope.response_o.data.order.sub_orders[0].shipments[0].ship_to.country ? $scope.response_o.data.order.sub_orders[0].shipments[0].ship_to.country : '');
+        $scope.shipTo_4 = $scope.response_o.data.order.sub_orders[0].shipments[0].ship_to.state ? $scope.response_o.data.order.sub_orders[0].shipments[0].ship_to.state : '' + " " + $scope.response_o.data.order.sub_orders[0].shipments[0].ship_to.province ? $scope.response_o.data.order.sub_orders[0].shipments[0].ship_to.province : '' + " " + $scope.response_o.data.order.sub_orders[0].shipments[0].ship_to.postalcode ? $scope.response_o.data.order.sub_orders[0].shipments[0].ship_to.postalcode : '';
+        $scope.billTo_1 = $scope.response_o.data.order.sub_orders[0].bill_to.address1 ? $scope.response_o.data.order.sub_orders[0].bill_to.address1 : '';
+        $scope.billTo_2 = $scope.response_o.data.order.sub_orders[0].bill_to.address2 ? $scope.response_o.data.order.sub_orders[0].bill_to.address2 : '';
+        $scope.billTo_3 = ($scope.response_o.data.order.sub_orders[0].bill_to.city)?$scope.response_o.data.order.sub_orders[0].bill_to.city:'' + " " + ($scope.response_o.data.order.sub_orders[0].bill_to.country)?$scope.response_o.data.order.sub_orders[0].bill_to.country:'';
+        $scope.billTo_4 = ($scope.response_o.data.order.sub_orders[0].bill_to.state)?$scope.response_o.data.order.sub_orders[0].bill_to.state:'' + " " + ($scope.response_o.data.order.sub_orders[0].bill_to.province)?$scope.response_o.data.order.sub_orders[0].bill_to.province:'' + " " + ($scope.response_o.data.order.sub_orders[0].postalcode)?$scope.response_o.data.order.sub_orders[0].postalcode:'';
+
+
+       //For Sub-Order Table
+       $scope.OrderList=[];
+        angular.forEach(response.data.order.sub_orders,function(value,key){
+          $scope.OrderList[count]=value;
+          $scope.OrderList[count].SrNo=count+1;
+          $scope.OrderList[count].billToaddress=value.bill_to.address1 ? value.bill_to.address1 : ''+" "+value.bill_to.address2 ? value.bill_to.address2 : ''+" " +value.bill_to.city ? value.bill_to.city :''+" "+value.bill_to.country ? value.bill_to.country : ''+" "+value.bill_to.state ? value.bill_to.state : ''+" "+value.bill_to.province ? value.bill_to.province : ''+" "+value.bill_to.postalcode ? value.bill_to.postalcode : '';
+          count++;
+        })
+        $scope.lengthofSubOrders = $scope.OrderList.length;
+        //For Shipment Table
+        $timeout(function () {
+          // console.log($scope.response.data);
+          for(var i=0;i<$scope.response_o.data.order.sub_orders.length;i++){
+          document.getElementById('Detail'+$scope.response_o.data.order.sub_orders[i].sub_order_id).addEventListener('click', function(event) {
+            var count1=0;
+            $scope.dummy = [];
+            $scope.SubOrderList=[];
+            $scope.ShipmentList = [];
+            $scope.Shipment=false;
+            $scope.$apply();
+            for(var i=0;i<$scope.response_o.data.order.sub_orders.length;i++){
+            angular.forEach($scope.response_o.data.order.sub_orders[i].shipments,function(value,key){
+              if(value.sub_order_id==$scope.selectedSubOrder){
+                $scope.dummy.push({
+                    'ge_order_number': value.ge_order_number,
+                    'ship_to': value.ship_to,
+                    'shipment_id': value.shipment_id,
+                    'sub_order_id': value.sub_order_id
+                });
+                $scope.SubOrderList[count1] = $scope.dummy[count1];
+                $scope.SubOrderList[count1].SrNo = count1 + 1;
+                $scope.SubOrderList[count1].ship_to = $scope.dummy[count1].ship_to.address1 ? $scope.dummy[count1].ship_to.address1 : '' + " " + $scope.dummy[count1].ship_to.address2 ? $scope.dummy[count1].ship_to.address2 : '' + " " + $scope.dummy[count1].ship_to.city ? $scope.dummy[count1].ship_to.city : '' + " " + $scope.dummy[count1].ship_to.country ? $scope.dummy[count1].ship_to.country : '' + " " + $scope.dummy[count1].ship_to.state ? $scope.dummy[count1].ship_to.state : '' + " " + $scope.dummy[count1].ship_to.province ? $scope.dummy[count1].ship_to.province : '' + " " + $scope.dummy[count1].ship_to.postalcode ? $scope.dummy[count1].ship_to.postalcode : '';
+                ++count1;
+              }
+            })
+          }
+              $scope.lengthofShipments = $scope.SubOrderList.length;
+              $scope.CreateShipmentJson1();
+              if($scope.SubOrderList.length>0){
+              $scope.Suborder=true;
+              $scope.$apply();
+            }
+            else{
+              $scope.Suborder=false;
+            }
+        }, false);
+      }
+    }, 2000);
+
+      // Call Comparision api when order is change_requested and CR is pending
+      //or when order is in accepted and CR is accepted
+      console.log($scope.orderStatus == 'change_requested');
+      if(($scope.orderStatus == 'change_requested' && $scope.CRStatus == 'pending') || ($scope.orderStatus == 'accepted' && $scope.CRStatus == 'accepted')){
+        console.log('in if');
+        diffCode($scope.orderNumber, $scope.customerId);
+      }
+
       })
-      // $scope.saveSubOrder = function(val) {
-      //     $scope.selectedSubOrder = val;
-      // };
-      // $scope.saveShipment = function(val) {
-      //     $scope.selectedShipment = val;
-      // };
-      // $scope.CreateShipmentJson = function() {
-      //     $timeout(function() {
-      //         for (var i = 0; i < $scope.SubOrderList.length; i++) {
-      //             document.getElementById('Details' + $scope.SubOrderList[i].shipment_id).addEventListener('click', function(event) {
-      //                 $scope.dummy1 = [];
-      //                 //$scope.selectedShipment = event.target.className;
-      //                 var count2 = 0;
-      //                 $scope.ShipmentList = [];
-      //                 debugger
-      //                 angular.forEach($scope.response.data.order.order_lines, function(value, key) {
-      //                     if (value.shipment_id == $scope.selectedShipment) {
-      //                         $scope.dummy1.push({
-      //                             'line_number': value.line_number,
-      //                             'item_number': value.item_number,
-      //                             'line_item_description': value.line_item_description,
-      //                             'quantity': value.quantity,
-      //                             'sub_order_id': value.sub_order_id,
-      //                             'shipment_id': value.shipment_id,
-      //                             'list_price': value.list_price,
-      //                             'discount_perc': value.discount_perc
-      //                         });
-      //                         $scope.ShipmentList[count2] = $scope.dummy1[count2];
-      //                         $scope.ShipmentList[count2].SrNo = count2 + 1;
-      //                         $scope.ShipmentList[count2].sellingPrice = $filter('currency')($scope.ShipmentList[count2].list_price - ($scope.ShipmentList[count2].list_price * ($scope.ShipmentList[count2].discount_perc / 100)), $scope.currency, 2);
-      //                         $scope.ShipmentList[count2].list_price = $filter('currency')($scope.ShipmentList[count2].list_price, $scope.currency, 2);
-      //                         $scope.ShipmentList[count2].discount_perc = $filter('number')($scope.ShipmentList[count2].discount_perc, 0);
-      //                         count2++;
-      //                     }
-      //                 })
-      //
-      //                 $scope.LengthOfShipment = $scope.ShipmentList.length;
-      //                 if ($scope.ShipmentList.length > 0) {
-      //                     $scope.Shipment = true;
-      //                     $scope.$apply();
-      //                 } else {
-      //                     $scope.Shipment = false;
-      //                     $scope.$apply();
-      //                 }
-      //
-      //             }, false);
-      //
-      //         }
-      //     }, 1000);
-      // }
+      $scope.saveSubOrder1 = function(val) {
+          $scope.selectedSubOrder = val;
+      };
+      $scope.saveShipment1 = function(val) {
+          $scope.selectedShipment = val;
+      };
+      $scope.CreateShipmentJson1 = function() {
+          $timeout(function() {
+              for (var i = 0; i < $scope.SubOrderList.length; i++) {
+                  document.getElementById('Details' + $scope.SubOrderList[i].shipment_id).addEventListener('click', function(event) {
+                      $scope.dummy1 = [];
+                      //$scope.selectedShipment = event.target.className;
+                      var count2 = 0;
+                      $scope.ShipmentList = [];
+                      debugger
+                      angular.forEach($scope.response_o.data.order.order_lines, function(value, key) {
+                          if (value.shipment_id == $scope.selectedShipment) {
+                              $scope.dummy1.push({
+                                  'line_number': value.line_number,
+                                  'item_number': value.item_number,
+                                  'line_item_description': value.line_item_description,
+                                  'quantity': value.quantity,
+                                  'sub_order_id': value.sub_order_id,
+                                  'shipment_id': value.shipment_id,
+                                  'list_price': value.list_price,
+                                  'discount_perc': value.discount_perc
+                              });
+                              $scope.ShipmentList[count2] = $scope.dummy1[count2];
+                              $scope.ShipmentList[count2].SrNo = count2 + 1;
+                              $scope.ShipmentList[count2].sellingPrice = $filter('currency')($scope.ShipmentList[count2].list_price - ($scope.ShipmentList[count2].list_price * ($scope.ShipmentList[count2].discount_perc / 100)), $scope.currency, 2);
+                              $scope.ShipmentList[count2].list_price = $filter('currency')($scope.ShipmentList[count2].list_price, $scope.currency, 2);
+                              $scope.ShipmentList[count2].discount_perc = $filter('number')($scope.ShipmentList[count2].discount_perc, 0);
+                              count2++;
+                          }
+                      })
+
+                      $scope.LengthOfShipment = $scope.ShipmentList.length;
+                      if ($scope.ShipmentList.length > 0) {
+                          $scope.Shipment = true;
+                          $scope.$apply();
+                      } else {
+                          $scope.Shipment = false;
+                          $scope.$apply();
+                      }
+
+                  }, false);
+
+              }
+          }, 1000);
+       }
 
       //Show Differences code
       function diffCode(oNo, custId) {
@@ -164,12 +173,16 @@ define(['angular', './module'], function (angular, controllers) {
             //$scope.customer_number=$scope.response.customer_number;
 
             //For Sub-Order Table
+            $scope.OrderList=[];
+            count = 0;
+            debugger
             angular.forEach($scope.response.sub_orders, function(value, key) {
                 $scope.OrderList[count] = value;
                 $scope.OrderList[count].SrNo = count + 1;
                 //$scope.OrderList[count].link = "<a id='Detail" + value.sub_order_id + "' class=" + value.sub_order_id + " href='javascript:void(0)'>Details</a>";
                 count++;
             })
+            console.log($scope.OrderList);
             $scope.lengthofSubOrders = $scope.OrderList.length;
 
             //For Highlighting changed Row of Sub_Order
@@ -232,6 +245,7 @@ define(['angular', './module'], function (angular, controllers) {
                             angular.forEach(response.data[1].sub_orders, function(value, key) {
                               if(value.shipments){
                                 for (var i = 0; i < value.shipments.length; i++) {
+                                  console.log(value.shipments[i].shipment_id);
                                     $('#Shipment' + value.shipments[i].shipment_id).css("background-color", "#85e085");
                                     //$('#Shipment' + value.shipments[i].shipment_id).css("font-weight", "bold");
                                 }
@@ -356,6 +370,7 @@ define(['angular', './module'], function (angular, controllers) {
 
         CrService.acceptCR($scope.crData.change_req_id, $scope.customerId, crdata).success(function (response) {
           alert('success!');
+          $state.reload();
         })
 
         //console.log($scope.data);
@@ -391,6 +406,7 @@ define(['angular', './module'], function (angular, controllers) {
         // crd.append('crbody', JSON.stringify(crdata));
         CrService.rejectCR($scope.crData.change_req_id, $scope.customerId, crdata).success(function (response) {
           alert('success!');
+          $state.reload();
         });
       }
       $scope.approveClicked=function(){
@@ -402,6 +418,7 @@ define(['angular', './module'], function (angular, controllers) {
         console.log(orderData);
         CrService.approveOrder($scope.orderNumber, $scope.customerId, orderData).success(function (response) {
           alert('success!');
+          $state.reload();
         });
       }
 

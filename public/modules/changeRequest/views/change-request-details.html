@@ -23,7 +23,7 @@
       </div>
       <div class="desk-20 small-50 lt details_div">
         <p class="small_label">Order Status</p>
-        <p class="big_label"><span ng-if="orderStatus == 'change requested'" class="status_pending"></span><span ng-if="orderStatus == 'accepted'" class="status_accept"></span><span ng-if="orderStatus == 'rejected'" class="status_reject"></span>&nbsp;&nbsp;{{orderStatus}}</p>
+        <p class="big_label"><span ng-if="orderStatus == 'change_requested'" class="status_pending"></span><span ng-if="orderStatus == 'accepted'" class="status_accept"></span><span ng-if="orderStatus == 'rejected'" class="status_reject"></span>&nbsp;&nbsp;{{orderStatus}}</p>
       </div>
     </div>
   </px-card>
@@ -33,12 +33,8 @@
         <h3 class="head-text">Request Email</h3>
       </div>
       <div class="desk-50 rt clearfix cr_btns">
-        <a  title="Accept" id="acceptButton" class="btn btn-primary rt" ng-click="acceptClicked()">Accept</a>
-        <!-- <a  title="Accept" id="rejectButton" class="btn btn-primary rt" ng-click="approveClicked()">Approve</a> -->
-        <a  title="Reject" id="rejectButton" class="btn btn-reject rt" class="btn" ng-click="rejectClicked()">Reject</a>
-        <!-- <a ng-if="CRStatus== 'pending' && orderStatus == 'change requested' && crData.to == 'CPA'" title="Accept" id="acceptButton" class="btn btn-primary rt" ng-click="acceptClicked()">Accept</a>
-        <a ng-if="CRStatus== 'accepted' && orderStatus == 'change requested' && crData.to == 'OMS'" title="Accept" id="rejectButton" class="btn btn-primary rt" ng-click="approveClicked()">Approve</a>
-        <a ng-if="CRStatus== 'pending' && orderStatus == 'accepted' && crData.to == 'CPA'" title="Reject" id="rejectButton" class="btn btn-reject rt" class="btn" ng-click="rejectClicked()">Reject</a> -->
+        <a ng-if="CRStatus== 'pending' && orderStatus == 'change_requested' && crData.to == 'OMS'" title="Accept" id="acceptButton" class="btn btn-primary rt" ng-click="acceptClicked()">Accept</a>
+        <a ng-if="CRStatus== 'pending' && orderStatus == 'accepted' && crData.to == 'OMS'" title="Reject" id="rejectButton" class="btn btn-reject rt" class="btn" ng-click="rejectClicked()">Reject</a>
       </div>
     </div>
     <div class="email_body">

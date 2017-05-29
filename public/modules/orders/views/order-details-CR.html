@@ -4,23 +4,30 @@
     <div class="layout">
         <div class="layout__item pull--right">
             <div class="lt">
-                <a href="/orders" title="Back" class="btn btn-primary">Back</a>
+                <a href="/orders" title="Back" class="btn btn-primary"> << Back</a>
             </div>
+            <!-- <div class="rt">
+                <a title="Change Requests" id="CR" class="btn btn-primary" ng-click="editIconClicked()">Request for Change</a>
+            </div> -->
         </div>
     </div>
     <h1 class="Orderheading">ORDER : &nbsp;&nbsp;{{orderNumber}}</h1>
 
     <div class="layout">
         <div class="layout__item pull--right">
-            <div class="lt" >
-                <table class="summaryTable" style="line-height:0.5;height:142px">
+            <div class="lt">
+                <table class="summaryTable" style="line-height:0.5">
                     <tr>
                         <th style="background-color:#b6c3cc">Date</th>
-                        <th style="font-weight:normal">{{orderdate}}</th>
+                        <th style="font-weight:normal">{{orderdate | date : 'MMM dd, yyyy'}}</th>
                     </tr>
                     <tr>
                         <td style="background-color:#b6c3cc;font-weight:bold">GE Reference Number/Order Number</td>
                         <td>{{orderNumber}}</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#b6c3cc;font-weight:bold">Quote Number</td>
+                        <td>{{quoteNumber}}</td>
                     </tr>
                     <tr>
                         <td style="background-color:#b6c3cc;font-weight:bold">PO Number</td>
@@ -28,39 +35,62 @@
                     </tr>
                     <tr>
                         <td style="background-color:#b6c3cc;font-weight:bold">Status</td>
-                        <td>{{status}}</td>
+                        <td><span ng-if="status == 'accepted'" class="status_accept"></span><span ng-if="status == 'change_requested'" class="status_pending"></span><span ng-if="status == 'rejected'" class="status_reject"></span>{{status}}</td>
                     </tr>
                 </table>
             </div>
-            <div class="rt" style="width:40%;">
-              <div id="disputeTextDiv" style="float:right">
-            		<h4>Change Request Email text</h4>
-            		<div class="send_form">
-            			<div>
-            				The items I requested and the items that are mentioned are different. Please change the item Monitor B450 to Monitor B950.
-            			</div>
-            		</div>
-            	</div>
+        </div>
+    </div>
+    <div id="changeRequestDiv" ng-show="changeRequest">
+        <h3>Request for Change in Order {{orderNumber}}</h3>
+        <div class="send_form">
+            <div class="mailTo">
+                <label for="soId">If Sub-Order, Please select :</label>
+                <select ng-model="sub_order_id">
+                  <option ng-repeat="soid in subOrders">{{soid}}</option>
+                </select>
+            </div>
+            <div class="mailTo">
+                <label for="mailTo">To:</label>
+                <input type="text" name="mailTo" class="form-field--inline text-input" ng-model="to" />
+            </div>
+            <div class="mailCc">
+                <label for="mailCc">Cc:</label>
+                <input type="text" name="mailCc" class="form-field--inline text-input" ng-model="cc" />
+            </div>
+            <div class="mailSub">
+                <label for="mailSub">Subject:</label>
+                <input type="text" name="mailSub" class="form-field--inline text-input" ng-model="subject"/>
+            </div>
+            <div>
+                <label for="mailBody"></label>
+                <textarea ng-model="description"></textarea>
+            </div>
+            <div>
+                <input type="file" name="" file-input="files"/>
+            </div>
+            <div class="clearfix">
+                <a title="Send" class="btn btn-primary rt" ng-click="sendCRMail()">Send</a>
             </div>
         </div>
     </div>
     <div class="layout" style="border-top:1px solid #8f9ca4;border-bottom:1px solid #8f9ca4">
         <div class="layout__item desk-50 small-100 cust_det clearfix" style="border-right:1px solid #8f9ca4;">
             <div class="lt">
-              <h4>Ship To</h4>
-              <p>{{shipTo_1}}</p>
-              <p>{{shipTo_2}}</p>
-              <p>{{shipTo_3}}</p>
-              <p>{{shipTo_4}}</p>
+                <h4>Ship To</h4>
+                <p>{{shipTo_1}}</p>
+                <p>{{shipTo_2}}</p>
+                <p>{{shipTo_3}}</p>
+                <p>{{shipTo_4}}</p>
             </div>
         </div>
         <div class="layout__item desk-50 small-100 cust_det clearfix">
             <div class="lt">
-              <h4>Bill To</h4>
-              <p>{{billTo_1}}</p>
-              <p>{{billTo_2}}</p>
-              <p>{{billTo_3}}</p>
-              <p>{{billTo_4}}</p>
+                <h4>Bill To</h4>
+                <p>{{billTo_1}}</p>
+                <p>{{billTo_2}}</p>
+                <p>{{billTo_3}}</p>
+                <p>{{billTo_4}}</p>
             </div>
         </div>
     </div>
@@ -76,12 +106,12 @@
                         </td>
                         <td>{{taxableStatus}}</td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td>
                             <h4>Liquidated Damage Terms(Parking Lot):</h4>
                         </td>
                         <td>{{liquidatedDamageTerms}}</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <td>
                             <h4>Billing Timeline and Percentage to be Billed:</h4>
@@ -90,7 +120,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <h4>Billing Terms:</h4>
+                            <h4>Payment/Billing Terms:</h4>
                         </td>
                         <td>{{billingTerms}}</td>
                     </tr>
@@ -106,23 +136,29 @@
                         </td>
                         <td>{{customerNumber}}</td>
                     </tr>
+                    <tr>
+                        <td>
+                            <h4>Customer name:</h4>
+                        </td>
+                        <td>{{customerName}}</td>
+                    </tr>
                 </table>
             </div>
         </div>
         <div class="layout__item desk-50 small-100 cust_det clearfix">
             <div class="rt" style="margin-top:14%;margin-right:25%">
-                <p style="color:#e53837;font-size:1.5em">Value:<span style="color:#e53837;font-size:1.5em">${{contractAmount}}</span></p>
+                <p style="color:#e53837;font-size:1.5em">Value: &nbsp;&nbsp;&nbsp;<span style="color:#e53837;font-size:1.5em">{{contractAmount | currency : 'USD ' : 2}}</span></p>
             </div>
         </div>
     </div>
     <h4>Sub Orders ({{LengthOfOrders}})</h4>
     <px-data-table table-data='{{OrderList}}' language="en" striped="true" table-rows="true" include-all-columns="true" hide-pagination-control="true">
         <px-data-table-column name="SrNo" Label="#"></px-data-table-column>
-        <px-data-table-column name="billing_terms" label="Billing Timeline and Percentage to be Billed"></px-data-table-column>
-        <px-data-table-column name="billToaddress" label="Bill To"></px-data-table-column>
-        <px-data-table-column name="sch_os_date" label="Scehduled Onsite Date"></px-data-table-column>
-        <px-data-table-column name="ros_date" label="Requested Onsite ROSD"></px-data-table-column>
-        <px-data-table-column name="bill_amt" label="Billing Amount(USD)"></px-data-table-column>
+        <!-- <px-data-table-column name="billing_terms" label="Billing Timeline and Percentage to be Billed"></px-data-table-column> -->
+        <px-data-table-column name="shipToaddress" label="Ship To"></px-data-table-column>
+        <px-data-table-column name="sch_os_date" label="SOSD"></px-data-table-column>
+        <px-data-table-column name="ros_date" label="ROSD"></px-data-table-column>
+        <px-data-table-column name="billing_amount" label="Billing Amount(USD)"></px-data-table-column>
         <px-data-table-column name="link" label=" " type="html"></px-data-table-column>
     </px-data-table>
     <div ng-show="Suborder==true">
@@ -130,8 +166,8 @@
         <px-data-table table-data='{{SubOrderList}}' language="en" striped="true" table-rows="true" include-all-columns="true" hide-pagination-control="true">
             <px-data-table-column name="SrNo" Label="#"></px-data-table-column>
             <px-data-table-column name="ship_to" label="Ship To"></px-data-table-column>
-            <px-data-table-column name="ship_date" label="Scehduled Onsite Date"></px-data-table-column>
-            <px-data-table-column name="delivery_date" label="Requested Onsite ROSD"></px-data-table-column>
+            <px-data-table-column name="ship_date" label="SOSD"></px-data-table-column>
+            <px-data-table-column name="delivery_date" label="ROSD"></px-data-table-column>
             <px-data-table-column name="ship_amt" label="Shipment Amount(USD)"></px-data-table-column>
             <px-data-table-column name="pod" label="POD"></px-data-table-column>
             <px-data-table-column name="link" label=" " type="html"></px-data-table-column>
@@ -141,7 +177,7 @@
         <h4>Part Details ({{LengthOfShipment}})</h4>
         <px-data-table table-data='{{ShipmentList}}' language="en" striped="true" table-rows="true" include-all-columns="true">
             <px-data-table-column name="SrNo" Label="#"></px-data-table-column>
-            <px-data-table-column name="model_Type" label="Model Type"></px-data-table-column>
+            <px-data-table-column name="model_type" label="Model Type"></px-data-table-column>
             <px-data-table-column name="item_number" label="Item #"></px-data-table-column>
             <px-data-table-column name="line_item_description" label="Item Description"></px-data-table-column>
             <px-data-table-column name="quantity" label="Qty"></px-data-table-column>
@@ -160,7 +196,7 @@
         					<td>{{$index+1}}. &nbsp;&nbsp;<a target="_blank" href="" ng-click="displayFile(document.url)">{{document.description}}</a></td>
         				</tr>
         				<tr ng-show="!docFlag">
-        					<td>No documents related to this Quote</td>
+        					<td>No documents related to this Order</td>
         				</tr>
                 <!--
                 <tr>
