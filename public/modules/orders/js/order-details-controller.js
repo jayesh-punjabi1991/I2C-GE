@@ -27,6 +27,7 @@ define(['angular', './module'], function(angular, controllers) {
             $scope.billingTerms = response.data.sub_orders[0].payment_terms;
             $scope.deliveryTerms = response.data.delivery_terms;
             $scope.customerNumber = response.data.customer_number;
+            $scope.customerName = response.data.customer_name;
             $scope.contractAmount = response.data.contract_amount;
             $scope.shipTo_1 = ($scope.response.data.sub_orders[0].shipments[0].ship_to.address1 ? $scope.response.data.sub_orders[0].shipments[0].ship_to.address1 : '');
             $scope.shipTo_2 = ($scope.response.data.sub_orders[0].shipments[0].ship_to.address2 ? $scope.response.data.sub_orders[0].shipments[0].ship_to.address2 : '');
@@ -53,7 +54,10 @@ define(['angular', './module'], function(angular, controllers) {
                 $scope.OrderList[count] = value;
                 $scope.OrderList[count].SrNo = count + 1;
                 $scope.OrderList[count].billToaddress = value.bill_to.address1 ? value.bill_to.address1 : '' + " " + value.bill_to.address2 ? value.bill_to.address2 : '' + " " + value.bill_to.city ? value.bill_to.city : '' + " " + value.bill_to.country ? value.bill_to.country : '' + " " + value.bill_to.state ? value.bill_to.state : '' + " " + value.bill_to.province ? value.bill_to.province : '' + " " + value.bill_to.postalcode ? value.bill_to.postalcode : '';
+                $scope.OrderList[count].shipToaddress = $scope.shipTo_1 +' '+ $scope.shipTo_2 +' '+ $scope.shipTo_3 +' '+ $scope.shipTo_4;
                 $scope.OrderList[count].link = "<a id='Detail" + value.sub_order_id + "' class=" + value.sub_order_id + " href='javascript:void(0)'>Details</a>";
+                $scope.OrderList[count].ros_date = $filter('date')(new Date(value.ros_date*1000),  'MMM dd, yyyy');
+                $scope.OrderList[count].billing_amount = $filter('currency')(value.billing_amount, 'USD ', 2);
                 count++;
             })
             $scope.LengthOfOrders=$scope.OrderList.length;
@@ -105,8 +109,8 @@ define(['angular', './module'], function(angular, controllers) {
                                     if (value.shipment_id == $scope.selectedShipment) {
                                         $scope.ShipmentList[count2] = value;
                                         $scope.ShipmentList[count2].SrNo = count2 + 1;
-                                        $scope.ShipmentList[count2].sellingPrice = $filter('currency')($scope.ShipmentList[count2].list_price - ($scope.ShipmentList[count2].list_price * ($scope.ShipmentList[count2].discount_perc/100)), $scope.currency, 2);
-                                        $scope.ShipmentList[count2].list_price = $filter('currency')($scope.ShipmentList[count2].list_price, $scope.currency, 2);
+                                        $scope.ShipmentList[count2].sellingPrice = $filter('currency')($scope.ShipmentList[count2].list_price - ($scope.ShipmentList[count2].list_price * ($scope.ShipmentList[count2].discount_perc/100)), 'USD ', 2);
+                                        $scope.ShipmentList[count2].list_price = $filter('currency')($scope.ShipmentList[count2].list_price,'USD ', 2);
                                         $scope.ShipmentList[count2].discount_perc = $filter('number')($scope.ShipmentList[count2].discount_perc, 0);
                                         count2++;
                                     }

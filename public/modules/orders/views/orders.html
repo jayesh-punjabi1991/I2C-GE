@@ -2,17 +2,18 @@
 <px-card style="background-color:white;border-radius:4px;padding-bottom:5px">
   <h3 style="float:left;width:10.5%;">List Of Orders</h3>
 </px-card>
-  <px-card style="background-color:white;border-radius:4px;margin-top:1%">
-    <div class="flex filters">
+  <px-card style="background-color:white;border-radius:4px;margin-top:1%;padding-top:50px;">
+    <!-- <div class="flex filters">
       <div id="calenderdiv">
           <px-datetime-range-field id="rangePicker" hide-time="true" show-buttons="true" date-format="YYYY/MM/DD" time-format="HH:mm:ss" time-zone="UTC" show-time-zone="abbreviatedText" range='{"from":"2015-07-01T01:00:00.000Z","to":"2016-07-08T14:00:00.000Z"}'></px-datetime-range-field>
       </div>
-    </div>
+    </div> -->
   <px-data-table table-data='{{OrderList}}' language="en" striped="true" sortable="true" show-column-chooser="true" table-rows="true" include-all-columns="true" filterable="true">
 		<px-data-table-column name="order#" Label="Order Number" type="html" sortable filterable></px-data-table-column>
 		<px-data-table-column name="PO#" label="PO Number" sortable filterable></px-data-table-column>
 		<px-data-table-column name="createdDate" label="Created Date" sortable filterable></px-data-table-column>
-		<px-data-table-column name="value" label="Total Value" sortable filterable></px-data-table-column>
+    <px-data-table-column name="custName" label="Customer" sortable filterable></px-data-table-column>
+    <px-data-table-column name="value" label="Total Value" sortable filterable></px-data-table-column>
     <px-data-table-column name="status" label="Status" type="html" sortable filterable></px-data-table-column>
 		<px-data-table-column name="action" label="Action" type="html"></px-data-table-column>
 	</px-data-table>
@@ -21,13 +22,17 @@
       <table class="table_det">
         <tbody>
           <tr>
-          <td><i class="fa fa-caret-right" style="padding-right:10px"aria-hidden="true"></i><strong>Accepted</strong>:</td>
+          <td><span class="status_accept"></span><strong>accepted</strong></td>
           <td>Are the orders which are approved for processing</td>
           </tr>
           <tr>
-          <td><i class="fa fa-caret-right" style="padding-right:10px" aria-hidden="true"></i><strong>Change Requested</strong>:</td>
+          <td><span class="status_pending"></span><strong>change requested</strong></td>
           <td>Order is in process of change, because of change in agreed Scope of Work. Once change request is approved order will be in Accepted state</td>
-        </tr>
+          </tr>
+          <tr>
+          <td><span class="status_reject"></span><strong>rejected</strong></td>
+          <td>Are the orders which are rejected</td>
+          </tr>
       </tbody></table>
     </div>
 </px-card>

@@ -114,8 +114,8 @@ body > div > div > main > section > px-card > px-data-table > div{
   margin-top:2% !important;
 }
 #scrollBodyTableContainer{
-  background-color: #59707e !important;
-  color: white;
+  /*background-color: #59707e !important;
+  color: white;*/
 }
 .block{
 		border:2px solid #818d94;

@@ -22,7 +22,7 @@ define(['angular', './module'], function(angular, controllers) {
                             "createdDate": value.cr_date ? $filter('date')(value.cr_date * 1000, "MMM dd, yyyy") : '',
                             "status": value.status === "accepted" ? "<div class='status_accept'></div>" + value.status  : value.status === "rejected" ? "<div class='status_reject'></div>" + value.status: "<div class='status_pending'></div>" + value.status,
                             "action": value.order_process_status == 'Pending' ? "<a title='Withdraw a change Request' style='color:#9c9c20 !important' href='javascript:void(0)'><i class='fa fa-undo' aria-hidden='true'></i></a>" : "",
-                            "crDesc": value.description.substring(1, 40) + '...'
+                            "crDesc": value.description.substring(0, 40) + '...'
                         });
                     })
                 })

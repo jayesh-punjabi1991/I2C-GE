@@ -154,7 +154,7 @@ body > div > div > main > section > px-card > px-data-table > div{
   margin-left: 15px;
   width: 93%
 }
-#changeRequestDiv .send_form .mailTo input[type="text"]{
+#changeRequestDiv .send_form .mailTo input[type="text"], #changeRequestDiv .send_form .mailCc input[type="text"]{
 	padding: 5px;
   margin-left: 15px;
   width: 96%
