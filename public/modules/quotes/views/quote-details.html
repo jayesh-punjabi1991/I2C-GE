@@ -5,13 +5,13 @@
 		background-color: white !important;
 	}
 </style>
-	<px-card>
+	<px-card style="padding:1rem 1rem 2rem !important;">
 		<div class="layout">
 			<div class="layout__item pull--right">
 				<div class="lt">
 					<a href="/quotes" title="Back" class="btn btn-primary">Back</a>
 				</div>
-				<div ng-if="QuoteStatus == 'confirmed'" class="rt">
+				<div class="rt">
 					<a title="Details" id="CompleteDetails" class="btn" style="background-color:#60bd68;color:white" ng-click="completedetails = true;acceptbutton = true" ng-hide="acceptbutton" ng-disabled="rejectDetails">Complete the Details</a>
 					<a title="Accept" id="AcceptButton" class="btn disabled" ng-show="acceptbutton" ng-click="acceptClicked()">Accept</a>
 					<a title="Reject" id="RejectButton" style="background-color:#f15854;color:white" class="btn" ng-disabled="acceptDetails" ng-click="successMessage=false;rejectDetails = true;">Reject</a>
@@ -34,7 +34,7 @@
   				<tr>
   					<td class="label_td">Supporting Documents:</td>
   					<td>
-  						<input type="file" name=""/>
+  						<input type="file" name="" file-input="files"/>
   					</td>
   				</tr>
   			</table>
@@ -55,31 +55,31 @@
 						</tr>
 						<tr>
 							<td style="background-color:#b6c3cc;font-weight:bold">Date</td>
-							<td>{{QuoteDate}}</td>
+							<td>{{QuoteDate | date : 'mediumDate'}}</td>
 						</tr>
 						<tr>
 							<td style="background-color:#b6c3cc;font-weight:bold">Status</td>
-							<td>{{QuoteStatus}}</td>
+							<td> <span ng-class="QuoteStatus == 'accepted' ? status_accept : QuoteStatus == 'status_reject' ? status_reject : status_pending"></span> {{QuoteStatus}}</td>
 						</tr>
 					</table>
 				</div>
 				<div class="rt">
 					<p style="border-bottom:2px red solid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Quote Net Selling Price: &nbsp;&nbsp;&nbsp;&nbsp;
-						<strong style="font-size:2rem">{{POAmount}}</strong>
+						<strong style="font-size:2rem">{{totalSP | currency : currency1+'&nbsp;' : 2}}</strong>
 					</p>
 				</div>
 			</div>
 		</div>
     <div class="layout" style="border-top:1px solid #8f9ca4;border-bottom:1px solid #8f9ca4">
-  		<div class="layout__item desk-25 small-100 cust_det clearfix" style="border-right:1px solid #8f9ca4;">
+  		<!-- <div class="layout__item desk-25 small-100 cust_det clearfix" style="border-right:1px solid #8f9ca4;">
   			<div class="lt">
   				<h4>Customer</h4>
-  				<p>Memorial Hospital of Lampa LP</p>
-  				<p>2901 Swan Lake</p>
-  				<p>Tampa FL 29380-92388</p>
+  				<p></p>
+  				<p></p>
+  				<p></p>
   			</div>
-  		</div>
-  		<div class="layout__item desk-33 small-100 cust_det clearfix" style="border-right:1px solid #8f9ca4;">
+  		</div> -->
+  		<div class="layout__item desk-50 small-100 cust_det clearfix" style="border-right:1px solid #8f9ca4;">
         <div class="lt">
   				<h4>Ship To</h4>
   				<p>{{ShipToAddress1}} , {{ShipToAddress2}}</p>
@@ -87,7 +87,7 @@
   				<p>{{ShipToCity}} , {{ShipToCountry}} , {{ShipToPostalCode}} {{ShipToProvince}} {{ShipToState}}</p>
   			</div>
   		</div>
-      <div class="layout__item desk-33 small-100 cust_det clearfix">
+      <div class="layout__item desk-50 small-100 cust_det clearfix">
         <div class="lt">
   				<h4>Bill To</h4>
           <textarea ng-show="completedetails" id="billTo" ng-change="enableAccept()" style="width:440px;height:100px" ng-model="BillTo" required></textarea>
@@ -101,20 +101,20 @@
         <h4>Terms</h4>
         <table>
           <tr>
-            <td><h4>Governing Agreement:</h4></td>
-            <td>{{customerId}}</td>
+            <td><h4>Governing Agreement</h4></td>
+            <td><b>:</b>&nbsp;&nbsp;{{custName}}</td>
           </tr>
           <tr>
-            <td><h4>Terms of Delivery:</h4></td>
-            <td>{{DeliveryTerms}}</td>
+            <td><h4>Terms of Delivery</h4></td>
+            <td><b>:</b>&nbsp;&nbsp;{{DeliveryTerms}}</td>
           </tr>
           <tr>
-            <td><h4>Billing Terms:</h4></td>
-            <td>{{BillingTerms}}</td>
+            <td><h4>Billing Terms</h4></td>
+            <td><b>:</b>&nbsp;&nbsp;{{BillingTerms}}</td>
           </tr>
           <tr>
-            <td><h4>Payment Terms:</h4></td>
-            <td>{{paymentTerms}}</td>
+            <td><h4>Payment Terms</h4></td>
+            <td><b>:</b>&nbsp;&nbsp;{{paymentTerms}}</td>
           </tr>
         </table>
       </div>
@@ -139,7 +139,7 @@
       </div>
     </div>
   </div>
-  <h4>Summary</h4>
+  <!-- <h4>Summary</h4> -->
   <!-- <px-data-table table-data='{{partsList}}' language="en" table-rows="true" include-all-columns="true" hide-pagination-control="true" class="items">
     <px-data-table-column name="srno" Label="#"></px-data-table-column>
     <px-data-table-column name="qty" label="Qty" class="items"></px-data-table-column>
@@ -157,20 +157,20 @@
           <td></td>
         </tr>
         <tr>
-          <td><p>1. &nbsp;&nbsp;<strong>Total Contract List Price : </strong></p></td>
-          <td>{{listPrice}}</td>
+          <td><p>1. &nbsp;&nbsp;<strong>Total Contract List Price  </strong></p></td>
+          <td><b>:</b>&nbsp;&nbsp;{{totalLP | currency : currency1+'&nbsp;' : 2}}</td>
         </tr>
         <tr>
-          <td><p>2. &nbsp;&nbsp;<strong>Total Quote Discount : </strong></p></td>
-          <td>$420,723.80</td>
+          <td><p>2. &nbsp;&nbsp;<strong>Total Quote Discount  </strong></p></td>
+          <td><b>:</b>&nbsp;&nbsp;{{totalDisc | currency : currency1+'&nbsp;' : 2}}</td>
         </tr>
         <tr>
-          <td><p>3. &nbsp;&nbsp;<strong>Total Extended Selling Price : </strong></p></td>
-          <td>{{sellingPrice}}</td>
+          <td><p>3. &nbsp;&nbsp;<strong>Total Extended Selling Price  </strong></p></td>
+          <td><b>:</b>&nbsp;&nbsp;{{totalSP | currency : currency1+'&nbsp;' : 2}}</td>
         </tr>
         <tr>
-          <td><p>4. &nbsp;&nbsp;<strong>Total Quote Net Selling Price : </strong></p></td>
-          <td>{{POAmount}}</td>
+          <td><p>4. &nbsp;&nbsp;<strong>Total Quote Net Selling Price  </strong></p></td>
+          <td><b>:</b>&nbsp;&nbsp;{{totalSP | currency : currency1+'&nbsp;' : 2}}</td>
         </tr>
       </table>
     </div>
@@ -178,12 +178,12 @@
 
   <h4>Item Details</h4>
   <px-data-table table-data='{{itemDetails}}' language="en" table-rows="true" include-all-columns="true" hide-pagination-control="true">
-    <px-data-table-column name="sr.no" Label="#" class="items"></px-data-table-column>
+    <px-data-table-column name="srno" Label="#" class="items"></px-data-table-column>
     <px-data-table-column name="qty" label="Qty" class="items"></px-data-table-column>
     <px-data-table-column name="itemNo" label="Item#" class="items"></px-data-table-column>
     <px-data-table-column name="desc" label="Description" class="items"></px-data-table-column>
     <px-data-table-column name="cPrice" label="Ext Contract Price" class="items"></px-data-table-column>
-    <px-data-table-column name="disc" label="Discount" class="items"></px-data-table-column>
+    <px-data-table-column name="disc" label="Discount(%)" class="items"></px-data-table-column>
     <px-data-table-column name="sPrice" label="Ext Sell Price" class="items"></px-data-table-column>
   </px-data-table>
 
@@ -193,12 +193,12 @@
         <tr>
           <td style="padding-bottom:10px !important;padding-top:10px !important;font-weight:bold">Support Documents</td>
         </tr>
-        <tr>
-          <td>1. &nbsp;&nbsp;<a href="">Confirmed Quote</a></td>
-        </tr>
-        <tr>
-          <td>2. &nbsp;&nbsp;<a href="">Customer Signed Quote</a></td>
-        </tr>
+				<tr ng-show="docFlag" ng-repeat = "document in supporting_documents">
+					<td>{{$index+1}}. &nbsp;&nbsp;<a target="_blank" href="" ng-click="displayFile(document.url)">{{document.description}}</a></td>
+				</tr>
+				<tr ng-show="!docFlag">
+					<td>No documents related to this Quote</td>
+				</tr>
       </table>
     </div>
   </div>

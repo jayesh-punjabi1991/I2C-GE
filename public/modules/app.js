@@ -40,21 +40,30 @@ define([
      */
     predixApp.controller('MainCtrl', ['$scope', '$rootScope','PredixUserService','$location','$window','$state', function ($scope, $rootScope, predixUserService, $location, $window, $state) {
 
+        $scope.tags = [];
+        $rootScope.userName = $window.sessionStorage.getItem('userName');
+        $rootScope.userRole = $window.sessionStorage.getItem('roleName');
+        if($rootScope.userRole == 'ge-oms'){
+          $scope.tags = [
+              {icon: 'fa-home fa-2x', state: 'dashboards', label: 'Home'},
+              {icon: 'fa-truck fa-2x', state: 'orders', label: 'Orders'},
+              {icon: 'fa-pencil-square-o fa-2x', state: 'changeRequest', label: 'Change Request'}
+              // {icon: 'fa-gavel fa-2x', state: '', label: 'Disputes'}
+          ]
+        }else if($rootScope.userRole == 'ge-sales'){
+          $scope.tags = [
+              {icon: 'fa-home fa-2x', state: 'dashboards', label: 'Home'},
+              {icon: 'fa-file-text-o fa-2x', state: 'quotes', label: 'Quotes'}
+          ]
+        }
         //Global application object
         window.App = $rootScope.App = {
             version: '1.0',
             name: 'Predix Seed',
             session: {},
-            tabs: [
-                {icon: 'fa-home fa-2x', state: 'dashboards', label: 'Home'},
-                {icon: 'fa-truck fa-2x', state: 'orders', label: 'Orders'},
-                {icon: 'fa-pencil-square-o fa-2x', state: 'changeRequest', label: 'Change Request'}
-                // {icon: 'fa-gavel fa-2x', state: '', label: 'Disputes'}
-            ]
+            tabs: $scope.tags
         };
 
-        $rootScope.userName = $window.sessionStorage.getItem('userName');
-        $rootScope.userRole = $window.sessionStorage.getItem('roleName');
 
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, error) {
             //console.log('on state change');
@@ -81,6 +90,19 @@ define([
                           $window.sessionStorage.setItem('roleID', response.userRole.userRoleID);
                           $window.sessionStorage.setItem('userPermission', response.userPermission);
                           $rootScope.userRole = response.userRole.userRoleName;
+                          if($rootScope.userRole == 'ge-oms'){
+                            $rootScope.App.tabs = [
+                                {icon: 'fa-home fa-2x', state: 'dashboards', label: 'Home'},
+                                {icon: 'fa-truck fa-2x', state: 'orders', label: 'Orders'},
+                                {icon: 'fa-pencil-square-o fa-2x', state: 'changeRequest', label: 'Change Request'}
+                                // {icon: 'fa-gavel fa-2x', state: '', label: 'Disputes'}
+                            ]
+                          }else if($rootScope.userRole == 'ge-sales'){
+                            $rootScope.App.tabs = [
+                                {icon: 'fa-home fa-2x', state: 'dashboards', label: 'Home'},
+                                {icon: 'fa-file-text-o fa-2x', state: 'quotes', label: 'Quotes'}
+                            ]
+                          }
                           $window.location.reload();
                         });
                     }else{

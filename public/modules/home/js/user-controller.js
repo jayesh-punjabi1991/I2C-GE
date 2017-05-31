@@ -24,6 +24,19 @@ define(['angular', './module'], function (angular, controllers) {
                   $window.sessionStorage.setItem('userPermission', response.userPermission);
                   console.log($window.sessionStorage.getItem('userRole'));
                   $rootScope.userRole = response.userRole.userRoleName;
+                  if($rootScope.userRole == 'ge-oms'){
+                    $rootScope.App.tabs = [
+                        {icon: 'fa-home fa-2x', state: 'dashboards', label: 'Home'},
+                        {icon: 'fa-truck fa-2x', state: 'orders', label: 'Orders'},
+                        {icon: 'fa-pencil-square-o fa-2x', state: 'changeRequest', label: 'Change Request'}
+                        // {icon: 'fa-gavel fa-2x', state: '', label: 'Disputes'}
+                    ]
+                  }else if($rootScope.userRole == 'ge-sales'){
+                    $rootScope.App.tabs = [
+                        {icon: 'fa-home fa-2x', state: 'dashboards', label: 'Home'},
+                        {icon: 'fa-file-text-o fa-2x', state: 'quotes', label: 'Quotes'}
+                    ]
+                  }
                   $state.go('dashboards');
                 });
             }else{

@@ -42,6 +42,24 @@ define(['angular', 'angular-ui-router'], function(angular) {
                 templateUrl: 'modules/home/views/dashboards.html',
                 controller: 'DashboardsCtrl'
             })
+            .state('quotes', {
+                parent: 'secure',
+                url: '/quotes',
+                templateUrl: 'modules/quotes/views/quotes.html',
+                controller: 'QuotesCtrl'
+            })
+            .state('quoteDetails', {
+                parent: 'secure',
+                url: '/quoteDetails/:id',
+                templateUrl: 'modules/quotes/views/quote-details.html',
+                controller: 'QuoteDetailsCtrl'
+            })
+            .state('quoteDetailsAR', {
+                parent: 'secure',
+                url: '/quoteDetails/AR/:custId/:id',
+                templateUrl: 'modules/quotes/views/quote-details-ar.html',
+                controller: 'QuoteDetailsCtrl'
+            })
             .state('orders', {
                 parent: 'secure',
                 url: '/orders',

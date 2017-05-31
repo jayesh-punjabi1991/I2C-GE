@@ -2,13 +2,13 @@ define(['angular', './module'], function (angular, controllers) {
     'use strict';
 
     // Controller definition
-    controllers.controller('QuoteDetailsCtrl', ['$scope', '$log','$timeout','QuotesService','$http','$state','$stateParams','PredixUserService', function ($scope, $log,$timeout,QuotesService,$http,$state,$stateParams,PredixUserService) {
-      QuotesService.getQuoteDetails($stateParams.id).then(function success(response){
+    controllers.controller('QuoteDetailsCtrl', ['$scope', '$log','$timeout','QuotesService','$http','$state','$stateParams','PredixUserService','$window','$sce','$filter', function ($scope, $log,$timeout,QuotesService,$http,$state,$stateParams,PredixUserService,$window,$sce, $filter) {
+      QuotesService.getQuoteDetails($stateParams.id, $stateParams.custId).then(function success(response){
         console.log(response);
         $scope.quoteData = response.data;
         $scope.customerId = response.data.customerId;
         $scope.QuoteNumber=response.data.quote_number;
-        $scope.QuoteDate=response.data.quote_date;
+        $scope.QuoteDate=parseInt(response.data.quote_date)*1000;
         $scope.QuoteVersion=response.data.quote_version;
         $scope.QuoteStatus=response.data.status;
         $scope.BillingTerms=response.data.billing_terms;
@@ -29,10 +29,11 @@ define(['angular', './module'], function (angular, controllers) {
         $scope.BillToPostalCode=response.data.bill_to.postalCode;
         $scope.BillToProvince=response.data.bill_to.province;
         $scope.BillToState=response.data.bill_to.state;
-        $scope.poNumber = $scope.poNumber;
+        $scope.poNumber = response.data.po_number;
         $scope.CustomerAccountNumber = response.data.customer_acc_number;
         $scope.POAmount = response.data.purchase_order_amount;
         $scope.paymentTerms = response.data.payment_terms;
+        $scope.currency1 = response.data.currency;
         $scope.partNumber = response.data.quoteLines[0].partNumber;
         $scope.partDesc = response.data.quoteLines[0].lineItemDescription;
         $scope.sellingPrice = response.data.quoteLines[0].sellingPrice;
@@ -41,20 +42,38 @@ define(['angular', './module'], function (angular, controllers) {
         $scope.discountPerc = response.data.quoteLines[0].discountPerc;
         $scope.partsList = [];
         $scope.itemDetails = [];
+        $scope.totalLP = 0;
+        $scope.totalSP = 0;
+        $scope.totalDisc = 0;
+        console.log(response.data.supporting_documents.length);
+        if(response.data.supporting_documents != null && response.data.supporting_documents.length != 0){
+            console.log('in if');
+            $scope.docFlag = true;
+            $scope.supporting_documents = response.data.supporting_documents;
+        }else{
+            $scope.docFlag = false;
+        }
         angular.forEach(response.data.quoteLines,function(value,key){
+          $scope.totalLP = $scope.totalLP + parseInt(value.quantity)*parseFloat(value.list_price);
+          $scope.discA = value.list_price * (value.discount_perc/100);
+          value.selling_price = value.list_price - (value.list_price * (value.discount_perc/100));
+          $scope.totalSP = $scope.totalSP + parseInt(value.quantity)*parseFloat(value.selling_price);
+          $scope.totalDisc = $scope.totalDisc + parseInt(value.quantity) * parseFloat(value.list_price * (value.discount_perc/100));
           $scope.partsList.push({
+            'srno': key + 1,
             'qty': value.quantity,
-            'desc': value.lineItemDescription,
-            'cPrice': value.list_price,
-            'disc': value.discount_perc,
-            'sPrice': value.selling_price
+            'desc': value.line_item_description,
+            'cPrice': $filter('currency')(value.list_price, $scope.currency1 + ' ', 2),
+            'disc': $filter('number')(value.discount_perc, 2),
+            'sPrice': $filter('currency')(value.selling_price, $scope.currency1 + ' ', 2)
           });
           $scope.itemDetails.push({
+            'srno': key + 1,
             'qty': value.quantity,
-            'desc': value.lineItemDescription,
-            'cPrice': value.list_price,
-            'disc': value.discount_perc,
-            'sPrice': value.selling_price,
+            'desc': value.line_item_description,
+            'cPrice': $filter('currency')(value.list_price, $scope.currency1  + ' ', 2),
+            'disc': $filter('number')(value.discount_perc, 0),
+            'sPrice': $filter('currency')(value.selling_price, $scope.currency1  + ' ', 2),
             'itemNo': value.part_number
           });
         });
@@ -73,11 +92,10 @@ define(['angular', './module'], function (angular, controllers) {
         d1.className += " disabled";
 
         var acceptData = $scope.quoteData;
-        // var fd = new FormData();
-        // angular.forEach($scope.files, function(file){
-        //   fd.append('file', file);
-        // });
-        //console.log($scope.files);
+        var fd = new FormData();
+        angular.forEach($scope.files, function(file){
+           fd.append('file', file);
+        });
 
         acceptData.bill_to = {
           'address1':  $scope.BillTo,
@@ -86,22 +104,44 @@ define(['angular', './module'], function (angular, controllers) {
           'city':''
         };
         //acceptData.bill_to = $scope.BillTo;
-        acceptData.poNumber = $scope.PONumber;
-        //fd.append('quoteInputVO', JSON.stringify(acceptData));
+        acceptData.po_number = $scope.PONumber;
+        fd.append('quoteInputVO', JSON.stringify(acceptData));
         // for (var pair of fd.entries()) {
         //     console.log(pair[0]+ ', ' + pair[1]);
         // };
         //console.log(fd);
-        // QuotesService.acceptQuote(fd).success(function (response) {
-        //   $scope.successMessage = true;
-        //   //alert(response);
-        // });
-        QuotesService.acceptQuote1(acceptData).success(function (response) {
-          $scope.successMessage = true;
-          alert(response);
+        QuotesService.acceptQuote(fd).success(function (response) {
+          alert("Quote #" + $scope.QuoteNumber + " is accepted successfully.");
+          $state.go('quoteDetailsAR',{id: $scope.QuoteNumber});
         });
 
       };
+      $scope.displayFile = function (fileName) {
+        QuotesService.viewDocument(fileName).success(function(response){
+           var sliceSize = sliceSize || 512;
+
+           var byteCharacters = atob(response);
+           var byteArrays = [];
+
+          for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            var byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+              byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            var byteArray = new Uint8Array(byteNumbers);
+
+            byteArrays.push(byteArray);
+          }
+           var blob = new Blob(byteArrays, { type: 'application/pdf' });
+           var objectUrl = URL.createObjectURL(blob);
+           //console.log(objectUrl);
+           //var fURL = $sce.trustAsResourceUrl(objectUrl);
+           window.open(objectUrl);
+        });
+      }
 
       $scope.rejectClicked = function () {
         var d = document.getElementById("AcceptButton");
@@ -110,14 +150,22 @@ define(['angular', './module'], function (angular, controllers) {
         d1.className += " disabled";
 
         var rejectData = $scope.quoteData;
+        var rd = new FormData();
         rejectData.comment = $scope.comments;
-        console.log(rejectData);
+        rd.append('quoteInputVO', JSON.stringify(rejectData));
 
-         QuotesService.rejectQuote(rejectData).success(function (response) {
-           $scope.AcknowledgeReject=true;
+        angular.forEach($scope.files, function(file){
+           rd.append('file', file);
+        });
+        // for (var pair of rd.entries()) {
+        //     console.log(pair[0]+ ', ' + pair[1]);
+        // };
+        QuotesService.rejectQuote(rd).success(function (response) {
            $scope.rejectDetails=false;
+           alert("You have rejected Quote #" + $scope.QuoteNumber);
+           $state.go('quoteDetailsAR',{id: $scope.QuoteNumber});
            //alert('Quote rejected');
-         });
+        });
       }
     }]);
 });

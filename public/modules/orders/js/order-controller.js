@@ -7,10 +7,9 @@ define(['angular', './module'], function(angular, controllers) {
         if ($window.sessionStorage.getItem('auth_token')) {
             OrdersService.getOrdersList().then(function success(response) {
                 angular.forEach(response.data, function(val, ind) {
-                    console.log(val);
                     angular.forEach(val.orders, function(value, key) {
                         $scope.OrderList.push({
-                            "order#": value.order_process_status == 'accepted' ? "<a href='/orderDetails/Accepted/" + val.custId + "/" + value.ge_order_number + "'>" + value.ge_order_number + "</a>" : value.order_process_status == 'generated' ? "<a href='/orderDetails/Accepted/" + val.custId + "/" + value.ge_order_number + "'>" + value.ge_order_number + "</a>" : value.order_process_status == 'change_requested' ? "<a href='/orderDetails/CR/" + val.custId + "/" + value.ge_order_number + "'>" + value.ge_order_number + "</a>" : "<a href='/orderDetails/Rejected/" + value.ge_order_number + "'>" + value.ge_order_number + "</a>",
+                            "order#": value.order_process_status == 'accepted' ? "<a href='/orderDetails/Accepted/" + val.custId + "/" + value.ge_order_number + "'>" + value.ge_order_number + "</a>" : value.order_process_status == 'generated' ? "<a href='/orderDetails/Accepted/" + val.custId + "/" + value.ge_order_number + "'>" + value.ge_order_number + "</a>" : value.order_process_status == 'change_requested' ? "<a href='/orderDetails/CR/" + val.custId + "/" + value.ge_order_number + "'>" + value.ge_order_number + "</a>" : "<a href='/orderDetails/Rejected/" + val.custId + "/" + value.ge_order_number + "'>" + value.ge_order_number + "</a>",
                             "PO#": value.cust_po_number,
                             "createdDate": value.order_date ? $filter('date')(new Date(parseInt(value.order_date) * 1000), 'MMM dd, yyyy') : '',
                             "value": $filter('currency')(value.contract_amount, 'USD ', 2),
