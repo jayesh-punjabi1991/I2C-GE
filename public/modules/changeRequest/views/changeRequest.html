@@ -2,12 +2,16 @@
 <px-card style="background-color:white;border-radius:4px;padding-bottom:5px">
   <h3 style="float:left;width:18%;">List Of Change Requests</h3>
 </px-card>
-<px-card style="background-color:white;border-radius:4px;margin-top:1%; padding-top:50px;">
-  <!-- <div class="flex filters">
+<px-card style="background-color:white;border-radius:4px;margin-top:1%;">
+  <div class="flex filters">
     <div id="calenderdiv">
         <px-datetime-range-field id="rangePicker" hide-time="true" show-buttons="true" date-format="YYYY/MM/DD" time-format="HH:mm:ss" time-zone="UTC" show-time-zone="abbreviatedText" range='{"from":"2015-07-01T01:00:00.000Z","to":"2016-07-08T14:00:00.000Z"}'></px-datetime-range-field>
     </div>
-  </div> -->
+  </div>
+  <div id="Loader" ng-show="Loading==true" ng-hide="Loading==false">
+      <px-spinner size="100"></px-spinner>
+  </div>
+  <div ng-show="Loading==false" ng-hide="Loading==true">
   <px-data-table table-data='{{ChangeRequestList}}' language="en" striped="true" sortable="true" show-column-chooser="true" table-rows="true" include-all-columns="true" filterable="true">
     <px-data-table-column name="cr#" Label="CR. Number" type="html" sortable filterable></px-data-table-column>
     <px-data-table-column name="order#" Label="Order Number" sortable filterable></px-data-table-column>
@@ -17,20 +21,21 @@
     <px-data-table-column name="status" label="Status" type="html" sortable filterable></px-data-table-column>
     <!-- <px-data-table-column name="action" label="Actions" type="html" ></px-data-table-column> -->
   </px-data-table>
+</div>
   <h4 style="margin-bottom:0px !important;margin-top:0 !important">Legends</h4>
   <div class="layout_item legend_tbl">
       <table class="table_det">
         <tbody>
           <tr>
-          <td><span class="status_pending"></span><strong>Pending</strong>:</td>
+          <td><span class="status_pending"></span><strong>Pending</strong></td>
           <td>Change request is in process or pending your approval</td>
           </tr>
           <tr>
-          <td><span class="status_accept"></span><strong>Accepted</strong>:</td>
+          <td><span class="status_accept"></span><strong>Accepted</strong></td>
           <td>Change request is accepted and is in progress</td>
           </tr>
           <tr>
-          <td><span class="status_reject"></span><strong>Rejected</strong>:</td>
+          <td><span class="status_reject"></span><strong>Rejected</strong></td>
           <td>Change request is rejected as may not meet common agreement</td>
         </tr>
       </tbody></table>

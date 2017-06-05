@@ -20,6 +20,9 @@ aha-table{
 #scrollBodyTableContainer > div:nth-child(1){
   color:black;
 }
+.px-datetime-range-field-0 .u-mb.px-datetime-range-field, .px-datetime-range-field-0 .u-mv.px-datetime-range-field{
+  margin-bottom: 0 !important;
+}
 .aha-table-0 .sorted-text.aha-table{
   color:white !important;
 }
@@ -130,3 +133,8 @@ border-radius: 3px !important;
 /*#scrollBodyTableContainer > div:nth-child(1) > span.th.aha-cr\23 -th.u-p0.sortable.style-scope.aha-table > div > span > iron-icon > svg{
   width:70% !important;
 }*/
+#Loader{
+  margin-top: 5%;
+  margin-left: 45%;
+  margin-bottom: 5%;
+}

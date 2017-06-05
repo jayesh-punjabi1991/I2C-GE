@@ -6,7 +6,7 @@
         <h2 class="cr-heading" style="display: -webkit-inline-box"><span class="cr">CHANGE REQUEST# :</span>&nbsp;<span class="cr_id">{{crId}}</span></h2>
         <div class="desk-50 rt clearfix cr_btns">
             <input class="tgl tgl-flip" id="cb5" type="checkbox" />
-            <label id="ToggleVersion" ng-click="ToggleVersion()" style="width:25% !important;float:right;;height:1.5rem;display:none;" class="tgl-btn" data-tg-off="Current Version" data-tg-on="Previous Version" for="cb5"></label>
+            <label id="ToggleVersion" ng-click="ToggleVersion()" style="width:25% !important;float:right;height:1.5rem;display:none" class="tgl-btn" data-tg-off="Current Version" data-tg-on="Previous Version" for="cb5"></label>
             <!-- <a title="" id="PreviousVersion" class="btn btn-tertiary rt" ng-click="ShowPreviousVersion()">Previous Version of Change Request# : {{crId}}</a>
             <a title="" style="display:none" id="Back" class="btn btn-tertiary rt" ng-click="ShowCurrentVersion()">Back</a> -->
         </div>
@@ -39,9 +39,14 @@
                     <h3 class="head-text">Request Email</h3>
                 </div>
                 <div class="desk-50 rt clearfix cr_btns">
-                  <a ng-if="CRStatus== 'pending' && orderStatus == 'change_requested' && crData.to == 'ge-oms'" title="Accept" id="acceptButton" class="btn btn-primary rt" ng-click="acceptClicked()">Accept</a>
+                  <a ng-hide="acptBtn" ng-if="CRStatus== 'pending' && orderStatus == 'change_requested' && crData.to == 'cust-cpa'" title="Accept" id="acceptButton" class="btn btn-primary rt" ng-click="acceptBtnClicked()">Accept</a>
+                  <a ng-show="acptBtn" ng-if="CRStatus== 'pending' && orderStatus == 'change_requested' && crData.to == 'cust-cpa'" title="Accept" id="acceptButton1" class="btn btn-primary rt" ng-click="acceptClicked()">Accept</a>
                   <a ng-if="CRStatus== 'pending' && orderStatus == 'accepted' && crData.to == 'ge-oms'" title="Reject" id="rejectButton" class="btn btn-reject rt" class="btn" ng-click="rejectClicked()">Reject</a>
                 </div>
+            </div>
+            <div ng-if="showLinkInput == true">
+              <label for="changeLtrLink">Change Letter Link</label>
+              <input type="text" name="changeLtrLink" value="" ng-model="changeLtrLink">
             </div>
             <div class="email_body">
                 <div class="toFrom clearfix">
@@ -77,9 +82,13 @@
                     <p class="small_label">Billing Timeline and Percentage to be Billed</p>
                     <p class="big_label">{{billingTimeline}}</p>
                 </div>
-                <div class="desk-20 small-50 lt details_div">
+                <div class="desk-10 small-50 lt details_div">
                     <p class="small_label">Delivery Terms</p>
                     <p class="big_label" id="delivery_terms">{{deliveryTerms}}</p>
+                </div>
+                <div class="desk-10 small-50 lt details_div">
+                    <p class="small_label">FF Status</p>
+                    <p class="big_label" id="order_ff_status">{{order_ff_state}}</p>
                 </div>
             </div>
             <div class="adr_div clearfix">
@@ -89,6 +98,10 @@
                     <p class="big_label side-margin bottom-margin">{{shipTo_2}}</p>
                     <p class="big_label side-margin bottom-margin">{{shipTo_3}}</p>
                     <p class="big_label side-margin">{{shipTo_4}}</p>
+                    <p class="big_label side-margin">{{shipTo_5}}</p>
+                    <p class="big_label side-margin">{{shipTo_6}}</p>
+                    <p class="big_label side-margin">{{shipTo_7}}</p>
+                    <p class="big_label side-margin">{{shipTo_8}}</p>
                 </div>
                 <div class="desk-50 lt">
                     <p class="small_label">Bill To</p>
@@ -96,6 +109,10 @@
                     <p class="big_label side-margin bottom-margin">{{billTo_2}}</p>
                     <p class="big_label side-margin bottom-margin">{{billTo_3}}</p>
                     <p class="big_label side-margin">{{billTo_4}}</p>
+                    <p class="big_label side-margin">{{billTo_5}}</p>
+                    <p class="big_label side-margin">{{billTo_6}}</p>
+                    <p class="big_label side-margin">{{billTo_7}}</p>
+                    <p class="big_label side-margin">{{billTo_8}}</p>
                 </div>
             </div>
         </px-card>
@@ -103,20 +120,26 @@
             <h4 style="margin: 0 !important; padding: 20px 0;">Sub Order Details ({{lengthofSubOrders}})</h4>
             <table class="sortable" style="width: 100%;">
                 <tr style="background-color: #2b5ea2;color: white;">
-                    <th>Sr.No</th>
+                    <th style="width:4% !important">Sr.</th>
                     <th>Bill To Address</th>
                     <th>Billing Terms</th>
                     <th>SOSD</th>
                     <th>ROSD</th>
+                    <th>ASDD</th>
+                    <th>ASOD</th>
+                    <th>FF State</th>
                     <th>Bill Amt</th>
                     <th></th>
                 </tr>
                 <tr id="{{'Sub_Order'+x.sub_order_id}}" dir-paginate="x in OrderList |itemsPerPage:10" pagination-id="SubOrder">
                     <td>{{x.SrNo}}</td>
-                    <td id="{{'bill_to'+x.sub_order_id}}">{{x.bill_to.address1}}</td>
+                    <td id="{{'bill_to'+x.sub_order_id}}">{{x.billToaddress}}</td>
                     <td id="{{'billing_terms'+x.sub_order_id}}">{{x.billing_terms}}</td>
                     <td id="{{'sch_os_date'+x.sub_order_id}}">{{x.sch_os_date}}</td>
                     <td id="{{'ros_date'+x.sub_order_id}}">{{x.ros_date*1000 | date : 'mediumDate'}}</td>
+                    <td id="{{'ship_date'+x.sub_order_id}}">{{x.ship_date*1000 | date : 'mediumDate'}}</td>
+                    <td id="{{'delivery_date'+x.sub_order_id}}">{{x.delivery_date*1000 | date : 'mediumDate'}}</td>
+                    <td id="{{'sub_order_ff_state'+x.sub_order_id}}">{{x.sub_order_ff_state}}</td>
                     <td id="{{'bill_amt'+x.sub_order_id}}">{{x.billing_amount | currency : 'USD ': 2}}</td>
                     <td id="{{'Detail'+x.sub_order_id}}" ng-click="saveSubOrder(x.sub_order_id)"><a href='javascript:void(0)'>Details</a></td>
                 </tr>
@@ -131,8 +154,9 @@
                     <tr style="background-color: #2b5ea2;color: white;">
                         <th>Sr.No</th>
                         <th>Ship To</th>
-                        <th>Ship Date</th>
-                        <th>Delivery Date</th>
+                        <th>ASDD</th>
+                        <th>AOSD</th>
+                        <th>FF State</th>
                         <th>Ship Amount</th>
                         <th>POD</th>
                         <th></th>
@@ -142,6 +166,7 @@
                         <td id="{{'ship_to'+x.shipment_id}}">{{x.ship_to}}</td>
                         <td id="{{'ship_date'+x.shipment_id}}">{{x.ship_date}}</td>
                         <td id="{{'delivery_date'+x.shipment_id}}">{{x.delivery_date}}</td>
+                        <td id="{{'shipment_ff_state'+x.shipment_id}}">{{x.shipment_ff_state}}</td>
                         <td id="{{'ship_amt'+x.shipment_id}}">{{x.ship_amt}}</td>
                         <td id="{{'pod'+x.shipment_id}}">{{x.pod}}</td>
                         <td id="{{'Details'+x.shipment_id}}" ng-click="saveShipment(x.shipment_id)"><a href='javascript:void(0)'>Details</a></td>
@@ -181,6 +206,21 @@
                     </dir-pagination-controls>
                 </div>
             </div>
+        </px-card>
+        <px-card>
+          <div>
+            <h3 class="cr-heading label-color">Order Details</h3>
+          </div>
+          <div>
+            <table>
+                <tr ng-show="docFlag" ng-repeat = "document in supporting_documents">
+                  <td>{{$index+1}}. &nbsp;&nbsp;<a target="_blank" href="" ng-click="displayFile(document.url)">{{document.description}}</a></td>
+                </tr>
+                <tr ng-show="!docFlag">
+                  <td>No documents related to this Order</td>
+                </tr>
+            </table>
+          </div>
         </px-card>
     </div>
 </div>

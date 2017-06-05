@@ -82,6 +82,10 @@
                 <p>{{shipTo_2}}</p>
                 <p>{{shipTo_3}}</p>
                 <p>{{shipTo_4}}</p>
+                <p>{{shipTo_5}}</p>
+                <p>{{shipTo_6}}</p>
+                <p>{{shipTo_7}}</p>
+                <p>{{shipTo_8}}</p>
             </div>
         </div>
         <div class="layout__item desk-50 small-100 cust_det clearfix">
@@ -91,6 +95,10 @@
                 <p>{{billTo_2}}</p>
                 <p>{{billTo_3}}</p>
                 <p>{{billTo_4}}</p>
+                <p>{{billTo_5}}</p>
+                <p>{{billTo_6}}</p>
+                <p>{{billTo_7}}</p>
+                <p>{{billTo_8}}</p>
             </div>
         </div>
     </div>
@@ -100,6 +108,12 @@
             <div class="lt">
                 <h4>Terms</h4>
                 <table>
+                  <tr>
+                      <td>
+                          <h4>Fulfillment State:</h4>
+                      </td>
+                      <td>{{order_ff_state}}</td>
+                  </tr>
                     <tr>
                         <td>
                             <h4>Taxable Status:</h4>
@@ -158,6 +172,9 @@
         <px-data-table-column name="shipToaddress" label="Ship To"></px-data-table-column>
         <px-data-table-column name="sch_os_date" label="SOSD"></px-data-table-column>
         <px-data-table-column name="ros_date" label="ROSD"></px-data-table-column>
+        <px-data-table-column name="ship_date" label="ASDD"></px-data-table-column>
+        <px-data-table-column name="delivery_date" label="AOSD"></px-data-table-column>
+        <px-data-table-column name="sub_order_ff_state" label="Fulfillment State"></px-data-table-column>
         <px-data-table-column name="billing_amount" label="Billing Amount(USD)"></px-data-table-column>
         <px-data-table-column name="link" label=" " type="html"></px-data-table-column>
     </px-data-table>
@@ -166,8 +183,9 @@
         <px-data-table table-data='{{SubOrderList}}' language="en" striped="true" table-rows="true" include-all-columns="true" hide-pagination-control="true">
             <px-data-table-column name="SrNo" Label="#"></px-data-table-column>
             <px-data-table-column name="ship_to" label="Ship To"></px-data-table-column>
-            <px-data-table-column name="ship_date" label="SOSD"></px-data-table-column>
-            <px-data-table-column name="delivery_date" label="ROSD"></px-data-table-column>
+            <px-data-table-column name="ship_date" label="ASDD"></px-data-table-column>
+            <px-data-table-column name="delivery_date" label="AOSD"></px-data-table-column>
+            <px-data-table-column name="shipment_ff_state" label="Fulfillment State"></px-data-table-column>
             <px-data-table-column name="ship_amt" label="Shipment Amount(USD)"></px-data-table-column>
             <px-data-table-column name="pod" label="POD"></px-data-table-column>
             <px-data-table-column name="link" label=" " type="html"></px-data-table-column>

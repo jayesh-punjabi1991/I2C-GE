@@ -14,9 +14,13 @@
         <!-- <th style="width:5%"></th> -->
         <tbody>
           <tr class="alert" ng-repeat="(key, value) in pendingActions">
-            <td><span ng-if="value.eventType == 'Quote.Import'" style="display:inline-block; background-color:orange; color:white; padding: 5px;">{{value.eventType}}</span><span ng-if="value.eventType == 'Quote.Accept'" style="display:inline-block; background-color:green; color:white; padding: 5px;">{{value.eventType}}</span><span ng-if="value.eventType == 'quote.reject'" style="display:inline-block; background-color:red; color:white; padding: 5px;">{{value.eventType}}</span><span ng-if="!(value.eventType == 'Quote.Import' || value.eventType == 'Quote.Accept' || value.eventType == 'quote.reject')" style="display:inline-block; background-color:blue; color:white; padding: 5px;">{{value.eventType}}</span></td>
+            <td ng-if="value.eventType == 'Quote.Accept'"><span  style="display:inline-block; background-color:green; color:white; padding: 5px;">{{value.eventType}}</span></td>
+            <td ng-if="value.eventType == 'Quote.Reject'"><span style="display:inline-block; background-color:red; color:white; padding: 5px;">{{value.eventType}}</span></td>
+            <td ng-if="value.eventType == 'CR.Accept'"><span style="display:inline-block; background-color:green; color:white; padding: 5px;">{{value.eventType}}</span></td>
+            <td ng-if="value.eventType == 'CR.Initiate'"><span style="display:inline-block; background-color:orange; color:white; padding: 5px;">{{value.eventType}}</span></td>
             <td>{{value.message}}</td>
-            <td><a ng-if="value.eventType == 'Quote.Accept'" href="{{'/orderDetails/Accepted/'+ value.order_id}}">View Order</a><a ng-if="value.eventType == 'Order.Approve'" href="{{'/orderDetails/Accepted/'+ value.order_id}}">View Order</a><a ng-if="!(value.eventType == 'Quote.Accept' || value.eventType == 'Quote.Import')" href="">View</a></td>
+            <td ng-if="value.eventType == 'CR.Accept' || value.eventType == 'CR.Initiate' || value.eventType == 'Quote.Accept'"><a href="{{'/orderDetails/Accepted/'+value.cust_id+'/'+ value.order_id}}">View Order</a></td>
+            <td ng-if="value.eventType == 'Quote.Reject'"><a href="{{'/quoteDetails/AR/'+value.cust_id+'/'+ value.quote_id}}">View Quote</a></td>
           </tr>
         </tbody>
       </table>

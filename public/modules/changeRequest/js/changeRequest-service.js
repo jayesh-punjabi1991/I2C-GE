@@ -15,6 +15,14 @@ define(['angular', './module', 'constants'], function(angular, module) {
                     }
                 });
             },
+            getCrListByDate: function(){
+              return $http.get(urls.base_url + urls.get_Cr_List_date +'/'+$window.sessionStorage.getItem('fromDate')+'/'+$window.sessionStorage.getItem('toDate')+'/CR', {
+                 headers: {
+                   'Authorization': 'Bearer ' + $window.sessionStorage.getItem('auth_token'),
+                   'x-access-token': $window.sessionStorage.getItem('userToken')
+                 }
+               });
+             },
             getCrDetails: function(crNo, custId) {
                 //return $http.get('modules/changeRequest/json/ChangeRequestList.json')
                 return $http.get(urls.base_url + urls.get_Cr_details + '/' + crNo + '?custId=' + custId, {
