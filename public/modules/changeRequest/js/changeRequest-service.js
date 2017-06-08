@@ -42,7 +42,7 @@ define(['angular', './module', 'constants'], function(angular, module) {
                });
              },
             acceptCR: function(crNo,custId, data) {
-              return $http.post(urls.base_url + urls.accept_CR+'/'+ crNo +'?custId='+custId, JSON.stringify(data), {
+              return $http.post(urls.base_url + urls.accept_CR+'/'+ crNo +'?custId='+custId, angular.toJson(data), {
                  headers: {
                    'Authorization': 'Bearer ' + $window.sessionStorage.getItem('auth_token'),
                    'x-access-token': $window.sessionStorage.getItem('userToken')
@@ -50,7 +50,7 @@ define(['angular', './module', 'constants'], function(angular, module) {
                });
             },
             rejectCR: function(crNo,custId, data) {
-              return $http.post(urls.base_url + urls.reject_CR+'/'+ crNo +'?custId='+custId, JSON.stringify(data), {
+              return $http.post(urls.base_url + urls.reject_CR+'/'+ crNo +'?custId='+custId, angular.toJson(data), {
                  headers: {
                    'Authorization': 'Bearer ' + $window.sessionStorage.getItem('auth_token'),
                    'x-access-token': $window.sessionStorage.getItem('userToken')

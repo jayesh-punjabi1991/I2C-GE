@@ -154,9 +154,7 @@ define(['angular', './module'], function(angular, controllers) {
                                     $scope.$apply();
                                 }
 
-                        }, false);
-
-                    }
+                        }
                 }, 3000);
             }
         })

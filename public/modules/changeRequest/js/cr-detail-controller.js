@@ -16,6 +16,7 @@ define(['angular', './module'], function(angular, controllers) {
         $scope.CurrentVersion = true;
         $scope.acptBtn = false;
         $scope.showLinkInput = false;
+        //$scope.changeLtrLink = '';
         var count = 0;
         var count1 = 0;
         CrService.getCrDetails($stateParams.id, $stateParams.custId).then(function success(response) {
@@ -470,7 +471,18 @@ define(['angular', './module'], function(angular, controllers) {
             // var d1 = document.getElementById("RejectButton");
             // d.className += " disabled";
             // d1.className += " disabled";
+            console.log($scope.crData.supporting_documents);
             $scope.showLinkInput = false;
+            var crDocs = $scope.crData.supporting_documents;
+            //console.log(Object.keys($scope.crData.supporting_documents).length);
+            var length = Object.keys($scope.crData.supporting_documents).length;
+            crDocs[Object.keys($scope.crData.supporting_documents).length] = {
+                'document_type':'link',
+                'description':'ChangeLetter_link',
+                'url':$scope.ltrLink,
+                'hash':''
+            };
+            console.log(crDocs);
             var crdata = {
                 'from': $scope.crData.from,
                 'to': $scope.crData.to,
@@ -487,10 +499,10 @@ define(['angular', './module'], function(angular, controllers) {
                 'order_date': $scope.crData.order_date,
                 'parentCustId': $scope.crData.parentCustId,
                 'status': $scope.crData.status,
-                'supporting_documents': $scope.crData.supporting_documents,
+                'supporting_documents': crDocs,
                 'tc_order_version': $scope.crData.tc_order_version
             };
-
+            console.log(crdata);
             CrService.acceptCR($scope.crData.change_req_id, $scope.customerId, crdata).success(function(response) {
                 alert('success!');
                 $state.reload();
