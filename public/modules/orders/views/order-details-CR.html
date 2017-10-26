@@ -165,45 +165,103 @@
             </div>
         </div>
     </div>
-    <h4>Sub Orders ({{LengthOfOrders}})</h4>
-    <px-data-table table-data='{{OrderList}}' language="en" striped="true" table-rows="true" include-all-columns="true" hide-pagination-control="true">
-        <px-data-table-column name="SrNo" Label="#"></px-data-table-column>
-        <!-- <px-data-table-column name="billing_terms" label="Billing Timeline and Percentage to be Billed"></px-data-table-column> -->
-        <px-data-table-column name="billToaddress" label="Bill To"></px-data-table-column>
-        <px-data-table-column name="sch_os_date" label="SOSD"></px-data-table-column>
-        <px-data-table-column name="ros_date" label="ROSD"></px-data-table-column>
-        <px-data-table-column name="ship_date" label="ASDD"></px-data-table-column>
-        <px-data-table-column name="delivery_date" label="AOSD"></px-data-table-column>
-        <px-data-table-column name="sub_order_ff_state" label="Fulfillment State"></px-data-table-column>
-        <px-data-table-column name="billing_amount" label="Billing Amount(USD)"></px-data-table-column>
-        <px-data-table-column name="link" label=" " type="html"></px-data-table-column>
-    </px-data-table>
-    <div ng-show="Suborder==true">
-        <h4>Shipment Details ({{LengthOfSubOrders}})</h4>
-        <px-data-table table-data='{{SubOrderList}}' language="en" striped="true" table-rows="true" include-all-columns="true" hide-pagination-control="true">
-            <px-data-table-column name="SrNo" Label="#"></px-data-table-column>
-            <px-data-table-column name="ship_to" label="Ship To"></px-data-table-column>
-            <px-data-table-column name="ship_date" label="ASDD"></px-data-table-column>
-            <px-data-table-column name="delivery_date" label="ASOD"></px-data-table-column>
-            <px-data-table-column name="shipment_ff_state" label="Fulfillment State"></px-data-table-column>
-            <px-data-table-column name="ship_amt" label="Shipment Amount(USD)"></px-data-table-column>
-            <px-data-table-column name="pod" label="POD"></px-data-table-column>
-            <px-data-table-column name="link" label=" " type="html"></px-data-table-column>
-        </px-data-table>
-    </div>
-    <div ng-show="Shipment==true">
-        <h4>Part Details ({{LengthOfShipment}})</h4>
-        <px-data-table table-data='{{ShipmentList}}' language="en" striped="true" table-rows="true" include-all-columns="true">
-            <px-data-table-column name="SrNo" Label="#"></px-data-table-column>
-            <px-data-table-column name="model_type" label="Model Type"></px-data-table-column>
-            <px-data-table-column name="item_number" label="Item #"></px-data-table-column>
-            <px-data-table-column name="line_item_description" label="Item Description"></px-data-table-column>
-            <px-data-table-column name="quantity" label="Qty"></px-data-table-column>
-            <px-data-table-column name="list_price" label="L.P"></px-data-table-column>
-            <px-data-table-column name="discount_perc" label="Discount"></px-data-table-column>
-            <px-data-table-column name="sellingPrice" label="S.P"></px-data-table-column>
-        </px-data-table>
-    </div>
+    <h4 style="margin-top:0px !important">Sub Orders ({{LengthOfOrders}})</h4>
+            <table style="margin-bottom:1rem">
+                <tr style="background-color: #2b5ea2;color: white;">
+                    <th style="width:4% !important">Sr</th>
+                    <th>Billing Terms</th>
+                    <th>Bill To Address</th>
+                    <th>SOSD</th>
+                    <th>ROSD</th>
+                    <th>ASDD</th>
+                    <th>ASOD</th>
+                    <th>FF State</th>
+                    <th>Bill Amt</th>
+                </tr>
+            </table>
+            <div class="accordion">
+                <div class="accordion-section" ng-repeat="x in OrderList">
+                    <a class="accordion-section-title" ng-click="saveSubOrder(x.sub_order_id)" href="#accordion-{{x.sub_order_id}}">
+                        <table class="sub-order-table" style="margin-bottom:0rem !important">
+                            <tr id="{{'Sub_Order'+x.sub_order_id}}">
+                                <th>{{x.SrNo}}</td>
+                                <th id="{{'bill_to'+x.sub_order_id}}">{{x.billToaddress}}</th>
+                                <th id="{{'billing_terms'+x.sub_order_id}}">{{x.billing_terms}}</th>
+                                <th id="{{'sch_os_date'+x.sub_order_id}}">{{x.sch_os_date}}</th>
+                                <th id="{{'ros_date'+x.sub_order_id}}">{{x.ros_date}}</th>
+                                <th id="{{'ship_date'+x.sub_order_id}}">{{x.ship_date}}</th>
+                                <th id="{{'delivery_date'+x.sub_order_id}}">{{x.delivery_date}}</th>
+                                <th id="{{'sub_order_ff_state'+x.sub_order_id}}">{{x.sub_order_ff_state}}</th>
+                                <th id="{{'bill_amt'+x.sub_order_id}}">{{x.billing_amount | currency : 'USD ': 2}}</th>
+                            </tr>
+                        </table>
+                    </a>
+                    <div id="accordion-{{x.sub_order_id}}" class="accordion-section-content1">
+                        <h4>Shipments ({{LengthOfSubOrders}})</h4>
+                        <table>
+                            <tr style="background-color: #2b5ea2;color: white;">
+                                <th>Sr.No</th>
+                                <th>Ship To</th>
+                                <th>ASDD</th>
+                                <th>AOSD</th>
+                                <th>FF State</th>
+                                <th>Ship Amount</th>
+                                <th>POD</th>
+                            </tr>
+                        </table>
+                        <div class="accordion-section" ng-repeat="y in SubOrderList">
+                            <button class="accordion-section-title1" ng-click="saveShipment(y.shipment_id)" id="#accordion1-{{y.shipment_id}}">
+                              <table class="sub-order-table" style="margin-bottom:0rem !important">
+                                  <tr id="{{'Shipment'+y.shipment_id}}">
+                                  <th>{{y.SrNo}}</td>
+                                  <th id="{{'ship_to'+y.shipment_id}}">{{y.ship_to}}</th>
+                                  <th id="{{'ship_date'+y.shipment_id}}">{{y.ship_date}}</th>
+                                  <th id="{{'delivery_date'+y.shipment_id}}">{{y.delivery_date}}</th>
+                                  <th id="{{'shipment_ff_state'+y.shipment_id}}">{{y.shipment_ff_state}}</th>
+                                  <th id="{{'ship_amt'+y.shipment_id}}">{{y.ship_amt}}</th>
+                                  <th id="{{'pod'+y.shipment_id}}">{{y.pod}}</th>
+                                  </tr>
+                              </table>
+                            </button>
+                            <div id="accordion1-{{y.shipment_id}}" class="accordion-section-content2">
+                                <h4>Part Details ({{LengthOfShipment}})</h4>
+                                <table>
+                                    <tr style="background-color: #2b5ea2;color: white;">
+                                        <th>Sr.No</th>
+                                        <th>Model Type</th>
+                                        <th>Item Number</th>
+                                        <th>Line Description</th>
+                                        <th>Quantity</th>
+                                        <th>List Price</th>
+                                        <th>Discount Price</th>
+                                        <th>Selling Price</th>
+                                    </tr>
+                                    <tr id="{{'LineItem'+z.line_number}}" dir-paginate="z in ShipmentList |itemsPerPage:10" pagination-id="LineItem">
+                                        <td>{{z.SrNo}}</td>
+                                        <td>{{z.model_type}}</td>
+                                        <td>{{z.item_number}}</td>
+                                        <td>{{z.line_item_description}}</td>
+                                        <td>{{z.quantity}}</td>
+                                        <td>{{z.list_price}}</td>
+                                        <td>{{z.discount_perc}}</td>
+                                        <td>{{z.selling_price}}</td>
+                                    </tr>
+                                </table>
+                                <div>
+                                    <dir-pagination-controls ng-click="applyCss()" pagination-id="LineItem" max-size="5" direction-links="true" boundary-links="true">
+                                    </dir-pagination-controls>
+                                </div>
+                            </div>
+                            <!--end .accordion-section-content-->
+                        </div>
+                        <!--end .accordion-section-->
+                    </div>
+                    <!--end .accordion-section-content-->
+                </div>
+                <!--end .accordion-section-->
+
+            </div>
+            <!--end .accordion-->
     <div class="layout block">
         <div class="layout__item">
             <table>

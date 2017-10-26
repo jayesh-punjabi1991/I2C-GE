@@ -11,7 +11,8 @@ define([
     'interceptors',
     'px-datasource',
     'ng-bind-polymer',
-    'angularUtils.directives.dirPagination'
+    'angularUtils.directives.dirPagination',
+    'semantic'
 ], function ($, angular) {
     'use strict';
 
@@ -25,6 +26,10 @@ define([
         'quotes',
         'orders',
         'changeRequest',
+        'invoices',
+        'admin',
+        'disputes',
+        'payments',
         'app.routes',
         'app.constants',
         'app.interceptors',
@@ -43,17 +48,77 @@ define([
         $scope.tags = [];
         $rootScope.userName = $window.sessionStorage.getItem('userName');
         $rootScope.userRole = $window.sessionStorage.getItem('roleName');
-        if($rootScope.userRole == 'ge-oms'){
+        if ($rootScope.userRole == 'ge-oms') {
+            $scope.tags = [{
+                    icon: 'fa-home fa-2x',
+                    state: 'dashboards',
+                    label: 'Home'
+                },
+                {
+                    icon: 'fa-truck fa-2x',
+                    state: 'orders',
+                    label: 'Orders'
+                },
+                {
+                    icon: 'fa-pencil-square-o fa-2x',
+                    state: 'changeRequest',
+                    label: 'Change Request'
+                }
+            ]
+        } else if ($rootScope.userRole == 'ge-sales') {
+            $scope.tags = [{
+                    icon: 'fa-home fa-2x',
+                    state: 'dashboards',
+                    label: 'Home'
+                },
+                {
+                    icon: 'fa-file-text-o fa-2x',
+                    state: 'quotes',
+                    label: 'Quotes'
+                }
+            ]
+        } else if ($rootScope.userRole == 'ge-drc') {
+            $scope.tags = [{
+                    icon: 'fa-home fa-2x',
+                    state: 'dashboards',
+                    label: 'Home'
+                },
+                {
+                    icon: 'fa-truck fa-2x',
+                    state: 'orders',
+                    label: 'Orders'
+                },
+                {
+                    icon: 'fa-gavel fa-2x',
+                    state: 'disputes',
+                    label: 'Disputes'
+                },
+                {
+                    icon: 'fa-money fa-2x',
+                    state: 'payments',
+                    label: 'Payments'
+                }
+            ]
+        } else if($rootScope.userRole == 'admin'){
           $scope.tags = [
-              {icon: 'fa-home fa-2x', state: 'dashboards', label: 'Home'},
-              {icon: 'fa-truck fa-2x', state: 'orders', label: 'Orders'},
-              {icon: 'fa-pencil-square-o fa-2x', state: 'changeRequest', label: 'Change Request'}
-              // {icon: 'fa-gavel fa-2x', state: '', label: 'Disputes'}
+            {icon: 'fa-home fa-2x', state: 'dashboards', label: 'Home'},
+            {icon: 'fa-file-text-o fa-2x',state: 'quotes',label: 'Quotes'},
+            {icon: 'fa-truck fa-2x', state: 'orders', label: 'Orders'},
+            {icon: 'fa-pencil-square-o fa-2x', state: 'changeRequest', label: 'Change Request'},
+            {icon: 'fa-gavel fa-2x',state: 'disputes',label: 'Disputes'},
+            {icon: 'fa-money fa-2x',state: 'payments',label: 'Payments'},
+            {icon: 'fa fa-user fa-2x', state: 'admin', label: 'Admin'}
+            //Comment
+            // {icon: 'fa-file-text-o fa-2x',state: 'quotes',label: 'Quotes'},
+            // {icon: 'fa-gavel fa-2x',state: 'disputes',label: 'Disputes'},
+            // {icon: 'fa-money fa-2x',state: 'payments',label: 'Payments'}
+
           ]
-        }else if($rootScope.userRole == 'ge-sales'){
+        } else if($rootScope.userRole == 'ge-collector'){
           $scope.tags = [
-              {icon: 'fa-home fa-2x', state: 'dashboards', label: 'Home'},
-              {icon: 'fa-file-text-o fa-2x', state: 'quotes', label: 'Quotes'}
+            {icon: 'fa-home fa-2x', state: 'dashboards', label: 'Home'},
+            {icon: 'fa-truck fa-2x', state: 'orders', label: 'Orders'},
+            {icon: 'fa-money fa-2x',state: 'payments',label: 'Payments'}
           ]
         }
         //Global application object
@@ -65,7 +130,7 @@ define([
         };
 
 
-        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, error) {
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, error) {
             //console.log('on state change');
             if (!$window.sessionStorage.getItem('auth_token') && $location.path() != '/home') {
               //console.log('in if');
@@ -90,17 +155,78 @@ define([
                           $window.sessionStorage.setItem('roleID', response.userRole.userRoleID);
                           $window.sessionStorage.setItem('userPermission', response.userPermission);
                           $rootScope.userRole = response.userRole.userRoleName;
-                          if($rootScope.userRole == 'ge-oms'){
+                          if ($rootScope.userRole == 'ge-oms') {
+                              $rootScope.App.tabs = [{
+                                      icon: 'fa-home fa-2x',
+                                      state: 'dashboards',
+                                      label: 'Home'
+                                  },
+                                  {
+                                      icon: 'fa-truck fa-2x',
+                                      state: 'orders',
+                                      label: 'Orders'
+                                  },
+                                  {
+                                      icon: 'fa-pencil-square-o fa-2x',
+                                      state: 'changeRequest',
+                                      label: 'Change Request'
+                                  }
+                                  // {icon: 'fa-gavel fa-2x', state: '', label: 'Disputes'}
+                              ]
+                          } else if ($rootScope.userRole == 'ge-sales') {
+                              $rootScope.App.tabs = [{
+                                      icon: 'fa-home fa-2x',
+                                      state: 'dashboards',
+                                      label: 'Home'
+                                  },
+                                  {
+                                      icon: 'fa-file-text-o fa-2x',
+                                      state: 'quotes',
+                                      label: 'Quotes'
+                                  }
+                              ]
+                          } else if ($rootScope.userRole == 'ge-drc') {
+                              $rootScope.App.tabs = [{
+                                      icon: 'fa-home fa-2x',
+                                      state: 'dashboards',
+                                      label: 'Home'
+                                  },
+                                  {
+                                      icon: 'fa-truck fa-2x',
+                                      state: 'orders',
+                                      label: 'Orders'
+                                  },
+                                  {
+                                      icon: 'fa-gavel fa-2x',
+                                      state: 'disputes',
+                                      label: 'Disputes'
+                                  },
+                                  {
+                                      icon: 'fa-money fa-2x',
+                                      state: 'payments',
+                                      label: 'Payments'
+                                  }
+                              ]
+                          } else if($rootScope.userRole == 'admin'){
                             $rootScope.App.tabs = [
-                                {icon: 'fa-home fa-2x', state: 'dashboards', label: 'Home'},
-                                {icon: 'fa-truck fa-2x', state: 'orders', label: 'Orders'},
-                                {icon: 'fa-pencil-square-o fa-2x', state: 'changeRequest', label: 'Change Request'}
-                                // {icon: 'fa-gavel fa-2x', state: '', label: 'Disputes'}
+                              {icon: 'fa-home fa-2x', state: 'dashboards', label: 'Home'},
+                              {icon: 'fa-file-text-o fa-2x',state: 'quotes',label: 'Quotes'},
+                              {icon: 'fa-truck fa-2x', state: 'orders', label: 'Orders'},
+                              {icon: 'fa-pencil-square-o fa-2x', state: 'changeRequest', label: 'Change Request'},
+                              {icon: 'fa-gavel fa-2x',state: 'disputes',label: 'Disputes'},
+                              {icon: 'fa-money fa-2x',state: 'payments',label: 'Payments'},
+                              {icon: 'fa fa-user fa-2x', state: 'admin', label: 'Admin'}
+
+                              //Comment
+                              // {icon: 'fa-file-text-o fa-2x',state: 'quotes',label: 'Quotes'},
+                              // {icon: 'fa-gavel fa-2x',state: 'disputes',label: 'Disputes'},
+                              // {icon: 'fa-money fa-2x',state: 'payments',label: 'Payments'}
                             ]
-                          }else if($rootScope.userRole == 'ge-sales'){
+                          } else if($rootScope.userRole == 'ge-collector'){
                             $rootScope.App.tabs = [
-                                {icon: 'fa-home fa-2x', state: 'dashboards', label: 'Home'},
-                                {icon: 'fa-file-text-o fa-2x', state: 'quotes', label: 'Quotes'}
+                              {icon: 'fa-home fa-2x', state: 'dashboards', label: 'Home'},
+                              {icon: 'fa-truck fa-2x', state: 'orders', label: 'Orders'},
+                              {icon: 'fa-money fa-2x',state: 'payments',label: 'Payments'}
                             ]
                           }
                           $window.location.reload();
@@ -114,6 +240,10 @@ define([
                 console.log('in else');
                 // unexpected error
             }
+        });
+
+        $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams, error) {
+           $rootScope.App.prevState = fromState;
         });
 
         $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {

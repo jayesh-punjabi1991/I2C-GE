@@ -3,8 +3,42 @@ define(['angular', './module'], function (angular, controllers) {
 
     // Controller definition
     controllers.controller('QuoteDetailsCtrl', ['$scope', '$log','$timeout','QuotesService','$http','$state','$stateParams','PredixUserService','$window','$sce','$filter', function ($scope, $log,$timeout,QuotesService,$http,$state,$stateParams,PredixUserService,$window,$sce, $filter) {
+      $scope.Loading=true;
+      $scope.Validation=false;
+      $scope.Validation1=false;
+      $scope.Validation2=false;
+      $scope.Validation3=false;
+      $(document).ready(function(){
+        $("input[class^='MandatoryFields']").on('change keyup paste mouseup',function(e){
+              var alltxt=$("input[class^='MandatoryFields']").length;
+              $scope.Validation=true;
+              $("input[class^='MandatoryFields']").each(function(i){
+                  if($(this).val().trim()=='')
+                  {
+                      $scope.Validation=true;
+                      $scope.Validation1=false;
+                      $scope.DisableAccept();
+                      return false;
+                  }
+                  else
+                  {
+                      $scope.Validation=false;
+                      $scope.Validation1=false;
+                      $scope.DisableAccept();
+                  }
+                });
+                if(!$scope.Validation){
+                  $scope.enableAccept();
+                  $scope.Validation=true;
+                  $scope.Validation1=true;
+                  alert("Done");
+                  }
+            });
+        })
+
       QuotesService.getQuoteDetails($stateParams.id, $stateParams.custId).then(function success(response){
         console.log(response);
+        $scope.Loading=false;
         $scope.quoteData = response.data;
         $scope.customerId = response.data.customerId;
         $scope.QuoteNumber=response.data.quote_number;
@@ -79,13 +113,30 @@ define(['angular', './module'], function (angular, controllers) {
         });
       });
       $scope.acceptDetails1=true;
+      $scope.DisableAccept=function(){
+        var d = document.getElementById("AcceptButton");
+        d.className += " disabled";
+        d.classList.remove("btn-primary");
+      }
+      $scope.DisableReject=function(){
+        var d = document.getElementById("RejectQuoteButton");
+        d.className += " disabled";
+        d.classList.remove("btn-reject");
+      }
+
       $scope.enableAccept=function(){
         var d = document.getElementById("AcceptButton");
         d.className += " btn btn-primary";
         d.classList.remove("disabled");
       }
+      $scope.enableReject=function(){
+        var d = document.getElementById("RejectQuoteButton");
+        d.className += " btn-reject";
+        d.classList.remove("disabled");
+      }
 
       $scope.acceptClicked = function () {
+        if($scope.Validation1==true){
         var d = document.getElementById("AcceptButton");
         var d1 = document.getElementById("RejectButton");
         d.className += " disabled";
@@ -105,6 +156,7 @@ define(['angular', './module'], function (angular, controllers) {
         };
         //acceptData.bill_to = $scope.BillTo;
         acceptData.po_number = $scope.PONumber;
+        $scope.acceptDataTest = acceptData;
         fd.append('quoteInputVO', JSON.stringify(acceptData));
         // for (var pair of fd.entries()) {
         //     console.log(pair[0]+ ', ' + pair[1]);
@@ -114,7 +166,11 @@ define(['angular', './module'], function (angular, controllers) {
           alert("Quote #" + $scope.QuoteNumber + " is accepted successfully.");
           $state.go('quoteDetailsAR',{id: $scope.QuoteNumber});
         });
+      }
 
+    else{
+      alert("Please fill all the Mandatory fields");
+    }
       };
       $scope.displayFile = function (fileName) {
         QuotesService.viewDocument(fileName).success(function(response){
@@ -142,8 +198,40 @@ define(['angular', './module'], function (angular, controllers) {
            window.open(objectUrl);
         });
       }
+      $scope.rejectBtnClicked = function () {
+          $("input[class^='ForRejection']").on('change keyup paste mouseup',function(e){
+                var alltxt=$("input[class^='ForRejection']").length;
+                $scope.Validation2=true;
+                $("input[class^='ForRejection']").each(function(i){
+                    if($(this).val().trim()=='')
+                    {
+                        $scope.Validation2=true;
+                        $scope.Validation3=false;
+                        $scope.DisableReject();
+                        return false;
+                    }
+                    else
+                    {
+                        $scope.Validation2=false;
+                        $scope.Validation3=false;
+                        $scope.DisableReject();
+                    }
+                  });
+                  if(!$scope.Validation2){
+                    $scope.enableReject();
+                    $scope.Validation2=true;
+                    $scope.Validation3=true;
+                    alert("Done");
+                    }
+              });
+        $scope.successMessage=false;
+        $scope.rejectDetails = true;
+        $("#RejectDiv").slideToggle("slow");
+
+      }
 
       $scope.rejectClicked = function () {
+        if($scope.Validation3==true){
         var d = document.getElementById("AcceptButton");
         var d1 = document.getElementById("RejectButton");
         d.className += " disabled";
@@ -166,6 +254,10 @@ define(['angular', './module'], function (angular, controllers) {
            $state.go('quoteDetailsAR',{id: $scope.QuoteNumber});
            //alert('Quote rejected');
         });
+      }
+    else{
+      alert("Please fill out the Mandatory Fields");
+    }
       }
     }]);
 });

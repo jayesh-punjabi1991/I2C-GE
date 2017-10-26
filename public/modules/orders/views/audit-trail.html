@@ -1,0 +1,157 @@
+<link rel="stylesheet" href="css/changeRequestList.css">
+<link rel="stylesheet" href="css/orderDetails.css">
+<link rel="stylesheet" href="css/common-lg.css">
+<link rel="stylesheet" href="css/audit.css">
+<link rel="stylesheet" href="css/Semantic.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+<div id="Loader" ng-show="Loading==true" ng-hide="Loading==false">
+      <px-spinner size="100"></px-spinner>
+</div>
+<div ng-show="Loading==false" ng-hide="Loading==true">
+  <div class="btn_div clearfix">
+    <div class="desk-25 small-50 lt">
+      <a href="{{'/orderDetails/'+ customerId +'/' + orderNumber}}" title="Back" class="btn btn-primary"> << Back</a>
+    </div>
+
+  </div>
+  <px-card class="odr-header">
+    <div class="odr-heading clearfix">
+      <h3><span class="">Audit Trail for Order# :</span>&nbsp;<span class="">{{orderNumber}}</span></h3>
+    </div>
+  </px-card>
+  <px-card class="odr-vers">
+    <div class="odr-small-heading clearfix">
+        <h4 class="label-color lt"><i class="fa fa-truck"></i>&nbsp;&nbsp;Order Versions</h4>
+        <div class="desk-50 small-50 rt clearfix">
+          <a href="#invoice" title="Invoice" id="Invoice" class="rt" style="margin-right: 15px;margin-top: 15px;font-size: 15px;text-decoration: underline;">View Invoices</a>
+          <a href="#changeRequest" title="Change Requests" id="CR" class="rt" style="margin-right: 25px;margin-top: 15px;font-size: 15px;text-decoration: underline;">View Change Requests</a>
+        </div>
+    </div>
+    <div class="imp_details">
+      <div class="ui styled accordion">
+        <div class="" ng-repeat="x in versionList">
+          <div class="title active clearfix">
+            <h4 class="lt">Order Version {{versionLength - $index}}</h4>
+            <div class="imp_details clearfix rt">
+                <a href="{{'/version/orderDetails/'+ customerId}}" class="btn btn-primary rt" ng-click="viewVersions(x)">View Details</a>
+            </div>
+          </div>
+          <div class="content active">
+            <div class="imp_details clearfix">
+                <div class="desk-25 small-50 lt details_div" ng-hide="x.order_process_status=='generated'">
+                    <p class="small_label">PO Number</p>
+                    <p class="big_label" id="cust_po_number"><i class="fa fa-file small_label"></i>&nbsp;&nbsp;{{x.cust_po_number}}</p>
+                </div>
+                <div class="desk-25 small-50 lt details_div">
+                    <p class="small_label">Created Date</p>
+                    <p class="big_label"><i class="fa fa-calendar small_label"></i>&nbsp;&nbsp;{{x.order_date*1000 | date : 'mediumDate'}}</p>
+                </div>
+                <div class="desk-25 small-50 lt details_div">
+                    <p class="small_label">Order Status</p>
+                    <p class="big_label"><span ng-if="x.order_process_status == 'change_requested'" class="status_pending"></span><span ng-if="x.order_process_status == 'accepted'" class="status_accept"></span><span ng-if="x.order_process_status == 'rejected'" class="status_reject"></span>&nbsp;&nbsp;{{x.order_process_status}}</p>
+                </div>
+                <div class="desk-25 small-50 lt details_div">
+                    <p class="small_label">Fulfillment Status</p>
+                    <p class="big_label">&nbsp;&nbsp;{{x.order_ff_state}}</p>
+                </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </px-card>
+  <px-card class="odr-crs" id="changeRequest">
+    <div class="odr-small-heading">
+        <h4 class="label-color"><i class="fa fa-files-o"></i>&nbsp;&nbsp;Change Requests</h4>
+    </div>
+    <div class="imp_details">
+      <div class="" style="padding-top:50px;">
+        <px-data-table table-data='{{crList}}' language="en" striped="true" sortable="true" show-column-chooser="true" table-rows="true" include-all-columns="true" filterable="true">
+          <px-data-table-column name="cr_link" Label="CR. Number" type="html" sortable filterable></px-data-table-column>
+          <px-data-table-column name="cust_po_number" label="PO Number" sortable filterable></px-data-table-column>
+          <px-data-table-column name="description" label="Description" sortable filterable></px-data-table-column>
+          <px-data-table-column name="ge_order_number" Label="Order Number" sortable filterable></px-data-table-column>
+          <px-data-table-column name="cr_date_format" label="Created Date" sortable filterable></px-data-table-column>
+          <px-data-table-column name="cr_status" label="Status" type="html" sortable filterable></px-data-table-column>
+          <!-- <px-data-table-column name="action" label="Actions" type="html" ></px-data-table-column> -->
+        </px-data-table>
+      </div>
+    </div>
+  </px-card>
+  <div id="Loader" ng-show="PLoading==true" ng-hide="PLoading==false">
+        <px-spinner size="75"></px-spinner>
+  </div>
+  <div ng-show="PLoading==false" ng-hide="PLoading==true">
+    <px-card class="odr-inv" id="invoice">
+      <div class="odr-small-heading">
+          <h4 class="label-color"><i class="fa fa-files-o"></i>&nbsp;&nbsp;Invoices</h4>
+      </div>
+      <div class="imp_details">
+        <div ng-show="invoiceList" class="ui styled accordion invoice">
+          <div  class="" ng-repeat="x in invoiceList">
+            <div class="title active clearfix" >
+              <h4 class="lt">Invoice# {{x.invoice_number}}</h4>
+              <div class="imp_details clearfix rt">
+                  <a href="{{'/invoiceDetails/'+ customerId + '/' + x.invoice_number}}" class="btn btn-primary rt">View Invoice</a>
+              </div>
+            </div>
+            <div class="content active">
+
+              <div class="">
+                <h4>Disputes</h4>
+                <div ng-show="disputeList[$index]">
+                  <table style="width:100%;" class="audit_table">
+                      <tr style="background-color: #898b8d;color: white;">
+                          <th>Sr.No</th>
+                          <th>Dispute #</th>
+                          <th>Dispute Date</th>
+                          <th>Status</th>
+                      </tr>
+                      <tr ng-repeat="x in disputeList[$index]">
+                          <td>{{$index+1}}</td>
+                          <td><a href="{{'disputeDetails/'+ customerId + '/' + x.dispute_id}}">{{x.dispute_id}}</a></td>
+                          <td>{{x.dispute_date*1000 | date : 'mediumDate'}}</td>
+                          <td>{{x.status}}</th>
+                      </tr>
+                  </table>
+                </div>
+                <div ng-hide="disputeList[$index]">
+                  <p>No disputes raised on this Invoice.</p>
+                </div>
+              </div>
+              <div class="ui divider"></div>
+              <div class="">
+                <h4>Payments</h4>
+                <div ng-show="paymentList[$index]">
+                  <table style="width:100%;" class="audit_table">
+                      <tr style="background-color: #898b8d;color: white;">
+                          <th>Sr.No</th>
+                          <th>Invoice #</th>
+                          <th>Payment Date</th>
+                          <th>Payment Amount</th>
+                          <th>Status</th>
+                      </tr>
+                      <tr ng-repeat="x in paymentList[$index]">
+                          <td>{{$index+1}}</td>
+                          <td><a href="{{'/payment/invoiceDetails/'+ customerId + '/' + x.invoice_number}}">{{x.invoice_number}}</a></td>
+                          <td>{{x.payment_date*1000 | date : 'mediumDate'}}</td>
+                          <td>{{x.payment_amount | currency : 'USD ' : 2}}</td>
+                          <td>{{x.status}}</th>
+                      </tr>
+                  </table>
+                </div>
+                <div ng-hide="paymentList[$index]">
+                  No payments made on this invoice.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div ng-hide="invoiceList">
+          <p>No Invoices to display yet.</p>
+        </div>
+      </div>
+    </px-card>
+  </div>
+</div>

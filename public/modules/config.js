@@ -67,6 +67,7 @@ require.config({
 
         lodash: '../bower_components/lodash/dist/lodash.min',
         jquery: '../bower_components/jquery/dist/jquery.min',
+        semantic: '../lib/Semantic-UI-master/dist/semantic.min',
 
     },
     priority: [
@@ -96,6 +97,10 @@ require.config({
         },
         'app': {
             deps: ['angular']
+        },
+        'semantic': {
+            deps: ['jquery'],
+            exports: 'semantic'
         }
 
     }

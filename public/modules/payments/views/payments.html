@@ -1,0 +1,178 @@
+<link rel="stylesheet" href="css/ordersList.css">
+<link rel="stylesheet" href="css/payments.css">
+<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/Semantic.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.ui .item').on('click', function() {
+            $('.ui .item').removeClass('active');
+            $(this).addClass('active');
+        });
+    });
+    $(document).ready(function() {
+        $('.ui .item1').on('click', function() {
+            $('.ui .item1').removeClass('active1');
+            $(this).addClass('active1');
+        });
+    });
+</script>
+<div class="cr-wrapper">
+    <px-card class="admin-hdr">
+        <div class="ui top attached tabular menu">
+            <div ng-click="invoiceClicked=true;paymentsClicked=false" class="active1 item1"><i class="fa fa-files-o"></i>&nbsp;&nbsp;Invoices</div>
+            <div ng-click="invoiceClicked=false;paymentsClicked=true" class="item1"><i class="fa fa-money"></i>&nbsp;&nbsp;Authorised Payments</div>
+        </div>
+        <div class="ui bottom attached active tab segment" style="min-height:450px">
+            <div ng-show="invoiceClicked">
+                <div class="imp_details">
+                  <div id="tabs" style="display:block;padding-top: 2rem;">
+                      <ul id="tab-ul">
+                        <li class="selected-tab">Due/Over Due Invoices</li>
+                        <li>All Invoices</li>
+                      </ul>
+                      <div id="content">
+                        <div class="div-visible" id="selected">
+                          <!-- <div class="flex filters">
+                            <div id="calenderdiv">
+                                <px-rangepicker id="rangePicker" hide-time="true" show-buttons="true" date-format="YYYY/MM/DD" time-format="HH:mm:ss" time-zone="UTC" show-time-zone="abbreviatedText" range='{"from":"2015-07-01T01:00:00.000Z","to":"2016-07-08T14:00:00.000Z"}'></px-rangepicker>
+                            </div>
+                          </div> -->
+                          <div id="Loader" ng-show="ILoading==true" ng-hide="ILoading==false">
+                              <px-spinner size="100"></px-spinner>
+                          </div>
+                          <div ng-show="ILoading==false" ng-hide="ILoading==true">
+                            <px-data-table table-data='{{DueList}}' language="en" striped="true" sortable="true" show-column-chooser="true" include-all-columns="true" table-rows="true" filterable="true">
+                              <px-data-table-column name="invoiceNo" Label="Invoice Number" type="html" sortable filterable></px-data-table-column>
+                              <px-data-table-column name="orderNo" label="Order Number" sortable filterable></px-data-table-column>
+                              <px-data-table-column name="custId" label="Customer Name" sortable filterable></px-data-table-column>
+                              <px-data-table-column name="dueAmt" label="Due/Total Amount (USD)" sortable filterable></px-data-table-column>
+                              <px-data-table-column name="dueDate" sort-function-name="window.sortbydate1" label="Due Date" type="html" sortable filterable></px-data-table-column>
+                              <px-data-table-column name="custName" label="Customer Name" sortable filterable></px-data-table-column>
+                              <px-data-table-column name="status" label="Status" type="html" sortable filterable></px-data-table-column>
+                            </px-data-table>
+                          </div>
+                          <h4 style="margin-bottom:0px !important;margin-top:0 !important">Invoice Status Legends</h4>
+                          <div class="layout_item legend_tbl">
+                              <table class="table_pay">
+                                <tbody>
+                                  <tr>
+                                  <td><span class="status_accept"></span></td>
+                                  <td>Invoices for which Due date is greater than 5 days</td>
+                                  </tr>
+                                  <tr>
+                                  <td><span class="status_pending"></span></td>
+                                  <td>Invoices for which Due date is less than 5 days</td>
+                                  </tr>
+                                  <tr>
+                                  <td><span class="status_reject"></span></td>
+                                  <td>Invoices for which are overdue</td>
+                                  </tr>
+                              </tbody></table>
+                            </div>
+                        </div>
+
+                        <div class="div-invisible">
+                          <!-- <div class="flex filters">
+                            <div id="calenderdiv">
+                                <px-rangepicker id="rangePicker" hide-time="true" show-buttons="true" date-format="YYYY/MM/DD" time-format="HH:mm:ss" time-zone="UTC" show-time-zone="abbreviatedText" range='{"from":"2015-07-01T01:00:00.000Z","to":"2016-07-08T14:00:00.000Z"}'></px-rangepicker>
+                            </div>
+                          </div> -->
+                          <div id="Loader" ng-show="ILoading==true" ng-hide="ILoading==false">
+                              <px-spinner size="100"></px-spinner>
+                          </div>
+                          <div ng-show="ILoading==false" ng-hide="ILoading==true">
+                            <px-data-table table-data='{{InvoiceList}}' language="en" striped="true" sortable="true" show-column-chooser="true" include-all-columns="true" table-rows="true" filterable="true">
+                              <px-data-table-column name="invoiceNo" Label="Invoice Number" type="html" sortable filterable></px-data-table-column>
+                              <px-data-table-column name="orderNo" label="Order Number" sortable filterable></px-data-table-column>
+                              <px-data-table-column name="custId" label="Customer Name" sortable filterable></px-data-table-column>
+                              <px-data-table-column name="dueAmt" label="Due/Total Amount (USD)" sortable filterable></px-data-table-column>
+                              <px-data-table-column name="dueDate" sort-function-name="window.sortbydate1" label="Due Date" type="html" sortable filterable></px-data-table-column>
+                              <px-data-table-column name="custName" label="Customer Name" sortable filterable></px-data-table-column>
+                              <px-data-table-column name="status" label="Status" type="html" sortable filterable></px-data-table-column>
+                            </px-data-table>
+                          </div>
+                          <h4 style="margin-bottom:0px !important;margin-top:0 !important">Invoice Status Legends</h4>
+                          <div class="layout_item legend_tbl">
+                              <table class="table_pay">
+                                <tbody>
+                                  <tr>
+                                  <td><strong>Paid</strong></td>
+                                  <td>Are the invoices for which payment is complete</td>
+                                  </tr>
+                                  <tr>
+                                  <td><strong>Disputed</strong></td>
+                                  <td>Customer initiated a dispute against an invoice due to mismatch</td>
+                                  </tr>
+                                  <!-- <tr>
+                                  <td><strong>Pending</strong></td>
+                                  <td>Invoice for which payment is initiated. Once the payment is confirmed, the invoice will be paid</td>
+                                  </tr> -->
+                                  <tr>
+                                  <td><strong>Published</strong></td>
+                                  <td>Are the invoices for which no payments are initiated</td>
+                                  </tr>
+
+                              </tbody></table>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+            </div>
+            <div ng-show="paymentsClicked">
+              <!-- <div class="flex filters">
+                <div id="calenderdiv">
+                    <px-rangepicker id="rangePicker" hide-time="true" show-buttons="true" date-format="YYYY/MM/DD" time-format="HH:mm:ss" time-zone="UTC" show-time-zone="abbreviatedText" range='{"from":"2015-07-01T01:00:00.000Z","to":"2016-07-08T14:00:00.000Z"}'></px-rangepicker>
+                </div>
+              </div> -->
+              <div id="Loader" ng-show="PLoading==true" ng-hide="PLoading==false">
+                  <px-spinner size="100"></px-spinner>
+              </div>
+            <div ng-show="PLoading==false" ng-hide="PLoading==true" style="padding-top:50px">
+              <div ng-show="roleName == 'ge-collector'">
+                <px-data-table id="paymentsTable" table-data='{{PaymentList}}' language="en" striped="true" sortable="true" show-column-chooser="true" table-rows="true" include-all-columns="true" filterable="true">
+                  <px-data-table-column name="payment_id" Label="ID" type="html" sortable filterable></px-data-table-column>
+                  <px-data-table-column name="payee_bank_name" Label="Payee Bank Name" sortable filterable></px-data-table-column>
+                  <px-data-table-column name="payee_acc_number" label="Payee A/C No" sortable filterable></px-data-table-column>
+                  <!-- <px-data-table-column name="payer_int_ref" label="Payer A/C No" type="html" sortable filterable></px-data-table-column> -->
+                  <px-data-table-column name="custId" label="Customer Id" sortable filterable></px-data-table-column>
+                  <px-data-table-column name="payment_description" label="Description" sortable filterable></px-data-table-column>
+                  <px-data-table-column name="payment_date" sort-function-name="window.sortbydate" label="Payment Date" sortable filterable></px-data-table-column>
+                  <px-data-table-column name="payment_amount" label="Payment Amount" sortable filterable></px-data-table-column>
+                  <px-data-table-column name="status" label="Status" type="html" sortable filterable></px-data-table-column>
+                  <px-data-table-column class="paymentReceived" name="action" label="Action" type="html"></px-data-table-column>
+                </px-data-table>
+              </div>
+              <div ng-show="roleName != 'ge-collector'">
+                <px-data-table table-data='{{PaymentList}}' language="en" striped="true" sortable="true" show-column-chooser="true" table-rows="true" include-all-columns="true" filterable="true">
+                  <px-data-table-column name="payment_id" Label="ID" type="html" sortable filterable></px-data-table-column>
+                  <px-data-table-column name="payee_bank_name" Label="Payee Bank Name" sortable filterable></px-data-table-column>
+                  <px-data-table-column name="payee_acc_number" label="Payee A/C No" sortable filterable></px-data-table-column>
+                  <!-- <px-data-table-column name="payer_int_ref" label="Payer A/C No" type="html" sortable filterable></px-data-table-column> -->
+                  <px-data-table-column name="custId" label="Customer Id" sortable filterable></px-data-table-column>
+                  <px-data-table-column name="payment_description" label="Description" sortable filterable></px-data-table-column>
+                  <px-data-table-column name="payment_date" sort-function-name="window.sortbydate" label="Payment Date" sortable filterable></px-data-table-column>
+                  <px-data-table-column name="payment_amount" label="Payment Amount" sortable filterable></px-data-table-column>
+                  <px-data-table-column name="status" label="Status" type="html" sortable filterable></px-data-table-column>
+                </px-data-table>
+              </div>
+            </div>
+            <h4 style="margin-bottom:0px !important;margin-top:0 !important">Payment Status Legends</h4>
+            <div class="layout_item legend_tbl">
+              <table class="table_pay">
+                <tbody>
+                  <tr>
+                  <td><strong>Authorized</strong></td>
+                  <td>Payment is fully/partial authorized</td>
+                  </tr>
+                  <tr>
+                  <td><strong>Completed</strong></td>
+                  <td>Payments received by GE</td>
+                  </tr>
+              </tbody></table>
+              </div>
+            </div>
+        </div>
+    </px-card>
+</div>

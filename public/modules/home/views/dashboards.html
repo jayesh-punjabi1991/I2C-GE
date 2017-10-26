@@ -1,10 +1,10 @@
-<link rel="stylesheet" type="text/css" href="css/home.css">
+<link rel="stylesheet" href="css/home.css">
 
 <px-card style="padding-top:10px !important;padding-bottom:10px !important">
 <h1>Welcome to TradeConnect</h1>
 </px-card>
 <px-card style="height:75vh;padding-top:10px !important;padding-bottom:10px !important">
-  <h3 style="color:#386aa7;" style="width:30%">My Pending Actions <span style="color: red">({{notifCount}})</span></h3>
+  <h3 style="color:#386aa7;" style="width:30%">Notifications <span style="color: red">({{notifCount}})</span></h3>
   <div style="height:70vh;border-top:2px solid #2c3f4d;border-bottom:2px solid #2c3f4d;overflow-y:scroll;margin-top:2%">
     <div>
       <table id="PendingActions" style="width:100%">
@@ -17,10 +17,19 @@
             <td ng-if="value.eventType == 'Quote.Accept'"><span  style="display:inline-block; background-color:green; color:white; padding: 5px;">{{value.eventType}}</span></td>
             <td ng-if="value.eventType == 'Quote.Reject'"><span style="display:inline-block; background-color:red; color:white; padding: 5px;">{{value.eventType}}</span></td>
             <td ng-if="value.eventType == 'CR.Accept'"><span style="display:inline-block; background-color:green; color:white; padding: 5px;">{{value.eventType}}</span></td>
+            <td ng-if="value.eventType == 'CR.Reject'"><span style="display:inline-block; background-color:red; color:white; padding: 5px;">{{value.eventType}}</span></td>
             <td ng-if="value.eventType == 'CR.Initiate'"><span style="display:inline-block; background-color:orange; color:white; padding: 5px;">{{value.eventType}}</span></td>
+            <td ng-if="value.eventType == 'Order.Approve'"><span style="display:inline-block; background-color:#32CD32; color:white; padding: 5px;">{{value.eventType}}</span></td>
+            <td ng-if="value.eventType == 'Order.FFInitiated'"><span style="display:inline-block; background-color:#3090C7; color:white; padding: 5px;">{{value.eventType}}</span></td>
+            <td ng-if="value.eventType == 'Order.SubOrder.FFCompleted'"><span style="display:inline-block; background-color:#32CD32; color:white; padding: 5px;">{{value.eventType}}</span></td>
+            <td ng-if="value.eventType == 'Invoice.Mismatched'"><span style="display:inline-block; background-color:#ff5959; color:white; padding: 5px;">{{value.eventType}}</span></td>
+            <td ng-if="value.eventType == 'Dispute.Init'"><span style="display:inline-block; background-color:orange; color:white; padding: 5px;">{{value.eventType}}</span></td>
+            <td ng-if="value.eventType == 'Payment.Init'"><span style="display:inline-block; background-color:orange; color:white; padding: 5px;">{{value.eventType}}</span></td>
             <td>{{value.message}}</td>
-            <td ng-if="value.eventType == 'CR.Accept' || value.eventType == 'CR.Initiate' || value.eventType == 'Quote.Accept'"><a href="{{'/orderDetails/Accepted/'+value.cust_id+'/'+ value.order_id}}">View Order</a></td>
-            <td ng-if="value.eventType == 'Quote.Reject'"><a href="{{'/quoteDetails/AR/'+value.cust_id+'/'+ value.quote_id}}">View Quote</a></td>
+            <td ng-if="value.eventType == 'CR.Accept' || value.eventType == 'CR.Reject' || value.eventType == 'CR.Initiate' || value.eventType == 'Quote.Accept' || value.eventType == 'Order.FFInitiated' || value.eventType == 'Order.SubOrder.FFCompleted' || value.eventType =='Order.Approve'"><a ng-click="processNotification(value);markAsRead(value)" style="color: blue;text-decoration: underline;cursor: pointer;">View Updated Order</a></td>
+            <td ng-if="value.eventType == 'Quote.Reject'"><a ng-click="processNotification(value);markAsRead(value)" style="color: blue;text-decoration: underline;cursor: pointer;">View Rejected Quote</a></td>
+            <td ng-if="value.eventType == 'Invoice.Mismatched'  || value.eventType == 'Payment.Init'"><a ng-click="processNotification(value);markAsRead(value)" style="color: blue;text-decoration: underline;cursor: pointer;">View Invoice</a></td>
+            <td ng-if="value.eventType == 'Dispute.Init'"><a ng-click="processNotification(value);markAsRead(value)" style="color: blue;text-decoration: underline;cursor: pointer;">View Dispute</a></td>
           </tr>
         </tbody>
       </table>

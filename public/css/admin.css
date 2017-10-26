@@ -1,0 +1,92 @@
+.ui.menu{
+  font-family: 'GE Inspira' !important;
+}
+body{
+  font-family: 'GE Inspira' !important;
+}
+.pagination{
+  padding-left: 0px !important;
+}
+.settings{
+    padding: 0px !important;
+}
+p{
+  margin: 1% 1% 0 0 !important;
+  line-height: 1.3333333333 !important;
+}
+body{
+  font-size: 15px !important;
+}
+.ui.tabular.menu .active1.item1 {
+    background: #FFF;
+    color: rgba(0, 0, 0, .95);
+    border-top-width: 1px;
+    border-color: #D4D4D5;
+    font-weight: 700;
+    margin-bottom: -1px;
+    box-shadow: none;
+    border-radius: .28571429rem .28571429rem 0 0!important;
+    color:#2b5ea2;
+    /*border-bottom: 2px solid #2b5ea2;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    */
+}
+.ui.tabular.menu .item1 {
+    background: 0 0;
+    border-bottom: none;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-top: 2px solid transparent;
+    padding: .92857143em 1.42857143em;
+    color: rgba(0, 0, 0, .87);
+    cursor: pointer;
+}
+td,th{
+  width:108px;
+  max-width: 108px;
+  min-width: 108px;
+  word-break: break-word;
+  text-align:center;
+}
+#TableHeader{
+  background: #2980b9 !important;
+  color: white !important;
+}
+tr:nth-child(even){
+  background: #f6f6f6;
+}
+tr:nth-child(odd){
+  background: #e8e8e8;
+}
+#dataTable > div.flex.columnChooser.style-scope.aha-table{
+  margin-bottom: 2%
+}
+.px-pagination-0 .btn--pagination--number.px-pagination{
+  background-color: #2b5ea2 !important;
+}
+#scrollBodyTableContainer > div:nth-child(1){
+  background-color: #2b5ea2;
+  color: white !important;
+}
+.btn--primary.px-datetime-buttons{
+  background-color:#2b5ea2;
+}
+.aha-table-0 .sorted-text.aha-table{
+  color:white !important;
+}
+.aha-table-0 .sorted-text-hover.aha-table:hover{
+  color:white !important;
+}
+#PayeeAddressBlock{
+  display:none;
+}
+#PayeeBankAddressBlock{
+  display:none;
+}
+#Loader{
+  margin-top: 13%;
+  margin-left: 40%;
+  margin-bottom: 5%;
+}

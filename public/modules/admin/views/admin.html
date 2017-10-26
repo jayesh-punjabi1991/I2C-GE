@@ -1,0 +1,449 @@
+<link rel="stylesheet"  href="css/orderDetails.css">
+<link rel="stylesheet"  href="css/common-lg.css">
+<link rel="stylesheet"  href="css/admin.css">
+<link rel="stylesheet" href="css/Semantic.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.ui .item').on('click', function() {
+            $('.ui .item').removeClass('active');
+            $(this).addClass('active');
+        });
+    });
+    $(document).ready(function() {
+        $('.ui .item1').on('click', function() {
+            $('.ui .item1').removeClass('active1');
+            $(this).addClass('active1');
+        });
+    });
+</script>
+<div class="cr-wrapper">
+    <px-card class="admin-hdr">
+        <div class="ui top attached tabular menu">
+            <div ng-click="invoiceUploadClicked=true;logsClicked=false;SettingsClicked=false;" class="active1 item1"><i class="fa fa-list"></i>&nbsp;&nbsp;Invoice Upload Logs</div>
+            <div ng-click="invoiceUploadClicked=false;logsClicked=true;SettingsClicked=false;" class="item1"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload Invoice</div>
+            <div ng-click="invoiceUploadClicked=false;logsClicked=false;SettingsClicked=true;" class="item1"><i class="fa fa-cogs"></i>&nbsp;&nbsp;Settings</div>
+        </div>
+
+        <div class="ui bottom attached active tab segment" style="min-height:450px">
+          <div id="Loader" ng-show="Loading==true" ng-hide="Loading==false">
+                <px-spinner size="100"></px-spinner>
+          </div>
+          <div ng-show="Loading==false" ng-hide="Loading==true">
+            <div ng-show="invoiceUploadClicked">
+                <div class="imp_details">
+                    <px-data-table id="invoiceLogTable" table-data='{{invoiceLogs}}' language="en" striped="true" sortable="true" show-column-chooser="true" table-rows="true" include-all-columns="true" filterable="true">
+                        <px-data-table-column name="id" Label="Upload ID" type="html" sortable filterable></px-data-table-column>
+                        <px-data-table-column name="file_name" Label="File Name" sortable filterable></px-data-table-column>
+                        <px-data-table-column name="total_rows" label="Total No.of Rows" sortable filterable></px-data-table-column>
+                        <px-data-table-column name="no_of_rows_loaded" label="No.of Rows Processed" sortable filterable></px-data-table-column>
+                        <px-data-table-column name="no_of_rows_failed" label="No.of Rows Failed" sortable filterable></px-data-table-column>
+                        <px-data-table-column name="upload_status" label="Status" sortable filterable></px-data-table-column>
+                        <px-data-table-column name="uploaded_by" label="Uploaded By" sortable filterable></px-data-table-column>
+                        <px-data-table-column name="uploaded_date" sort-function-name="window.sortbydate" label="Uploaded Date" sortable filterable></px-data-table-column>
+                        <px-data-table-column name="comments" label="Comments" sortable filterable></px-data-table-column>
+                        <px-data-table-column class="processInvoice" name="action" label="Action" type="html" sortable filterable></px-data-table-column>
+                    </px-data-table>
+                </div>
+                <button class="btn btn-primary rt" ng-click="refreshClicked()" style="margin:10px;position:absolute;right:0;bottom:0;background:#2b5ea2 !important">Refresh</button>
+              </div>
+            </div>
+            <div ng-show="logsClicked">
+              <div id="Loader" ng-show="Loading1==true" ng-hide="Loading1==false">
+                    <px-spinner size="100"></px-spinner>
+              </div>
+              <div ng-show="Loading1==false" ng-hide="Loading1==true">
+                <div class="upload_form clearfix">
+                    <div>
+                        <input type="file" name="" accept=".csv" file-input="files" multiple/>
+                        <button class="btn btn-primary" ng-click="uploadInvoice()" style="float:right;background:#2b5ea2 !important">Upload</button>
+                    </div>
+                </div>
+            </div>
+          </div>
+            <div ng-show="SettingsClicked">
+              <div id="Loader" ng-show="Loading2==true" ng-hide="Loading2==false">
+                    <px-spinner size="100"></px-spinner>
+              </div>
+              <div ng-show="Loading2==false" ng-hide="Loading2==true">
+                <div id="SubTab" class="ui secondary vertical pointing menu desk-25 small-50 lt" style="padding-bottom:10px;height:415px;display:inline-block">
+                    <div>
+                        <a style="cursor: pointer" ng-click="CustomerSettings = true;PaymentSettings = false;CustomerClicked()" class="active item" style="padding:10px"><i style="margin-right:3%" class="fa fa-user" aria-hidden="true"></i>Customer Settings</a>
+                        <a style="cursor: pointer" ng-click="CustomerSettings = false;PaymentSettings = true;PaymentClicked()" class="item" style="padding:10px"><i style="margin-right:3%" class="fa fa-credit-card" aria-hidden="true"></i>Payment Settings</a>
+                    </div>
+                </div>
+                <div class="desk-75 small-50 rt" style="margin-left:15px;display:inline-block;vertical-align:top;font-size:0.95rem !important">
+                    <div ng-show="CustomerSettings">
+                      <form name="CustomerSettingsForm">
+                      <div>
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold">
+                            Customer Name
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                            <select ng-change="getSettingsData()" ng-model="selectedCustomer" style="padding:9px 0;width:50%;border:none;border-bottom:1px solid #ccc" name="option">
+                              <option value="" disabled selected>Select</option>
+                              <option value="hca">HCA</option>
+                              <option value="providence">Providence</option>
+                            </select>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold">
+                            Do you want to send notifications ?
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <p style="margin-bottom:0">
+                          <input class="Form" style="width:20px;height:20px;position:relative;top:6px" type="radio" name="notificationFlag" ng-model="Notifications" value="Yes" ng-change="NotificationsChanged()">
+                          <label style="font-size:0.9rem">Yes</label></p>
+                          <p style="margin-bottom:0">
+                          <input class="Form" style="width:20px;height:20px;position:relative;top:6px" type="radio" name="notificationFlag" ng-model="Notifications" value="No" ng-change="NotificationsChanged()">
+                          <label style="font-size:0.9rem">No</label></p>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold">
+                            Frequency of Notications
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc!important" type="number" ng-model="frequency" min="1" name="frequency">
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    </div>
+                    <div ng-show="PaymentSettings">
+                      <div>
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold">
+                            Customer Name
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                            <select ng-change="getSettingsData()" ng-model="selectedCustomer" style="padding:9px 0;width:50%;border:none;border-bottom:1px solid #ccc" name="option">
+                              <option value="" disabled selected>Select</option>
+                              <option value="hca">HCA</option>
+                              <option value="providence">Providence</option>
+                            </select>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold">
+                            Payment Mode
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc!important;margin-bottom: 0;margin-top: 0;" type="text" ng-model="payment_mode">
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            Payee Name
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <textarea class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;height:6em;min-height:4em;max-height:24em;border-radius:.28571429rem" type="text" ng-model="payee_name"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            Payee Address
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <textarea id="PayeeAddress" class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;height:6em;min-height:4em;max-height:24em;border-radius:.28571429rem" type="text" ng-model="payee_address"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="PayeeAddressBlock">
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            Address1
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;border-radius:.28571429rem" type="text" ng-model="payee_address_address1"></input>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            Address 2
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;border-radius:.28571429rem" type="text" ng-model="payee_address_address2"></input>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            Address 3
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;border-radius:.28571429rem" type="text" ng-model="payee_address_address3"></input>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            City
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;border-radius:.28571429rem" type="text" ng-model="payee_address_city"></input>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            Country
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;border-radius:.28571429rem" type="text" ng-model="payee_address_country"></input>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            Postal Code
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;border-radius:.28571429rem" type="text" ng-model="payee_address_postalcode"></input>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            Province
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;border-radius:.28571429rem" type="text" ng-model="payee_address_province"></input>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            State
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;border-radius:.28571429rem" type="text" ng-model="payee_address_state"></input>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold">
+                            Payee Bank Name
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc!important;margin-bottom: 0;margin-top: 0;" type="text" ng-model="payee_bank_name">
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            Payee Bank Address
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <textarea class="Form" id="PayeeBankAddress" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;height:6em;min-height:4em;max-height:24em;border-radius:.28571429rem" type="text" ng-model="payee_bank_address"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="PayeeBankAddressBlock">
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            Address1
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;border-radius:.28571429rem" type="text" ng-model="payee_bank_address_address1"></input>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            Address 2
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;border-radius:.28571429rem" type="text" ng-model="payee_bank_address_address2"></input>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            Address 3
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;border-radius:.28571429rem" type="text" ng-model="payee_bank_address_address3"></input>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            City
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;border-radius:.28571429rem" type="text" ng-model="payee_bank_address_city"></input>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            Country
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;border-radius:.28571429rem" type="text" ng-model="payee_bank_address_country"></input>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            Postal Code
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;border-radius:.28571429rem" type="text" ng-model="payee_bank_address_postalcode"></input>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            Province
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;border-radius:.28571429rem" type="text" ng-model="payee_bank_address_province"></input>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold;vertical-align:top">
+                            State
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc;margin-bottom: 0;margin-top: 0; #ccc!important;margin-bottom: 0;margin-top: 0;border-radius:.28571429rem" type="text" ng-model="payee_bank_address_state"></input>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold">
+                            Payee Account Number
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc!important;margin-bottom: 0;margin-top: 0;" type="text" ng-model="payee_acc_number">
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold">
+                            Payee Aba Routing Number
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc!important;margin-bottom: 0;margin-top: 0;" type="text" ng-model="payee_aba_routing_number">
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold">
+                            Payee Int Ref
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc!important;margin-bottom: 0;margin-top: 0;" type="text" ng-model="payer_int_ref">
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold">
+                            Customer Bank Account Number
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc!important;margin-bottom: 0;margin-top: 0;" type="text" ng-model="cust_bank_acc_number">
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold">
+                            Payer Aba Routing Number
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc!important;margin-bottom: 0;margin-top: 0;" type="text" ng-model="payer_aba_routing_number">
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold">
+                            Payer Swift Id
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc!important;margin-bottom: 0;margin-top: 0;" type="text" ng-model="payer_swift_id">
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold">
+                            Currency
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc!important;margin-bottom: 0;margin-top: 0;" type="text" ng-model="currency">
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold">
+                            Originator Bank Name
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc!important;margin-bottom: 0;margin-top: 0;" type="text" ng-model="originator_bank_name">
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold">
+                            Originator Bank Country
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc!important;margin-bottom: 0;margin-top: 0;" type="text" ng-model="originator_bank_country">
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top:2%">
+                        <div class="desk-25 lt" style="display:inline-block;font-weight:bold">
+                            Payment Charges Borne By
+                        </div>
+                        <div class="desk-50 rt" style="display:inline-block">
+                          <div>
+                            <input class="Form" style="padding:8px;display:block;width:50%;border:1px solid #ccc!important;margin-bottom: 0;margin-top: 0;" type="text" ng-model="payment_charges_borne_by">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary rt"  id="Save" ng-click="setSettingsData()" style="margin:10px;position:absolute;right:0;bottom:0;background:#2b5ea2 !important">Save</button>
+            </div>
+          </div>
+        </div>
+    </px-card>
+</div>

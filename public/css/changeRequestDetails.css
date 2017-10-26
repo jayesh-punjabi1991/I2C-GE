@@ -5,13 +5,46 @@
 .lt {
     float: left;
 }
+.none{
+  display:none;
+}
+.btn-message:hover {
+    color: white !important;
+    background-color: #f15854 !important;
+    border-color: #560907 !important;
+}
 
+.btn-message {
+    color: white !important;
+    background-color: #f15854 !important;
+    border-color: #560907 !important;
+}
 .clearfix:after {
     content: "";
     display: table;
     clear: both;
 }
+.suborder_card{
+  padding: 1rem 0.8rem 2rem !important;
+}
+.summaryTable td, th {
+width:123px !important;
+min-width: 123px !important;
+max-width: 123px !important;
+word-wrap: break-word;
+/*border: 1px solid #71838f !important;*/
+text-align: left !important;
+padding: 10px !important;
+font-weight: normal;
+/*padding-left: 20px !important;*/
+}
+.shipmentdatacell{
+  width:150px !important;
+  min-width: 150px !important;
+  max-width: 150px !important;
+  word-wrap: break-word;
 
+}
 .cr-wrapper {
     margin: 3px !important;
 }
@@ -48,6 +81,7 @@
 
 .big_label {
     margin-top: 0 !important;
+    margin-bottom: 0 !important;
     font-size: 15px;
 }
 
@@ -99,6 +133,17 @@
     color: #fff !important;
     background-color: #337ab7 !important;
     border-color: #2e6da4 !important;
+}
+.btn-message:hover {
+    color: white !important;
+    background-color: #f15854 !important;
+    border-color: #560907 !important;
+}
+
+.btn-message {
+    color: white !important;
+    background-color: #f15854 !important;
+    border-color: #560907 !important;
 }
 
 .btn-tertiary:hover {
@@ -290,4 +335,112 @@ table.sortable tr {
 .tgl-flip:checked+.tgl-btn:active:after {
     -webkit-transform: rotateY(20deg);
     transform: rotateY(20deg);
+}
+.accordion, .accordion *, .cr-accordion, .cr-accordion * {
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+
+.accordion, .cr-accordion {
+  overflow: hidden;
+  margin: 0 2px;
+}
+.accordion-section-content1 .accordion-section, .cr-accordion-section-content1 .cr-accordion-section{
+  margin: 0 4px 0 0;
+}
+
+/*----- Section Titles -----*/
+.accordion-section-title, .accordion-section-title1, .cr-accordion-section-title, .cr-accordion-section-title1  {
+	width:100%;
+	display:inline-block;
+	transition:all linear 0.15s;
+	/* Type */
+  text-decoration: none;
+	font-size:14px;
+  cursor: pointer;
+  border-bottom:1px solid #1a1a1a;
+  font-weight: normal;
+  background-color: white;
+}
+.accordion-section-title1, .cr-accordion-section-title1{
+  margin: 0 2px;
+  border-top: 0 !important;
+  border-bottom: 1px solid black;
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+.accordion-section-title.active, .cr-accordion-section-title.active {
+	background:#3c8dc6 !important;
+  color:white !important;
+	/* Type */
+	text-decoration:none;
+  border-bottom:2px solid black;
+}
+.accordion-section-title:hover, .cr-accordion-section-title:hover{
+  background:#479aff !important;
+  color:white !important;
+	/* Type */
+	text-decoration:none;
+}
+.accordion-section-title1:hover, .cr-accordion-section-title1:hover{
+  background:#479aff !important;
+  color:white !important;
+	/* Type */
+	text-decoration:none;
+}
+.accordion-section-title1.active, .cr-accordion-section-title1.active {
+  background:#3c8dc6 !important;
+  color:white !important;
+  /* Type */
+	text-decoration:none;
+  border:2px solid black;
+}
+
+.accordion-section:last-child .accordion-section-title, .cr-accordion-section:last-child .cr-accordion-section-title {
+	border-bottom:none;
+}
+.accordion-section:last-child .accordion-section-title1, .cr-accordion-section:last-child .cr-accordion-section-title1 {
+	border-bottom:1px dashed black;
+}
+
+/*----- Section Content -----*/
+.accordion-section-content, .cr-accordion-section-content {
+	padding:15px;
+	display:none;
+}
+.accordion-section-content1 h4, .cr-accordion-section-content1 h4{
+  margin: 0px 0px 5px 0 !important;
+}
+.accordion-section-content1, .cr-accordion-section-content1 {
+	padding:15px;
+	display:none;
+}
+.accordion-section-content2, .cr-accordion-section-content2 {
+	padding:15px;
+	display:none;
+}
+.item_tr{
+  border-bottom: 1px solid black  !important;
+}
+.item_tr td{
+  padding: 5px;
+}
+.accordion-section-title, .cr-accordion-section-title{
+  color: black;
+  font-size: 14px;
+  background-color: white;
+  box-shadow: 0px !important;
+}
+.trackingLink{
+  color: blue;
+}
+.trackingLink:hover{
+  color: white;
+}
+#Loader1{
+  margin-top: 20%;
+  margin-left: 45%;
+  margin-bottom: 5%;
 }

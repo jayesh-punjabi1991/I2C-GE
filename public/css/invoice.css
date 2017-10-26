@@ -1,0 +1,144 @@
+.invoice-wrapper {
+    margin: 3px !important;
+}
+.inv-header, .inv-latest, .dispute_mail{
+  padding: 0 !important;
+}
+.pagination{
+  padding-left: 0px !important;
+}
+.inv-details, .inv-oth-vers, .file_upload{
+  padding: 10px;
+}
+.small_label {
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px !important;
+    margin-top: 0 !important;
+}
+.big_label {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    font-size: 15px;
+}
+.amt_details{
+  border: 1px solid black;
+  padding: 10px;
+  background-color: black;
+  color: white;
+}
+.sup_docs{
+  min-height: 163px;
+}
+.remit-div{
+  border: 1px solid black;
+  padding: 5px;
+}
+.remit-div table{
+  margin-bottom: 0 !important;
+}
+.remit-div th{
+  text-align: left !important;
+}
+.header-box{
+  padding-bottom: 10px;
+  border-bottom: 1px solid black;
+}
+.adr-box{
+  padding: 10px 0;
+  border-bottom: 1px solid black;
+}
+.adr-box th{
+  text-align: left !important;
+}
+.adr-box td{
+  padding-left: 10px !important;
+}
+.cust-details{
+  /*border-right: 1px solid black;*/
+  min-height: 178px;
+  padding-left: 10px;
+}
+.cust-details th, .cust-details td, .pay_details th, .pay_details td{
+  text-align: left;
+  padding-bottom: 5px;
+}
+.cust-details td{
+  padding-left: 5px;
+}
+.sold_to_div{
+  padding-left: 10px;
+  border-right: 1px solid black;
+  min-height: 178px;
+}
+.ship_to_div{
+  padding-left: 10px;
+  border-right: 1px solid black;
+  min-height: 178px;
+}
+.rt {
+    float: right;
+}
+
+.lt {
+    float: left;
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.inv-ver{
+  padding: 0 10px;
+}
+.inv-ver h4{
+  margin: 16px 0 10px 0 !important;
+}
+.inv-ver .oth-vers{
+  margin: 10px  0;
+}
+.terms_div{
+  border: 1px solid black;
+  padding: 10px;
+}
+.terms_div table{
+  margin-bottom: 0 !important;
+}
+.spoc-box{
+  padding-bottom: 10px;
+  border-bottom: 1px solid black;
+}
+.inv-oth-vers h4{
+  margin-top: 0px;
+}
+.inv-lines{
+  padding:10px 0 10px 20px;;
+  /*border-bottom: 1px solid black;*/
+}
+.inv-lines table{
+  margin-bottom: 0 !important;
+  width: 100%;
+}
+.inv-lines th, .inv-lines td{
+  text-align: left !important;
+  padding: 10px 0 15px 10px;
+}
+.inv-lines th{
+  border: 1px solid black !important;
+}
+.inv-summary{
+  padding: 10px;
+}
+.inv-summary table{
+  margin-bottom: 0 !important;
+  width: 100%;
+}
+.inv-value-div{
+  margin-right: 37px;
+}
+.inv-summary th, .inv-summary td{
+  text-align: right !important;
+  padding: 5px 0;
+}

@@ -1,0 +1,57 @@
+body{overflow:initial !important}
+.odr-vers, .odr-crs, .odr-inv{
+  padding: 0 1rem 1rem 1rem !important;
+}
+.ui.styled{
+  width: 100% !important;
+}
+.small_label {
+    color: #7c7c84;
+    font-size: 14px;
+    margin-bottom: 5px !important;
+}
+
+.big_label {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    font-size: 15px;
+}
+.ui.menu{
+  font-family: 'GE Inspira' !important;
+}
+body{
+  font-family: 'GE Inspira' !important;
+}
+.settings{
+    padding: 0px !important;
+}
+.ui.tabular.menu .active.item {
+    background: #FFF;
+    color: rgba(0, 0, 0, .95);
+    border-top-width: 1px;
+    border-color: #D4D4D5;
+    font-weight: 700;
+    margin-bottom: -1px;
+    box-shadow: none;
+    border-radius: .28571429rem .28571429rem 0 0!important;
+    color:#2b5ea2;
+    /*border-bottom: 2px solid #2b5ea2;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    */
+}
+.ui.tabular.menu .item {
+    background: 0 0;
+    border-bottom: none;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-top: 2px solid transparent;
+    padding: .92857143em 1.42857143em;
+    color: rgba(0, 0, 0, .87);
+    cursor: pointer;
+}
+.audit_table th, .audit_table td{
+  padding: 10px;
+  text-align: left;
+}

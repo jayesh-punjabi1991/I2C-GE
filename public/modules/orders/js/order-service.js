@@ -5,6 +5,7 @@ define(['angular', './module', 'constants'], function(angular, module) {
      * PredixUserService is a sample service which returns information about the user and if they are logged in
      */
     module.factory('OrdersService', ['$q','$http','urls','$window','$rootScope', function($q,$http,urls,$window,$rootScope) {
+      var orderData;
         return {
             getOrdersList: function(){
               return $http.get(urls.base_url + urls.get_orders_list, {
@@ -57,6 +58,30 @@ define(['angular', './module', 'constants'], function(angular, module) {
                    'Content-Type': undefined
                  }
                });
+            },
+            getOrderAuditRecords: function (oNum, custId) {
+              return $http.get(urls.base_url + urls.get_order_audit_records + '?customerId='+ custId + '&orderId=' + oNum , {
+                 headers: {
+                   'Authorization': 'Bearer ' + $window.sessionStorage.getItem('auth_token'),
+                   'x-access-token': $window.sessionStorage.getItem('userToken'),
+                 }
+               });
+            },
+            getInvoiceAuditRecords: function (iNum, custId) {
+              return $http.get(urls.base_url + urls.get_invoice_audit_records + '?customerId='+ custId + '&invoiceNo=' + iNum , {
+                 headers: {
+                   'Authorization': 'Bearer ' + $window.sessionStorage.getItem('auth_token'),
+                   'x-access-token': $window.sessionStorage.getItem('userToken'),
+                 }
+               });
+            },
+            setOrderData: function (data) {
+              console.log(data);
+              orderData = data;
+            },
+            getOrderVersionData: function () {
+              console.log(orderData);
+              return orderData;
             }
         };
     }]);

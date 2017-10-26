@@ -4,7 +4,7 @@
 module.exports = {
     compile: {
         options: {
-            out: 'dist/www/scripts/bootstrapper.js',
+            out: 'dist/www/modules/bootstrapper.js',
             normalizeDirDefines: 'all',
             optimize: 'uglify',
             wrap: true,

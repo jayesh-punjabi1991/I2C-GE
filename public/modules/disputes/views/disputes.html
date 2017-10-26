@@ -1,0 +1,44 @@
+<link rel="stylesheet" href="css/ordersList.css">
+<px-card style="background-color:white;border-radius:4px;padding-bottom:5px">
+  <h3 style="float:left;">Disputes Dashboard</h3>
+</px-card>
+  <px-card style="background-color:white;border-radius:4px;margin-top:1%;">
+    <div class="flex filters">
+      <div id="calenderdiv">
+          <!-- <px-datetime-range-field id="rangePicker" hide-time="true" show-buttons="true" date-format="YYYY/MM/DD" time-format="HH:mm:ss" time-zone="UTC" show-time-zone="abbreviatedText" range='{"from":"2015-07-01T01:00:00.000Z","to":"2016-07-08T14:00:00.000Z"}'></px-datetime-range-field> -->
+          <px-rangepicker id="rangePicker" hide-time="true" show-buttons="true" date-format="YYYY/MM/DD" time-format="HH:mm:ss" time-zone="UTC" show-time-zone="abbreviatedText" range='{"from":"2015-07-01T01:00:00.000Z","to":"2016-07-08T14:00:00.000Z"}'></px-rangepicker>
+      </div>
+    </div>
+    <div id="Loader" ng-show="Loading==true" ng-hide="Loading==false">
+        <px-spinner size="100"></px-spinner>
+    </div>
+  <div ng-show="Loading==false" ng-hide="Loading==true">
+  <px-data-table table-data='{{DisputeList}}' language="en" striped="true" sortable="true" show-column-chooser="true" table-rows="true" include-all-columns="true" filterable="true">
+    <px-data-table-column name="Dispute#" sort-function-name="window.sortbyDisputeNumber" Label="Dispute Number" type="html" sortable filterable></px-data-table-column>
+		<px-data-table-column name="order#" Label="Order Number" type="html" sortable filterable></px-data-table-column>
+		<px-data-table-column name="Invoice#" label="Invoice Number" sortable filterable></px-data-table-column>
+    <px-data-table-column name="custId" label="Customer Name" sortable filterable></px-data-table-column>
+    <px-data-table-column name="DisputeDate" sort-function-name="window.sortbydate" label="Created Date" sortable filterable></px-data-table-column>
+    <px-data-table-column name="status" label="Status" sortable filterable></px-data-table-column>
+    <px-data-table-column name="actions" label="Actions" type="html" sortable filterable></px-data-table-column>
+	</px-data-table>
+  </div>
+  <h4 style="margin-bottom:0px !important;margin-top:0 !important">Legends</h4>
+  <div class="layout_item legend_tbl">
+      <table class="table_det">
+        <tbody>
+          <tr>
+          <td><span class="status_accept"></span><strong>Accepted</strong></td>
+          <!-- <td>Are the orders which are approved for processing</td> -->
+          </tr>
+          <tr>
+          <td><span class="status_pending"></span><strong>Initiated</strong></td>
+          <!-- <td>Order is in process of change, because of change in agreed Scope of Work. Once change request is approved order will be in Accepted state</td> -->
+          </tr>
+          <tr>
+          <td><span class="status_reject"></span><strong>Rejected</strong></td>
+          <!-- <td>Are the orders which are rejected</td> -->
+          </tr>
+      </tbody></table>
+    </div>
+</px-card>

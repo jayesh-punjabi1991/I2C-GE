@@ -1,0 +1,399 @@
+<link rel="stylesheet" href="css/orderDetails.css">
+<link rel="stylesheet" href="css/invoice.css">
+<link rel="stylesheet" href="css/common-lg.css">
+<div class="invoice-wrapper">
+  <div id="PageLoader" ng-show="ILoading==true" ng-hide="ILoading==false">
+      <px-spinner size="100"></px-spinner>
+  </div>
+  <div class="" ng-show="ILoading==false" ng-hide="ILoading==true">
+    <div class="btn_div clearfix">
+      <div class="desk-25 small-50 lt">
+        <a href="/payments" title="Back" class="btn btn-primary"> << Back</a>
+      </div>
+    </div>
+    <px-card class="inv-header">
+      <div class="odr-heading">
+        <h3><span class="">Invoice # :</span>&nbsp;<span class="">{{invoiceData.invoice_number}}</span></h3>
+        <h4>Order : {{invoiceData.ge_order_number}}</h4>
+        <h4>Status : {{invoiceData.status}}</h4>
+      </div>
+    </px-card>
+    <px-card class="payment_form clearfix">
+      <div class="odr-small-heading">
+          <h4 class="label-color"><i class="fa fa-money"></i>&nbsp;&nbsp;Make Payment</h4>
+      </div>
+      <div id="DivLoader" ng-show="PLoading==true" ng-hide="PLoading==false">
+          <px-spinner class="spinner_div rt" size="75"></px-spinner>
+      </div>
+      <div ng-show="PLoading==false" ng-hide="PLoading==true">
+        <div class="clearfix">
+          <div class="desk-40 small-50 lt" style="margin-top: 5px;">
+              <label for="payAmt">Payment Amount:</label>
+              <input type="text" name="" id="payAmt" ng-model="payAmount"/>
+          </div>
+          <div class="desk-40 small-50 rt" style="margin-top: 5px;">
+              <label for="balAmt">Balance Amount:</label>
+              <input type="text" name="" id="balAmt" value="{{payAmount < invoiceData.total_amt ? invoiceData.total_amt - payAmount : 0 | number : 2}}" disabled="disabled"/>
+          </div>
+        </div>
+        <div class="">
+          <div class="desk-100 small-100" style="margin-top: 5px;">
+              <label for="balAmt">Description:</label>
+              <textarea name="" id="balAmt" ng-model="description" style="width: 100%;height: 75px;"></textarea>
+          </div>
+        </div>
+        <div class="clearfix">
+          <div class="desk-50 small-50 rt">
+            <a title="Pay" class="btn btn-primary rt" ng-click="PaymentInitiate()">Pay</a>
+          </div>
+        </div>
+
+      </div>
+    </px-card>
+    <px-card class="dispute_mail clearfix" ng-show="disputeForm">
+      <div id="DivLoader" ng-show="ULoading==true" ng-hide="ULoading==false">
+          <px-spinner class="spinner_div rt" size="100"></px-spinner>
+      </div>
+      <div ng-show="ULoading==false" ng-hide="ULoading==true">
+        <div class="odr-small-heading">
+            <h4 class="label-color"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Raise a dispute on Invoice {{invoiceData.invoice_number}}</h4>
+        </div>
+        <div id="disputeTextDiv" ng-show="disputeForm">
+            <div class="send_form">
+                <div class="mailTo">
+                    <label for="mailTo">To:</label>
+                    <input type="text" name="mailTo" class="form-field--inline text-input" ng-model="to" disabled="disabled"/>
+                </div>
+                <div class="mailSub">
+                    <label for="mailSub">Subject:</label>
+                    <input type="text" name="mailSub" class="form-field--inline text-input" ng-model="subject"/>
+                </div>
+                <div>
+                    <label for="mailBody"></label>
+                    <textarea ng-model="description"></textarea>
+                </div>
+                <div>
+                    <input type="file" name="" file-input="files"/>
+                </div>
+                <div class="clearfix">
+                    <a title="Send" class="btn btn-primary rt" ng-click="sendDisputeMail()">Send</a>
+                </div>
+            </div>
+        </div>
+      </div>
+    </px-card>
+    <px-card class="payee-details">
+      <div class="odr-small-heading">
+          <h4 class="label-color"><i class="fa fa-credit-card"></i>&nbsp;&nbsp;Other Payment Details</h4>
+      </div>
+      <div class="imp_details clearfix pay_details">
+        <div class="desk-50 small-100 lt">
+          <table>
+            <tr>
+              <th>Payee Name</th>
+              <td>: {{paymentData.payee_name}}</td>
+            </tr>
+            <tr>
+              <th>Payee  Address</th>
+              <td>
+                <p class="big_label">: {{paymentData.payee_address.address1 ? paymentData.payee_address.address1 + ',' : ''}}</p>
+                <p class="big_label">{{paymentData.payee_address.address2 ? paymentData.payee_address.address2 + ',' : ''}}</p>
+                <p class="big_label">{{paymentData.payee_address.address3 ? paymentData.payee_address.address3 + ',' : ''}}</p>
+                <p class="big_label">{{paymentData.payee_address.city ? paymentData.payee_address.city + ',' : ''}}{{paymentData.payee_address.province ? paymentData.payee_address.province + ',' : ''}}</p>
+                <p class="big_label">{{paymentData.payee_address.state ? paymentData.payee_address.state + ',' : ''}}{{paymentData.payee_address.country ? paymentData.payee_address.country + '-' : ''}}{{paymentData.payee_address.postalcode ? paymentData.payee_address.postalcode : ''}}</p>
+              </td>
+            </tr>
+            <tr>
+              <th>Payment Mode</th>
+              <td>: {{paymentData.payment_mode}}</td>
+            </tr>
+            <tr>
+              <th>Payee Account Number</th>
+              <td>: {{paymentData.payee_acc_number}}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="desk-50 small-100 lt">
+          <table>
+            <tr>
+              <th>Payee Bank Name</th>
+              <td>: {{paymentData.payee_bank_name}}</td>
+            </tr>
+            <tr>
+              <th>Payee Bank Address</th>
+              <td>
+                <p class="big_label">: {{paymentData.payee_bank_address.address1 ? paymentData.payee_bank_address.address1 + ',' : ''}}</p>
+                <p class="big_label">{{paymentData.payee_bank_address.address2 ? paymentData.payee_bank_address.address2 + ',' : ''}}</p>
+                <p class="big_label">{{paymentData.payee_bank_address.address3 ? paymentData.payee_bank_address.address3 + ',' : ''}}</p>
+                <p class="big_label">{{paymentData.payee_bank_address.city ? paymentData.payee_bank_address.city + ',' : ''}}{{paymentData.payee_bank_address.province ? paymentData.payee_bank_address.province + ',' : ''}}</p>
+                <p class="big_label">{{paymentData.payee_bank_address.state ? paymentData.payee_bank_address.state + ',' : ''}}{{paymentData.payee_bank_address.country ? paymentData.payee_bank_address.country + '-' : ''}}{{paymentData.payee_bank_address.postalcode ? paymentData.payee_bank_address.postalcode : ''}}</p>
+              </td>
+            </tr>
+            <tr>
+              <th>Payee ABA/Routing Number</th>
+              <td>: {{paymentData.payee_aba_routing_number}}</td>
+            </tr>
+            <tr>
+              <th>Remit Details/Transaction Details</th>
+              <td>: {{paymentData.payee_bank_name}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </px-card>
+    <!-- <px-card class="inv-latest">
+      <div class="inv-ver clearfix">
+        <div class="desk-50 small-50 lt">
+          <h4>Latest Invoice Version : <a href="">12891201 - v10</a></h4>
+        </div>
+        <div class="oth-vers desk-50 small-50 rt clearfix">
+          <a class="btn btn-primary rt" ng-click="showVersion()">View Other Versions</a>
+        </div>
+      </div>
+    </px-card>
+    <px-card class="inv-oth-vers" ng-show="showOtherVersions">
+      <h4>Other Invoice Versions</h4>
+      <p>2. <a href="">12891201 - v2</a></p>
+      <p>3. <a href="">12891201 - v3</a></p>
+      <p>4. <a href="">12891201 - v4</a></p>
+    </px-card> -->
+    <px-card class="inv-details">
+      <div class="odr-small-heading">
+          <h4 class="label-color"><i class="fa fa-files-o"></i>&nbsp;&nbsp;Invoice</h4>
+      </div>
+      <div class="header-box clearfix">
+        <div class="desk-30 small-50 rt">
+          <div class="amt_details">
+            <p class="big_label clearfix"><span class="lt">AMOUNT DUE:</span><span class="rt">{{invoiceData.balance_amt | currency : invoiceData.currency + ' ' : 2}}</span></p>
+            <!-- <p class="big_label clearfix"><span class="lt">DUE DATE:</span><span class="rt">{{inv}}</span></p> -->
+          </div>
+          <div class="remit-div">
+            <table>
+              <tr>
+                <th>Remit to:</th>
+                <td>{{invoiceData.remit_info.remit_to}}</td>
+              </tr>
+              <tr>
+                <th>Remit Address:</th>
+                <td>
+                  <p class="big_label">{{invoiceData.remit_info.address.address1 ? invoiceData.remit_info.address.address1 + ',' : ''}}</p>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>
+                  <p class="big_label">{{invoiceData.remit_info.address.address2 ? invoiceData.remit_info.address.address2 + ',' : ''}}</p>
+                  <p class="big_label">{{invoiceData.remit_info.address.address3 ? invoiceData.remit_info.address.address3 + ',' : ''}}</p>
+                  <p class="big_label">{{invoiceData.remit_info.address.city ? invoiceData.remit_info.address.city + ',' : ''}}{{invoiceData.remit_info.address.province ? invoiceData.remit_info.address.province + ',' : ''}}</p>
+                  <p class="big_label">{{invoiceData.remit_info.address.state ? invoiceData.remit_info.address.state + ',' : ''}}{{invoiceData.remit_info.address.country ? invoiceData.remit_info.address.country + '-' : ''}}{{invoiceData.remit_info.address.postalcode ? invoiceData.remit_info.address.postalcode : ''}}</p>
+                </td>
+              </tr>
+              <tr>
+                <th>Wire Information:</th>
+                <td>{{invoiceData.remit_info.payment_instr}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="desk-40 small-50 lt">
+          <div class="cust-details">
+            <table>
+              <tr>
+                <th>Federal ID#</th>
+                <td>: {{invoiceData.federal_id_number}}</td>
+              </tr>
+              <tr>
+                <th>Invoice Date</th>
+                <td>: {{invoiceData.invoice_date*1000 | date:'mediumDate'}}</td>
+              </tr>
+              <tr>
+                <th>Customer Name</th>
+                <td>: {{invoiceData.customer_name}}</td>
+              </tr>
+              <tr>
+                <th>Customer Number</th>
+                <td>: {{invoiceData.customer_number}}</td>
+              </tr>
+              <tr>
+                <th>Quote Number</th>
+                <td>: {{invoiceData.quote_number}}</td>
+              </tr>
+              <tr>
+                <th>PO Number:</th>
+                <td>: {{invoiceData.cust_po_number}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="adr-box clearfix">
+        <div class="sold_to_div desk-30 small-100 lt">
+          <p class="small_label">Sold To:</p>
+          <p class="big_label">{{invoiceData.customer_name}}</p>
+          <p class="big_label">{{invoiceData.sold_to.address1 ? invoiceData.sold_to.address1 + ',' : ''}}</p>
+          <p class="big_label">{{invoiceData.sold_to.address2 ? invoiceData.sold_to.address2 + ',' : ''}}</p>
+          <p class="big_label">{{invoiceData.sold_to.address3 ? invoiceData.sold_to.address3 + ',' : ''}}</p>
+          <p class="big_label">{{invoiceData.sold_to.city ? invoiceData.sold_to.city + ',' : ''}}{{invoiceData.sold_to.province ? invoiceData.sold_to.province + ',' : ''}}</p>
+          <p class="big_label">{{invoiceData.sold_to.state ? invoiceData.sold_to.state + ',' : ''}}{{invoiceData.sold_to.country ? invoiceData.sold_to.country + '-' : ''}}{{invoiceData.sold_to.postalcode ? invoiceData.sold_to.postalcode : ''}}</p>
+        </div>
+        <div class="ship_to_div desk-30 small-100 lt">
+          <p class="small_label">Ship To:</p>
+          <p class="big_label">{{invoiceData.ship_to.address1 ? invoiceData.ship_to.address1 + ',' : ''}}</p>
+          <p class="big_label">{{invoiceData.ship_to.address2 ? invoiceData.ship_to.address2 + ',' : ''}}</p>
+          <p class="big_label">{{invoiceData.ship_to.address3 ? invoiceData.ship_to.address3 + ',' : ''}}</p>
+          <p class="big_label">{{invoiceData.ship_to.city ? invoiceData.ship_to.city + ',' : ''}}{{invoiceData.ship_to.province ? invoiceData.ship_to.province + ',' : ''}}</p>
+          <p class="big_label">{{invoiceData.ship_to.state ? invoiceData.ship_to.state + ',' : ''}}{{invoiceData.ship_to.country ? invoiceData.ship_to.country + '-' : ''}}{{invoiceData.ship_to.postalcode ? invoiceData.ship_to.postalcode : ''}}</p>
+        </div>
+        <div class="cust-details desk-40 small-100 lt">
+          <p class="small_label">Supporting Documents:</p>
+          <table>
+              <tr ng-show="docFlag" ng-repeat = "document in supporting_documents">
+                <td>{{$index+1}}. &nbsp;&nbsp;<a ng-if="document.document_type != 'link'" target="_blank" href="" ng-click="displayFile(document.description[0], document.url)">{{document.description[1]}}</a><a ng-if="document.document_type == 'link'" target="_blank" href="{{document.url}}" >{{document.description}}</a></td>
+              </tr>
+              <tr ng-show="!docFlag">
+                  <td>No documents related to this Invoice</td>
+              </tr>
+          </table>
+        </div>
+      </div>
+      <div class="terms-box">
+        <h4>Terms</h4>
+        <div class="clearfix">
+          <div class="terms_div desk-50 small-100 lt">
+            <table>
+              <tr>
+                <th>Billing Terms:</th>
+                <td>{{invoiceData.billing_terms}}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="terms_div desk-25 small-100 lt">
+            <table>
+              <tr>
+                <th>Payment Terms:</th>
+                <td>{{invoiceData.payment_terms}}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="terms_div desk-25 small-100 lt">
+            <table>
+              <tr>
+                <th>Delivery Terms:</th>
+                <td>{{invoiceData.delivery_terms}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <!-- <div class="clearfix">
+          <div class="terms_div desk-50 small-100 lt">
+            <table>
+              <tr>
+                <th>Delivery Terms:</th>
+                <td>{{invoiceData.delivery_terms}}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="terms_div desk-50 small-100 lt">
+            <table>
+              <tr>
+                <th>Freight Terms:</th>
+                <td>{{invoiceData.freight_terms}}</td>
+              </tr>
+            </table>
+          </div>
+        </div> -->
+      </div>
+      <div class="shipping-box">
+        <h4>Shipping Details</h4>
+        <div class="clearfix">
+          <!-- <div class="terms_div desk-33 small-100 lt">
+            <table>
+              <tr>
+                <th>Ship Date:</th>
+                <td>{{invoiceData.shipped_date*1000 | date:'mediumDate'}}</td>
+              </tr>
+            </table>
+          </div> -->
+          <div class="terms_div desk-50 small-100 lt">
+            <table>
+              <tr>
+                <th>Carrier:</th>
+                <td>{{invoiceData.carrier}}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="terms_div desk-50 small-100 lt">
+            <table>
+              <tr>
+                <th>Waybill:</th>
+                <td>{{invoiceData.waybill}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="spoc-box">
+        <h4>Contact Details</h4>
+        <div class="clearfix">
+          <div class="terms_div desk-50 small-100 lt">
+            <table>
+              <tr>
+                <th>GE Contact Person:</th>
+                <td>{{invoiceData.ge_contact_name}} ({{invoiceData.ge_contact_email}})</td>
+              </tr>
+            </table>
+          </div>
+          <div class="terms_div desk-50 small-100 lt">
+            <table>
+              <tr>
+                <th>Customer Contact:</th>
+                <td>{{invoiceData.buyer_ap_name}} ({{invoiceData.buyer_ap_email}})</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="inv-lines">
+        <h4>Items</h4>
+        <table >
+          <tr>
+            <th>Quantity</th>
+            <th>Item Number</th>
+            <th>Description</th>
+            <th>List Price</th>
+            <th>Net Price</th>
+          </tr>
+          <tr ng-repeat="line in invoiceData.invoice_lines">
+            <td>{{line.quantity}}</td>
+            <td>{{line.item_number}}</td>
+            <td>{{line.line_item_description}}</td>
+            <td>{{line.price | currency : invoiceData.currency + ' ' : 2}}</td>
+            <td>{{line.extended_price | currency : invoiceData.currency + ' ' : 2}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="inv-summary clearfix">
+        <div class="inv-value-div desk-50 small-100 rt">
+          <table>
+            <tr>
+              <th>Total</th>
+              <td>{{invoiceData.total_invoice_amt_with_tax | currency : invoiceData.currency + ' ' : 2}}</td>
+            </tr>
+            <tr>
+              <th>Tax</th>
+              <td>{{invoiceData.tax_amount | currency : invoiceData.currency + ' ' : 2}}</td>
+            </tr>
+            <!-- <tr>
+              <th>Shipping handling</th>
+              <td>{{invoiceData.shipping_handling_amt | currency : invoiceData.currency + ' ' : 2}}</td>
+            </tr> -->
+            <tr>
+              <th>Total Amount</th>
+              <td>{{invoiceData.total_amt | currency : invoiceData.currency + ' ' : 2}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </px-card>
+  </div>
+</div>

@@ -1,12 +1,23 @@
-<link rel="stylesheet" type="text/css" href="css/ChangeRequestDetails.css">
-<link rel="stylesheet" type="text/css" href="css/common-lg.css">
+<link rel="stylesheet" href="css/changeRequestDetails.css">
+<link rel="stylesheet" href="css/common-lg.css">
 <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+<div id="Loader1" ng-show="Loading1==true" ng-hide="Loading1==false">
+      <px-spinner size="100"></px-spinner>
+</div>
+<div ng-show="Loading1==false" ng-hide="Loading1==true">
 <div class="cr-wrapper">
+  <div class="btn_div clearfix" style="padding-bottom:7px;">
+    <div class="desk-25 small-50 lt">
+      <a ng-if="App.prevState.name != 'audit'" href="/changeRequest" title="Back" class="btn btn-primary"> << Back</a>
+      <a ng-if="App.prevState.name == 'audit'" href="{{'/order/auditTrail/'+ customerId + '/' + orderNumber}}" title="Back" class="btn btn-primary"> << Back</a>
+    </div>
+  </div>
     <px-card class="card-head">
         <h2 class="cr-heading" style="display: -webkit-inline-box"><span class="cr">CHANGE REQUEST# :</span>&nbsp;<span class="cr_id">{{crId}}</span></h2>
         <div class="desk-50 rt clearfix cr_btns">
             <input class="tgl tgl-flip" id="cb5" type="checkbox" />
-            <label id="ToggleVersion" ng-click="ToggleVersion()" style="width:25% !important;float:right;height:1.5rem;display:none" class="tgl-btn" data-tg-off="Current Version" data-tg-on="Previous Version" for="cb5"></label>
+            <a id="ToggleVersion" class="btn btn-message rt" style="width:50% !important;float:right;height:2rem;display:none" ng-click="ToggleVersion()">{{Message}}</a>
+            <!-- <label id="ToggleVersion" ng-click="ToggleVersion()" style="width:25% !important;float:right;height:1.5rem;display:none" class="tgl-btn" data-tg-off="Current Version" data-tg-on="Previous Version" for="cb5"></label> -->
             <!-- <a title="" id="PreviousVersion" class="btn btn-tertiary rt" ng-click="ShowPreviousVersion()">Previous Version of Change Request# : {{crId}}</a>
             <a title="" style="display:none" id="Back" class="btn btn-tertiary rt" ng-click="ShowCurrentVersion()">Back</a> -->
         </div>
@@ -21,7 +32,7 @@
             </div>
             <div class="desk-20 small-50 lt details_div">
                 <p class="small_label">Created Date</p>
-                <p class="big_label"><i class="fa fa-calendar small_label"></i>&nbsp;&nbsp;{{crdate | date : 'mediumDate'}}</p>
+                <p class="big_label" id="order_date"><i class="fa fa-calendar small_label"></i>&nbsp;&nbsp;{{crdate | date : 'mediumDate'}}</p>
             </div>
             <div class="desk-20 small-50 lt details_div">
                 <p class="small_label">CR Status</p>
@@ -32,6 +43,10 @@
                 <p class="big_label"><span ng-if="orderStatus == 'change_requested'" class="status_pending"></span><span ng-if="orderStatus == 'accepted'" class="status_accept"></span><span ng-if="orderStatus == 'rejected'" class="status_reject"></span>&nbsp;&nbsp;{{orderStatus}}</p>
             </div>
         </div>
+        <div class="imp_details" ng-show="CRStatus== 'rejected'">
+          <p class="small_label">Rejection Comments </p>
+          <p class="big_label">{{crData.comments}}</p>
+        </div>
     </px-card>
         <px-card>
             <div class="clearfix">
@@ -39,32 +54,48 @@
                     <h3 class="head-text">Request Email</h3>
                 </div>
                 <div class="desk-50 rt clearfix cr_btns">
-                  <a ng-hide="acptBtn" ng-if="CRStatus== 'pending' && orderStatus == 'change_requested' && crData.to == 'ge-oms'" title="Accept" id="acceptButton" class="btn btn-primary rt" ng-click="acceptBtnClicked()">Accept</a>
-                  <a ng-show="acptBtn" ng-if="CRStatus== 'pending' && orderStatus == 'change_requested' && crData.to == 'ge-oms'" title="Accept" id="acceptButton1" class="btn btn-primary rt" ng-click="acceptClicked()">Accept</a>
-                  <a ng-if="CRStatus== 'pending' && orderStatus == 'accepted' && crData.to == 'ge-oms'" title="Reject" id="rejectButton" class="btn btn-reject rt" class="btn" ng-click="rejectClicked()">Reject</a>
+                  <a ng-if="CRStatus== 'pending' && orderStatus == 'change_requested' && crData.to == 'ge-oms'" ng-hide="acptBtn"  title="Accept" id="acceptButton" class="btn btn-primary rt" ng-click="acceptBtnClicked()">Accept</a>
+                  <a ng-if="CRStatus== 'pending' && orderStatus == 'change_requested' && crData.to == 'ge-oms'" ng-show="acptBtn"  title="Accept" id="acceptButton1" class="btn disabled rt" ng-click="acceptClicked()">Accept</a>
+                  <a ng-if="CRStatus== 'pending' && orderStatus == 'accepted' && crData.to == 'ge-oms'" ng-hide="rejectBtn" title="Reject" id="rejectButton1" class="btn btn-reject rt" ng-click="rejectBtnClicked()">Reject</a>
+                  <a ng-if="CRStatus== 'pending' && orderStatus == 'accepted' && crData.to == 'ge-oms'" ng-show="rejectBtn" title="Reject" id="rejectButton" class="btn disabled rt" ng-click="rejectClicked()">Reject</a>
                 </div>
             </div>
-            <div ng-show="showLinkInput == true">
-              <label for="changeLtrLink">Change Letter Link</label>
-              <input type="text" name="changeLtrLink" ng-model="ltrLink">
+            <div ng-show="showLinkInput == true" style="padding-left:10px">
+              <i style="color: #fb1c1c;vertical-align: super;font-size: 8px;" class="fa fa-asterisk" aria-hidden="true"></i><label for="changeLtrLink">Change Letter Link</label>
+              <input class="MandatoryField" type="text" name="changeLtrLink" ng-model="ltrLink"/>
+              <div>
+                <i style="color: #fb1c1c;vertical-align: super;font-size: 8px;" class="fa fa-asterisk" aria-hidden="true"></i><span style="font-size:12px">Mandatory Field</span>
+              </div>
+            </div>
+            <div ng-show="showTextInput">
+              <p class="small_label"><i style="color: #fb1c1c;vertical-align: super;font-size: 8px;" class="fa fa-asterisk" aria-hidden="true"></i>Comments</p>
+              <textarea class="MandatoryField" name="cmnt" rows="5" cols="100" ng-model="rej_comment" style="width:100%;"></textarea>
             </div>
             <div class="email_body">
-                <div class="toFrom clearfix">
-                    <div class="desk-50 lt">
-                        <span class="label-color ">Sent To :</span><span class="u_email">{{crData.to}}</span>
-                    </div>
-                    <div class="desk-50 rt">
-                        <span class="label-color">Sent By :</span><span class="u_email">{{crData.from}}</span>
-                    </div>
-                </div>
-                <p>{{description}}</p>
+              <div class="toFrom clearfix">
+                  <div class="desk-50 lt">
+                      <span ng-show="crData.from != 'system'" class="label-color ">Sent To :</span><span ng-show="crData.from != 'system'" class="u_email">{{crData.to}}</span>
+                      <span ng-show="crData.from == 'system'" class="label-color ">Sent To :</span><span ng-show="crData.from == 'system'" class="u_email">cust-cpa</span>
+                  </div>
+                  <div class="desk-50 rt">
+                      <span ng-show="crData.from != 'system'" class="label-color">Sent By :</span><span ng-show="crData.from != 'system'" class="u_email">{{crData.from}}</span>
+                      <span ng-show="crData.from == 'system'" class="label-color">Sent By :</span><span ng-show="crData.from == 'system'" class="u_email">TradeConnect</span>
+                  </div>
+              </div>
+              <p ng-show="crData.from == 'system'">TradeConnect generated Change Request – Initiated due to amendment  in materially significant fields</p>
+              <p ng-show="crData.from != 'system'">{{description}}</p>
             </div>
         </px-card>
         <div ng-show="Loading==false" ng-hide="Loading==true">
         <px-card>
-            <div>
+          <div class="clearfix">
+            <div class="desk-50 lt">
                 <h3 class="cr-heading label-color">Order Details</h3>
             </div>
+            <div class="desk-50 rt clearfix">
+                <h3 class="cr-heading label-color rt"><span class="cr">Value :</span>&nbsp;<span class="cr_id" id="contract_amount">{{contract_amount | currency : 'USD ' : 2}}</span></h3>
+            </div>
+          </div>
             <div class="adr_div clearfix">
                 <div class="desk-20 small-50 lt details_div">
                     <p class="small_label">Customer account number</p>
@@ -87,7 +118,7 @@
                     <p class="big_label" id="delivery_terms">{{deliveryTerms}}</p>
                 </div>
                 <div class="desk-10 small-50 lt details_div">
-                    <p class="small_label">FF Status</p>
+                    <p class="small_label">Fulfillment Status</p>
                     <p class="big_label" id="order_ff_status">{{order_ff_state}}</p>
                 </div>
             </div>
@@ -117,105 +148,114 @@
             </div>
         </px-card>
         <px-card class="suborder_card">
-            <h4 style="margin: 0 !important; padding: 20px 0;">Sub Order Details ({{lengthofSubOrders}})</h4>
-            <table class="sortable" style="width: 100%;">
-                <tr style="background-color: #2b5ea2;color: white;">
-                    <th style="width:4% !important">Sr.</th>
-                    <th>Bill To Address</th>
-                    <th>Billing Terms</th>
-                    <th>SOSD</th>
-                    <th>ROSD</th>
-                    <th>ASDD</th>
-                    <th>ASOD</th>
-                    <th>FF State</th>
-                    <th>Bill Amt</th>
-                    <th></th>
-                </tr>
-                <tr id="{{'Sub_Order'+x.sub_order_id}}" dir-paginate="x in OrderList |itemsPerPage:10" pagination-id="SubOrder">
-                    <td>{{x.SrNo}}</td>
-                    <td id="{{'bill_to'+x.sub_order_id}}">{{x.billToaddress}}</td>
-                    <td id="{{'billing_terms'+x.sub_order_id}}">{{x.billing_terms}}</td>
-                    <td id="{{'sch_os_date'+x.sub_order_id}}">{{x.sch_os_date}}</td>
-                    <td id="{{'ros_date'+x.sub_order_id}}">{{x.ros_date*1000 | date : 'mediumDate'}}</td>
-                    <td id="{{'ship_date'+x.sub_order_id}}">{{x.ship_date*1000 | date : 'mediumDate'}}</td>
-                    <td id="{{'delivery_date'+x.sub_order_id}}">{{x.delivery_date*1000 | date : 'mediumDate'}}</td>
-                    <td id="{{'sub_order_ff_state'+x.sub_order_id}}">{{x.sub_order_ff_state}}</td>
-                    <td id="{{'bill_amt'+x.sub_order_id}}">{{x.billing_amount | currency : 'USD ': 2}}</td>
-                    <td id="{{'Detail'+x.sub_order_id}}" ng-click="saveSubOrder(x.sub_order_id)"><a href='javascript:void(0)'>Details</a></td>
-                </tr>
-            </table>
-            <div>
-                <dir-pagination-controls pagination-id="SubOrder" ng-click="applyCss()" max-size="5" direction-links="true" boundary-links="true">
-                </dir-pagination-controls>
-            </div>
-            <div ng-show="Suborder==true">
-                <h4>Shipment Details ({{lengthofShipments}})</h4>
-                <table class="sortable" style="width: 100%;">
-                    <tr style="background-color: #2b5ea2;color: white;">
-                        <th>Sr.No</th>
-                        <th>Ship To</th>
-                        <th>ASDD</th>
-                        <th>AOSD</th>
-                        <th>FF State</th>
-                        <th>Ship Amount</th>
-                        <th>POD</th>
-                        <th></th>
-                    </tr>
-                    <tr id="{{'Shipment'+x.shipment_id}}" dir-paginate="x in SubOrderList |itemsPerPage:10" pagination-id="Shipment">
-                        <td>{{x.SrNo}}</td>
-                        <td id="{{'ship_to'+x.shipment_id}}">{{x.ship_to}}</td>
-                        <td id="{{'ship_date'+x.shipment_id}}">{{x.ship_date}}</td>
-                        <td id="{{'delivery_date'+x.shipment_id}}">{{x.delivery_date}}</td>
-                        <td id="{{'shipment_ff_state'+x.shipment_id}}">{{x.shipment_ff_state}}</td>
-                        <td id="{{'ship_amt'+x.shipment_id}}">{{x.ship_amt}}</td>
-                        <td id="{{'pod'+x.shipment_id}}">{{x.pod}}</td>
-                        <td id="{{'Details'+x.shipment_id}}" ng-click="saveShipment(x.shipment_id)"><a href='javascript:void(0)'>Details</a></td>
-                    </tr>
-                </table>
-                <div>
-                    <dir-pagination-controls ng-click="applyCss()" pagination-id="Shipment" max-size="5" direction-links="true" boundary-links="true">
-                    </dir-pagination-controls>
-                </div>
-            </div>
-            <div ng-show="Shipment==true">
-                <h4>Part Details ({{LengthOfShipment}})</h4>
-                <table class="sortable" style="width: 100%;">
-                    <tr style="background-color: #2b5ea2;color: white;">
-                        <th>Sr.No</th>
-                        <th>Model Type</th>
-                        <th>Item Number</th>
-                        <th>Line Description</th>
-                        <th>Quantity</th>
-                        <th>List Price</th>
-                        <th>Discount Price</th>
-                        <th>Selling Price</th>
-                    </tr>
-                    <tr id="{{'LineItem'+x.line_number}}" dir-paginate="x in ShipmentList |itemsPerPage:10" pagination-id="LineItem">
-                        <td>{{x.SrNo}}</td>
-                        <td>{{x.model_type}}</td>
-                        <td>{{x.item_number}}</td>
-                        <td>{{x.line_item_description}}</td>
-                        <td>{{x.quantity}}</td>
-                        <td>{{x.list_price}}</td>
-                        <td>{{x.discount_perc}}</td>
-                        <td>{{x.selling_price}}</td>
-                    </tr>
-                </table>
-                <div>
-                    <dir-pagination-controls ng-click="applyCss()" pagination-id="LineItem" max-size="5" direction-links="true" boundary-links="true">
-                    </dir-pagination-controls>
-                </div>
-            </div>
+          <h4 style="margin-top:0px !important">Sub Orders ({{lengthofSubOrders}})</h4>
+          <table style="margin-bottom:0rem !important">
+              <tr style="background-color: #898b8d;color: white;">
+                  <th>#</th>
+                  <th>Ship To</th>
+                  <th>Bill To</th>
+                  <th style="word-wrap: break-word;">Scheduled (SOSD)</th>
+                  <th style="word-wrap: break-word;">Requested (ROSD)</th>
+                  <th>Shipped(ASDD)</th>
+                  <th style="word-wrap: break-word;">Delivered (AOSD)</th>
+                  <th>Fullfillment State</th>
+                  <th>Bill Amt</th>
+              </tr>
+          </table>
+          <div class="accordion">
+              <div class="accordion-section" ng-repeat="x in OrderList" style="border:2px solid black;margin-top:1%">
+                  <a class="accordion-section-title acc-{{x.sub_order_id}}" ng-click="saveSubOrder(x.sub_order_id)" style="border:none">
+                      <table class="sub-order-table" style="margin-bottom:0rem !important">
+                          <tr id="{{'Sub_Order'+x.sub_order_id}}">
+                              <th>{{x.SrNo}}</td>
+                              <th id="{{'ship_to'+x.sub_order_id}}">{{x.shipToaddress}}</th>
+                              <!-- <th id="{{'billing_terms'+x.sub_order_id}}">{{x.billing_terms}}</th> -->
+                              <th id="{{'bill_to'+x.sub_order_id}}">{{x.billToaddress}}</th>
+                              <th id="{{'sch_os_date'+x.sub_order_id}}">{{x.schDate}}</th>
+                              <th id="{{'ros_date'+x.sub_order_id}}">{{x.rosDate}}</th>
+                              <th id="{{'ship_date'+x.sub_order_id}}">{{x.shipDate}}</th>
+                              <th id="{{'delivery_date'+x.sub_order_id}}">{{x.deliveryDate}}</th>
+                              <th id="{{'sub_order_ff_state'+x.sub_order_id}}">{{x.sub_order_ff_state}}</th>
+                              <th id="{{'bill_amt'+x.sub_order_id}}">{{x.billing_amount}}</th>
+                          </tr>
+                      </table>
+                  </a>
+                  <div id="accordion-{{x.sub_order_id}}" class="accordion-section-content1">
+                      <h4>Shipments ({{lengthofShipments}})</h4>
+                      <table style="margin-bottom:0rem !important">
+                          <tr style="background-color: #898b8d;color: white;">
+                              <th class="shipmentdatacell">#</th>
+                              <th class="shipmentdatacell">Ship To</th>
+                              <th class="shipmentdatacell">Shipped(ASDD)</th>
+                              <th class="shipmentdatacell">Delivered(AOSD)</th>
+                              <th class="shipmentdatacell">Fulfillment State</th>
+                              <th class="shipmentdatacell">Ship Amount</th>
+                              <th class="shipmentdatacell">Proof of Delivery (POD)</th>
+                          </tr>
+                      </table>
+                      <div class="accordion-section" ng-repeat="y in SubOrderList" style="border:2px solid black;margin-top:1%">
+                          <button class="accordion-section-title1 acc1-{{y.shipment_id}}" ng-click="saveShipment(y.shipment_id)" style="border:none">
+                            <table class="sub-order-table" style="margin-bottom:0rem !important">
+                                <tr class="{{'Shipment'+y.shipment_id}}">
+                                <th class="shipmentdatacell">{{y.SrNo}}</td>
+                                <th class="shipmentdatacell" id="{{'ship_to'+y.shipment_id}}">{{y.ship_to}}</th>
+                                <th class="shipmentdatacell" id="{{'ship_date'+y.shipment_id}}">{{y.ship_date}}</th>
+                                <th class="shipmentdatacell" id="{{'delivery_date'+y.shipment_id}}">{{y.delivery_date}}</th>
+                                <th class="shipmentdatacell" id="{{'shipment_ff_state'+y.shipment_id}}">{{y.shipment_ff_state}}</th>
+                                <th class="shipmentdatacell" id="{{'ship_amt'+y.shipment_id}}">{{y.ship_amt}}</th>
+                                <th class="shipmentdatacell"  id="{{'pod'+y.shipment_id}}"><span class="trackingLink" ng-show="y.pod != null" ng-hide="y.pod == 'Not Found'" ng-click="Redirect(y.trackingLink)" style="text-decoration: underline;cursor: pointer;">{{y.pod}}</span><span ng-show="y.pod == null" ng-hide=" y.pod != 'Not Found'">Not Found</span></th>
+                                </tr>
+                            </table>
+                          </button>
+                          <div class="accordion1-{{y.shipment_id}} none" style="margin:2%">
+                              <h4>Part Details ({{LengthOfShipment}})</h4>
+                              <table style="margin-bottom:0rem !important">
+                                  <tr style="background-color: #898b8d;color: white;">
+                                      <th style="width:5% !important">#</th>
+                                      <th>Model Type</th>
+                                      <th>Item Number</th>
+                                      <th>Line Description</th>
+                                      <th>Quantity</th>
+                                      <th>List Price</th>
+                                      <th>Discount (%)</th>
+                                      <th>Selling Price</th>
+                                  </tr>
+                                  <tr class="item_tr" id="{{'LineItem'+z.line_number}}" dir-paginate="z in ShipmentList |itemsPerPage:10" pagination-id="LineItem">
+                                      <td style="width:5% !important">{{z.SrNo}}</td>
+                                      <td>{{z.model_type}}</td>
+                                      <td>{{z.item_number}}</td>
+                                      <td>{{z.line_item_description}}</td>
+                                      <td>{{z.quantity}}</td>
+                                      <td>{{z.list_price}}</td>
+                                      <td>{{z.discount_perc}}</td>
+                                      <td>{{z.selling_price}}</td>
+                                  </tr>
+                              </table>
+                              <div>
+                                  <dir-pagination-controls ng-click="applyCss()" pagination-id="LineItem" max-size="5" direction-links="true" boundary-links="true">
+                                  </dir-pagination-controls>
+                              </div>
+                          </div>
+                          <!--end .accordion-section-content-->
+                      </div>
+                      <!--end .accordion-section-->
+                  </div>
+                  <!--end .accordion-section-content-->
+              </div>
+              <!--end .accordion-section-->
+
+          </div>
+            <!--end .accordion-->
         </px-card>
         <px-card>
           <div>
-            <h3 class="cr-heading label-color">Order Details</h3>
+            <h3 class="cr-heading label-color">Supporting Documents</h3>
           </div>
           <div>
             <table>
-                <tr ng-show="docFlag" ng-repeat = "document in supporting_documents">
-                  <td>{{$index+1}}. &nbsp;&nbsp;<a target="_blank" href="" ng-click="displayFile(document.url)">{{document.description}}</a></td>
-                </tr>
+              <tr ng-show="docFlag" ng-repeat = "document in supporting_documents">
+                <td>{{$index+1}}. &nbsp;&nbsp;<a ng-if="document.document_type != 'link'" target="_blank" href="" ng-click="displayFile(document.url)">{{document.description}}</a><a ng-if="document.document_type == 'link'" target="_blank" href="{{document.url}}" >{{document.description}}</a></td>
+              </tr>
                 <tr ng-show="!docFlag">
                   <td>No documents related to this Order</td>
                 </tr>
@@ -226,4 +266,5 @@
 </div>
 <div id="Loader" ng-show="Loading==true" ng-hide="Loading==false">
     <px-spinner size="100"></px-spinner>
+</div>
 </div>

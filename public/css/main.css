@@ -1,3 +1,19 @@
+body{
+  font-family: 'GE Inspira' !important;
+}
+.rt {
+    float: right;
+}
+
+.lt {
+    float: left;
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
 .viewport{
   margin-left: 0 !important;
   margin-right: 0 !important;
@@ -8,7 +24,9 @@ body{
 #nav-item-0{
   font-size: 1.5rem !important;
 }
-
+.px-app-nav-0 .navbar__item.px-app-nav > li.px-app-nav a.px-app-nav{
+  color: white !important;
+}
 #nav-item-1{
   font-size: 1.5rem !important;
 }
@@ -58,18 +76,24 @@ main{
 
 
 html, header {
-    background-color: #172937 !important;
+    background-color: #333333 !important;
 }
 
 px-app-nav {
-    background-color: #2f414f !important;
+    background-color: #5a5858 !important;
     padding-top: 0px !important;
     width: 13.5% !important;
 }
 
 main {
     background-color: #e7e7e7  !important;
-    min-height: calc(100vh - 4rem) !important;
+    min-height: calc(100vh - 6rem) !important;
+}
+footer{
+  float:right !important;
+  margin-right:1% !important;
+  color:white !important;
+  padding:5px !important;
 }
 
 
@@ -96,7 +120,7 @@ main {
 }
 
 
-input[type=text] {
+input[type=text], input[type=number]  {
     width: 100%;
     padding: 7px 15px;
     margin: 8px 0;
@@ -172,4 +196,84 @@ background-color: white !important;
 	display: inline-block;
 	vertical-align: middle;
   margin-right: 8px;
+}
+.btn-primary:hover {
+    color: #fff !important;
+    background-color: #286090 !important;
+    border-color: #204d74 !important;
+}
+
+.btn-primary {
+    color: #fff !important;
+    background-color: #337ab7 !important;
+    border-color: #2e6da4 !important;
+}
+.btn-success{
+  color: #fff !important;
+  background-color: #60bd68 !important;
+  border-color: #60bd68 !important;
+}
+.admin-hdr{
+  padding: 15px !important;
+}
+.invoice_upload{
+  padding: 0px !important;
+}
+.upload_form{
+  margin: 20px;
+}
+.invoice_upload .odr-heading{
+  border-radius: 0px;
+  margin-top: 10px;
+}
+.odr-heading .hdr-name{
+  padding-bottom: 10px !important;
+}
+.spinner_div{
+  margin: 3px 20px;
+}
+#PageLoader{
+  width: 10%;
+  margin: 5rem auto;
+}
+#DivLoader{
+  width: 10%;
+  margin: 1rem auto;
+}
+.disabled {
+  opacity: 0.65 !important;
+  cursor: not-allowed !important;
+}
+.inv-table { border: none; border-collapse: collapse; }
+.inv-table td { border-left: 1px solid #000; }
+.inv-table td:last-child {
+border-right: 1px solid #000;
+}
+.inv-table tr:last-child {
+  border-bottom: 1px solid #000;
+}
+.accordion .pagination, .cr-accordion .pagination {
+  padding-left: 760px;
+}
+.accordion .pagination li, .cr-accordion .pagination li{
+  padding: 8px;
+}
+.accordion .pagination li > a, .cr-accordion .pagination li > a{
+  color: black !important;
+  text-decoration: none;
+}
+.accordion .pagination li a:hover, .cr-accordion .pagination li a:hover{
+  color: blue !important;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+}
+.accordion .pagination li a:visited, .cr-accordion .pagination li a:visited{
+  color: blue !important;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: underline !important;
+}
+.ui.styled.accordion .title{
+  padding: .75em 1em 0 1em !important;
 }

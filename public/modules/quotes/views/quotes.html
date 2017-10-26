@@ -1,45 +1,26 @@
-<link rel="stylesheet" type="text/css" href="css/quotesList.css">
-<!-- <px-card header-text="List of Quotes ({{Length}})">
-  <px-data-table table-data='{{QuotesList}}' language="en" striped="true" sortable="true" show-column-chooser="true" table-rows="true" include-all-columns="true" >
-		<px-data-table-column name="quote#" Label="Quote Number" type="html" sortable></px-data-table-column>
-		<px-data-table-column name="quoteVer" label="Quote Version" sortable></px-data-table-column>
-		<px-data-table-column name="createdDate" label="Created Date" sortable></px-data-table-column>
-		<px-data-table-column name="status" label="Status" sortable></px-data-table-column>
-		<px-data-table-column name="action" label="Action" type="html"></px-data-table-column>
-	</px-data-table>
-  <div class="layout_item legend_tbl">
-			<table class="table_det">
-				<tbody>
-          <tr>
-					<td><i class="fa fa-caret-right" style="padding-right:10px" aria-hidden="true"></i><strong>Confirmed</strong>:</td>
-          <td>Quote is available for you review and ready to ordered</td>
-          </tr>
-          <tr>
-          <td><i class="fa fa-caret-right" style="padding-right:10px"aria-hidden="true"></i><strong>Accepted</strong>:</td>
-          <td>Quote is accepted by you & order is placed</td>
-          </tr>
-          <tr>
-          <td><i class="fa fa-caret-right" style="padding-right:10px" aria-hidden="true"></i><strong>Rejected</strong>:</td>
-          <td>Quote is rejected by you</td>
-				</tr>
-			</tbody></table>
-		</div>
-</px-card> -->
+<link rel="stylesheet" href="css/quotesList.css">
 <px-card style="background-color:white;border-radius:4px;padding-bottom:5px">
-  <h3 style="float:left;width:18%;">List Of Quotes</h3>
+  <h3 style="float:left;width:18%;">Quotes Dashboard</h3>
 </px-card>
-<px-card style="background-color:white;border-radius:4px;margin-top:1%;padding-top:50px;">
-  <!-- <div class="flex filters">
+<px-card style="background-color:white;border-radius:4px;margin-top:1%;">
+  <div class="flex filters">
     <div id="calenderdiv">
-        <px-datetime-range-field id="rangePicker" hide-time="true" show-buttons="true" date-format="YYYY/MM/DD" time-format="HH:mm:ss" time-zone="UTC" show-time-zone="abbreviatedText" range='{"from":"2015-07-01T01:00:00.000Z","to":"2016-07-08T14:00:00.000Z"}'></px-datetime-range-field>
+        <!-- <px-datetime-range-field id="rangePicker" hide-time="true" show-buttons="true" date-format="YYYY/MM/DD" time-format="HH:mm:ss" time-zone="UTC" show-time-zone="abbreviatedText" range='{"from":"2015-07-01T01:00:00.000Z","to":"2016-07-08T14:00:00.000Z"}'></px-datetime-range-field> -->
+        <px-rangepicker id="rangePicker" hide-time="true" show-buttons="true" date-format="YYYY/MM/DD" time-format="HH:mm:ss" time-zone="UTC" show-time-zone="abbreviatedText" range='{"from":"2015-07-01T01:00:00.000Z","to":"2016-07-08T14:00:00.000Z"}'></px-rangepicker>
     </div>
-  </div> -->
+  </div>
+  <div id="Loader" ng-show="Loading==true" ng-hide="Loading==false">
+      <px-spinner size="100"></px-spinner>
+  </div>
+<div ng-show="Loading==false" ng-hide="Loading==true">
   <px-data-table table-data='{{QuotesList}}' language="en" striped="true" sortable="true" show-column-chooser="true" table-rows="true" include-all-columns="true" filterable="true">
 		<px-data-table-column name="quote#" Label="Quote Number" type="html" sortable filterable></px-data-table-column>
 		<px-data-table-column name="quoteVer" label="Quote Version" sortable filterable ></px-data-table-column>
-		<px-data-table-column name="createdDate" label="Created Date" sortable filterable></px-data-table-column>
+    <px-data-table-column name="custId" label="Customer Name" sortable filterable></px-data-table-column>
+    <px-data-table-column name="createdDate" sort-function-name="window.sortbydate" label="Created Date" sortable filterable></px-data-table-column>
 		<px-data-table-column name="status" label="Status" type="html" sortable filterable></px-data-table-column>
 	</px-data-table>
+</div>
   <h4 style="margin-bottom:0px !important;margin-top:0 !important">Legends</h4>
   <div class="layout_item legend_tbl">
 			<table class="table_det">

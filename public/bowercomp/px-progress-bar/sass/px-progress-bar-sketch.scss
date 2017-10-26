@@ -1,0 +1,89 @@
+/*
+ * Copyright (c) 2014 GE Global Research. All rights reserved.
+ *
+ * The copyright to the computer software herein is the property of
+ * GE Global Research. The software may be used and/or copied only
+ * with the written permission of GE Global Research or in accordance
+ * with the terms and conditions stipulated in the agreement/contract
+ * under which the software has been supplied.
+ */
+
+//
+// Sass for the "sketch" notion of the px-progress-bar component
+//
+// @author
+//
+
+/*
+THIS FILE SHOULD CONTAIN ONLY ABSTRACT/'SKETCH' THEME RULES, NOT SPECIFIC TO PREDIX BRANDING
+Predix branding rules go in px-progress-bar-predix.scss, not in this file.
+*/
+
+
+
+// Generic
+@import "px-normalize-design/_generic.normalize.scss";
+@import "px-box-sizing-design/_generic.box-sizing.scss";
+@import "px-helpers-design/_generic.helpers.scss";
+
+// Base
+@import "px-flexbox-design/_base.flexbox.scss";
+@import "px-viewport-design/_base.viewport.scss";
+
+
+
+
+
+
+// Component
+@import "variables";
+
+.px-progress-bar {
+  height: $px-progress-bar-height;
+}
+.background {
+  background-color: $grey3;
+}
+.fill {
+  transition: transform 0.2s;
+  -webkit-transform-origin: left center;
+  transform-origin: left center;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  overflow: hidden;
+}
+.filleffect {
+  background-color: $px-progress-bar-fill-color;
+  transition: transform 0.2s;
+  -webkit-transform-origin: left center;
+  transform-origin: left center;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+}
+.striped {
+  background-image: linear-gradient(
+  -45deg,
+  $px-progress-bar-stripe-color 25%,
+  transparent 25%,
+  transparent 50%,
+  $px-progress-bar-stripe-color 50%,
+  $px-progress-bar-stripe-color 75%,
+  transparent 75%,
+  transparent);
+  background-size: 60px 60px;
+  background-repeat: repeat-x;
+  background-position: top left;
+}
+@keyframes progress-animation {
+  from {background-position: 0px;}
+  to {background-position: -120px;}
+}
+.animated {
+  animation: progress-animation 2s linear infinite;
+}
+
+
+// Trumps
+@import "inuit-clearfix/_trumps.clearfix.scss";
+@import "px-spacing-responsive-design/_trumps.spacing-responsive.scss";
+@import "px-widths-responsive-design/_trumps.widths-responsive.scss";

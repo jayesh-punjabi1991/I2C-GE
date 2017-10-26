@@ -58,7 +58,7 @@ define(['angular', './module', 'constants'], function(angular, module) {
                });
             },
             approveOrder: function(oNo,custId, data) {
-              return $http.put(urls.base_url + urls.approve_order+'/'+ oNo +'?custId='+custId, JSON.stringify(data), {
+              return $http.put(urls.base_url + urls.approve_order+'/'+ oNo +'?custId='+custId, angular.toJson(data), {
                  headers: {
                    'Authorization': 'Bearer ' + $window.sessionStorage.getItem('auth_token'),
                    'x-access-token': $window.sessionStorage.getItem('userToken')

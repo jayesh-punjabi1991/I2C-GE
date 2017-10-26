@@ -4,6 +4,9 @@
 aha-table{
   margin-top: -3%;
 }
+.pagination{
+  padding-left: 0px !important;
+}
 .columnChooser{
   margin-bottom: 2%;
   margin-right: 1% !important;
@@ -147,11 +150,11 @@ border-radius: 3px !important;
   margin-left: 14%;
 }
 #scrollBodyTableContainer > div:nth-child(even) > px-data-table-cell.style-scope.aha-table.td.aha-status-td.x-scope.px-data-table-cell-0{
-  padding-left: 45px;
+  padding-left: 25px;
   font-size: 0.95rem;
 }
 #scrollBodyTableContainer > div:nth-child(odd) > px-data-table-cell.style-scope.aha-table.td.aha-status-td.x-scope.px-data-table-cell-0{
-  padding-left: 45px;
+  padding-left: 25px;
   font-size: 0.95rem;
 }
 #Loader{

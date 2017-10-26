@@ -1,0 +1,40 @@
+[{
+	"invoicedue_notification_flag": true,
+	"invoicedue_notification_frequency": 5,
+	"paymentAdmin": {
+		"payment_mode": "ACH",
+		"payee_name": "Datex-Ohmeda GE Healthcare Datex-Ohmeda, Inc.",
+		"payee_address": {
+			"address1": "P.O. Box 641936",
+			"address2": null,
+			"address3": null,
+			"city": "Pittsburgh",
+			"country": null,
+			"postalcode": "15264-1936",
+			"province": null,
+			"state": "ABCD"
+		},
+		"payee_bank_name": "",
+		"payee_bank_address": {
+			"address1": "P.O. Box 641936",
+			"address2": null,
+			"address3": null,
+			"city": "Pittsburgh",
+			"country": null,
+			"postalcode": "15264-1936",
+			"province": null,
+			"state": "ABCD"
+		},
+		"payee_acc_number": "ACCOUNT 50277024",
+		"payee_aba_routing_number": "ABA 021001033",
+		"payer_int_ref": "",
+		"cust_bank_acc_number": "",
+		"payer_aba_routing_number": "",
+		"payer_swift_id": "",
+		"currency": "USD",
+		"originator_bank_name": "",
+		"originator_bank_country": "",
+		"payment_charges_borne_by": ""
+	},
+	"customer": "hca"
+}]

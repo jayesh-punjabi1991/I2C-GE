@@ -1,0 +1,336 @@
+<link rel="stylesheet" href="css/common-lg.css">
+<link rel="stylesheet" href="css/orderDetails.css">
+<link rel="stylesheet" href="css/invoice.css">
+<link rel="stylesheet" href="css/disputeDetails.css">
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+<div id="Loader" ng-show="Loading==true" ng-hide="Loading==false">
+      <px-spinner size="100"></px-spinner>
+</div>
+<div ng-show="Loading==false" ng-hide="Loading==true">
+<div class="cr-wrapper">
+  <div class="btn_div clearfix">
+    <div class="desk-25 small-50 lt">
+      <a ng-show="App.prevState.name != 'audit'" href="/disputes" title="Back" class="btn btn-primary"> << Back</a>
+      <a ng-show="App.prevState.name == 'audit'" href="{{'/order/auditTrail/'+ custId + '/' + ge_order_number}}" title="Back" class="btn btn-primary"> << Back</a>
+    </div>
+  </div>
+  <px-card class="odr-header">
+    <div class="odr-heading clearfix">
+      <div class="lt" style="padding-bottom:10px">
+        <h3><span class="">DISPUTE# :</span>&nbsp;<span class="">{{dispute_id}}</span></h3>
+      </div>
+      <div class="rt">
+        <h3><a href="{{OrderLink}}" style="color:white">View Order</a></h3>
+      </div>
+    </div>
+    <div class="imp_details clearfix">
+        <div class="desk-20 small-50 lt details_div">
+            <p class="small_label_1">Invoice Number</p>
+            <p class="big_label" id="cust_po_number"><i class="fa fa-file small_label_1"></i>&nbsp;&nbsp;{{invoice_number}}</p>
+        </div>
+        <div class="desk-20 small-50 lt details_div">
+            <p class="small_label_1">Order Number</p>
+            <p class="big_label"><i class="fa fa-file small_label_1"></i>&nbsp;&nbsp;{{ge_order_number}}</p>
+        </div>
+        <div class="desk-20 small-50 lt details_div">
+            <p class="small_label_1">Invoice Date</p>
+            <p class="big_label"><i class="fa fa-calendar small_label_1"></i>&nbsp;&nbsp;{{invoice_date |  date : 'mediumDate'}}</p>
+        </div>
+        <div class="desk-20 small-50 lt details_div">
+            <p class="small_label_1">Invoice Status</p>
+            <p class="big_label"><span ng-if="status == 'change_requested'" class="status_pending"></span><span ng-if="status == 'accepted'" class="status_accept"></span><span ng-if="status == 'rejected'" class="status_reject"></span>&nbsp;&nbsp;{{invoice_status}}</p>
+        </div>
+        <div class="desk-20 small-50 lt details_div">
+            <p class="small_label_1">Dispute Status</p>
+            <p class="big_label">&nbsp;&nbsp;{{dispute_status}}</p>
+        </div>
+    </div>
+    <!-- <div class="imp_details" ng-show="dispute_status== 'rejected'">
+      <p class="small_label">Rejection Comments </p>
+      <p class="big_label">{{comments}}</p>
+    </div> -->
+  </px-card>
+        <px-card style="padding-left:0 !important">
+            <div class="clearfix">
+              <div class="odr-small-heading">
+                  <h4 style="color:#0c71b8"><i class="fa fa-file-o"></i>&nbsp;&nbsp;Request Email</h4>
+              </div>
+                <div class="desk-50 rt clearfix cr_btns">
+                  <a  ng-if="dispute_status== 'initiated'" ng-hide="rejectBtn" title="Reject" id="rejectButton1" class="btn btn-reject rt" ng-click="rejectBtnClicked();">Reject</a>
+                  <a  ng-if="rejectBtn==true && rejectBtn1==false && dispute_status== 'initiated'" title="Reject" id="rejectButton" class="btn disabled rt">Reject</a>
+                  <a  ng-if="dispute_status== 'initiated'" ng-show="rejectBtn1" title="Reject" id="rejectButton2" class="btn disabled rt" class="btn" ng-click="rejectClicked()">Reject</a>
+                  <a  ng-if="dispute_status== 'initiated'" ng-hide="acceptdisable" style="margin-right:2%" title="Accept" id="acceptButton" class="btn btn-primary rt" ng-click="acceptClicked()">Accept</a>
+                  <a  ng-if="dispute_status== 'initiated'" ng-show="acceptdisable" style="margin-right:2%" title="Accept" id="acceptButton1" class="btn disabled rt" >Accept</a>
+                </div>
+            </div>
+            <div ng-show="showTextInput">
+              <p class="small_label"><i style="color: #fb1c1c;vertical-align: super;font-size: 8px;" class="fa fa-asterisk" aria-hidden="true"></i>Comments</p>
+              <textarea class="MandatoryField" name="cmnt" rows="5" cols="100" ng-model="rej_comment" style="width:100%;"></textarea>
+            </div>
+            <div style="padding:10px 20px">
+                <div class="toFrom clearfix">
+                    <div class="desk-50 lt">
+                        <span class="label-color ">Sent To :</span><span class="u_email">{{To}}</span>
+                    </div>
+                    <div class="desk-50 rt">
+                        <span class="label-color">Sent By :</span><span class="u_email">{{From}}</span>
+                    </div>
+                </div>
+                <p>{{description}}</p>
+            </div>
+        </px-card>
+</div>
+<px-card class="odr_docs">
+  <div class="odr-small-heading">
+      <h4 class="label-color"><i class="fa fa-file-o"></i>&nbsp;&nbsp;Supporting Documents</h4>
+  </div>
+  <div style="padding:10px;">
+      <table>
+          <tr ng-show="docFlag1" ng-repeat = "document in supporting_documents1">
+            <td>{{$index+1}}. &nbsp;&nbsp;<a ng-if="document.document_type != 'link'" target="_blank" href="" ng-click="displayFile('',document.url)">{{document.description}}</a><a ng-if="document.document_type == 'link'" target="_blank" href="{{document.url}}" >{{document.description[0]}}</a></td>
+          </tr>
+          <tr ng-show="!docFlag1">
+              <td>No documents related to this Order</td>
+          </tr>
+      </table>
+  </div>
+</px-card>
+<px-card class="inv-details" style="padding-left:0 !important">
+  <div class="odr-small-heading">
+      <h4 style="color:#0c71b8"><i class="fa fa-cog"></i>&nbsp;&nbsp;Invoice Details</h4>
+  </div>
+  <div class="imp_details header-box clearfix padding-box">
+    <div class="desk-30 small-50 rt">
+      <div class="amt_details">
+        <p class="big_label clearfix"><span class="lt">AMOUNT DUE:</span><span class="rt">{{invoiceData.balance_amt | currency : invoiceData.currency + ' ' : 2}}</span></p>
+        <!-- <p class="big_label clearfix"><span class="lt">DUE DATE:</span><span class="rt">{{inv}}</span></p> -->
+      </div>
+      <div class="remit-div">
+        <table>
+          <tr>
+            <th>Remit to:</th>
+            <td>{{invoiceData.remit_info.remit_to}}</td>
+          </tr>
+          <tr>
+            <th>Remit Address:</th>
+            <td>
+              <p class="big_label">{{invoiceData.remit_info.address.address1 ? invoiceData.remit_info.address.address1 + ',' : ''}}</p>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>
+              <p class="big_label">{{invoiceData.remit_info.address.address2 ? invoiceData.remit_info.address.address2 + ',' : ''}}</p>
+              <p class="big_label">{{invoiceData.remit_info.address.address3 ? invoiceData.remit_info.address.address3 + ',' : ''}}</p>
+              <p class="big_label">{{invoiceData.remit_info.address.city ? invoiceData.remit_info.address.city + ',' : ''}}{{invoiceData.remit_info.address.province ? invoiceData.remit_info.address.province + ',' : ''}}</p>
+              <p class="big_label">{{invoiceData.remit_info.address.state ? invoiceData.remit_info.address.state + ',' : ''}}{{invoiceData.remit_info.address.country ? invoiceData.remit_info.address.country + '-' : ''}}{{invoiceData.remit_info.address.postalcode ? invoiceData.remit_info.address.postalcode : ''}}</p>
+            </td>
+          </tr>
+          <tr>
+            <th>Wire Information:</th>
+            <td>{{invoiceData.remit_info.payment_instr}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="desk-40 small-50 lt">
+      <div class="cust-details">
+        <table>
+          <tr>
+            <th>Federal ID#</th>
+            <td>: {{invoiceData.federal_id_number}}</td>
+          </tr>
+          <tr>
+            <th>Invoice Date</th>
+            <td>: {{invoiceData.invoice_date*1000 | date:'mediumDate'}}</td>
+          </tr>
+          <tr>
+            <th>Customer Name</th>
+            <td>: {{invoiceData.customer_name}}</td>
+          </tr>
+          <tr>
+            <th>Customer Number</th>
+            <td>: {{invoiceData.customer_number}}</td>
+          </tr>
+          <tr>
+            <th>Quote Number</th>
+            <td>: {{invoiceData.quote_number}}</td>
+          </tr>
+          <tr>
+            <th>PO Number:</th>
+            <td>: {{invoiceData.cust_po_number}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="adr-box clearfix padding-box">
+    <div class="sold_to_div desk-30 small-100 lt">
+      <p class="small_label">Sold To:</p>
+      <p class="big_label">{{invoiceData.customer_name}}</p>
+      <p class="big_label">{{invoiceData.sold_to.address1 ? invoiceData.sold_to.address1 + ',' : ''}}</p>
+      <p class="big_label">{{invoiceData.sold_to.address2 ? invoiceData.sold_to.address2 + ',' : ''}}</p>
+      <p class="big_label">{{invoiceData.sold_to.address3 ? invoiceData.sold_to.address3 + ',' : ''}}</p>
+      <p class="big_label">{{invoiceData.sold_to.city ? invoiceData.sold_to.city + ',' : ''}}{{invoiceData.sold_to.province ? invoiceData.sold_to.province + ',' : ''}}</p>
+      <p class="big_label">{{invoiceData.sold_to.state ? invoiceData.sold_to.state + ',' : ''}}{{invoiceData.sold_to.country ? invoiceData.sold_to.country + '-' : ''}}{{invoiceData.sold_to.postalcode ? invoiceData.sold_to.postalcode : ''}}</p>
+    </div>
+    <div class="ship_to_div desk-30 small-100 lt">
+      <p class="small_label">Ship To:</p>
+      <p class="big_label">{{invoiceData.ship_to.address1 ? invoiceData.ship_to.address1 + ',' : ''}}</p>
+      <p class="big_label">{{invoiceData.ship_to.address2 ? invoiceData.ship_to.address2 + ',' : ''}}</p>
+      <p class="big_label">{{invoiceData.ship_to.address3 ? invoiceData.ship_to.address3 + ',' : ''}}</p>
+      <p class="big_label">{{invoiceData.ship_to.city ? invoiceData.ship_to.city + ',' : ''}}{{invoiceData.ship_to.province ? invoiceData.ship_to.province + ',' : ''}}</p>
+      <p class="big_label">{{invoiceData.ship_to.state ? invoiceData.ship_to.state + ',' : ''}}{{invoiceData.ship_to.country ? invoiceData.ship_to.country + '-' : ''}}{{invoiceData.ship_to.postalcode ? invoiceData.ship_to.postalcode : ''}}</p>
+    </div>
+    <div class="cust-details desk-40 small-100 lt">
+      <p class="small_label">Supporting Documents:</p>
+      <table>
+          <tr ng-show="docFlag" ng-repeat = "document in supporting_documents">
+            <td>{{$index+1}}. &nbsp;&nbsp;<a ng-if="document.document_type != 'link'" target="_blank" href="" ng-click="displayFile(document.description[0], document.url)">{{document.description[1]}}</a><a ng-if="document.document_type == 'link'" target="_blank" href="{{document.url}}" >{{document.description}}</a></td>
+          </tr>
+          <tr ng-show="!docFlag">
+              <td>No documents related to this Invoice</td>
+          </tr>
+      </table>
+    </div>
+  </div>
+  <div class="terms-box padding-box">
+    <h4>Terms</h4>
+    <div class="clearfix">
+      <div class="terms_div desk-50 small-100 lt">
+        <table>
+          <tr>
+            <th>Billing Terms:</th>
+            <td>{{invoiceData.billing_terms}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="terms_div desk-25 small-100 lt">
+        <table>
+          <tr>
+            <th>Payment Terms:</th>
+            <td>{{invoiceData.payment_terms}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="terms_div desk-25 small-100 lt">
+        <table>
+          <tr>
+            <th>Delivery Terms:</th>
+            <td>{{invoiceData.delivery_terms}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!-- <div class="clearfix">
+      <div class="terms_div desk-50 small-100 lt">
+        <table>
+          <tr>
+            <th>Delivery Terms:</th>
+            <td>{{invoiceData.delivery_terms}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="terms_div desk-50 small-100 lt">
+        <table>
+          <tr>
+            <th>Freight Terms:</th>
+            <td>{{invoiceData.freight_terms}}</td>
+          </tr>
+        </table>
+      </div>
+    </div> -->
+  </div>
+  <div class="shipping-box padding-box">
+    <h4>Shipping Details</h4>
+    <div class="clearfix">
+      <!-- <div class="terms_div desk-33 small-100 lt">
+        <table>
+          <tr>
+            <th>Ship Date:</th>
+            <td>{{invoiceData.shipped_date*1000 | date:'mediumDate'}}</td>
+          </tr>
+        </table>
+      </div> -->
+      <div class="terms_div desk-50 small-100 lt">
+        <table>
+          <tr>
+            <th>Carrier:</th>
+            <td>{{invoiceData.carrier}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="terms_div desk-50 small-100 lt">
+        <table>
+          <tr>
+            <th>Waybill:</th>
+            <td>{{invoiceData.waybill}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="spoc-box padding-box">
+    <h4>Contact Details</h4>
+    <div class="clearfix">
+      <div class="terms_div desk-50 small-100 lt">
+        <table>
+          <tr>
+            <th>GE Contact Person:</th>
+            <td>{{invoiceData.ge_contact_name}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="terms_div desk-50 small-100 lt">
+        <table>
+          <tr>
+            <th>GE Contact Email:</th>
+            <td>{{invoiceData.ge_contact_email}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="inv-lines padding-box">
+    <h4>Items</h4>
+    <table class="inv-table">
+      <tr>
+        <th>Quantity</th>
+        <th>Item Number</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Net Price</th>
+      </tr>
+      <tr ng-repeat="line in invoiceData.invoice_lines">
+        <td>{{line.quantity}}</td>
+        <td>{{line.item_number}}</td>
+        <td>{{line.line_item_description}}</td>
+        <td>{{line.price | currency : invoiceData.currency + ' ' : 2}}</td>
+        <td>{{line.extended_price | currency : invoiceData.currency + ' ' : 2}}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="inv-summary clearfix padding-box">
+    <div class="inv-value-div desk-50 small-100 rt">
+      <table>
+        <tr>
+          <th>Total</th>
+          <td>{{invoiceData.total_amt | currency : invoiceData.currency + ' ' : 2}}</td>
+        </tr>
+        <tr>
+          <th>Tax</th>
+          <td>{{invoiceData.tax_amount | currency : invoiceData.currency + ' ' : 2}}</td>
+        </tr>
+        <!-- <tr>
+          <th>Shipping handling</th>
+          <td>{{invoiceData.shipping_handling_amt | currency : invoiceData.currency + ' ' : 2}}</td>
+        </tr> -->
+        <tr>
+          <th>Total Amount</th>
+          <td>{{invoiceData.total_invoice_amt_with_tax | currency : invoiceData.currency + ' ' : 2}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</px-card>
+</div>

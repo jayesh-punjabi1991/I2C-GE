@@ -16,8 +16,8 @@
 }
 @media only screen and (min-width: 992px){ /*CSS for devices with screen width greater than or equal to 992px*/
     main:not([style-scope]):not(.style-scope){
-        margin-left: 1rem;
-        margin-right: 1rem;
+        /*margin-left: 1rem;
+        margin-right: 1rem;*/
     }
     .desk-50{
         width: 50%;
@@ -39,12 +39,17 @@
     }
     .desk-10{
         max-width:10% !important;
-        width: 25%;
+        width: 10%;
         flex-basis:0 !important;
     }
     .desk-30{
         max-width:30% !important;
         width: 30%;
+        flex-basis:0 !important;
+    }
+    .desk-40{
+        max-width:40% !important;
+        width: 40%;
         flex-basis:0 !important;
     }
     .desk-33{
